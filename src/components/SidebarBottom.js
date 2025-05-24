@@ -1,6 +1,6 @@
 export function SidebarBottom() {
   const sidebarBottom = document.createElement("div");
-  sidebarBottom.classList.add("sidebar-top");
+  sidebarBottom.classList.add("sidebar-bottom");
 
   // const sidebarBottomMenu = document.createElement("div");
   // sidebarBottomMenu.classList.add("sidebar-menu");
@@ -24,11 +24,11 @@ export function SidebarBottom() {
 
   changePasswordIcon.src = "/assets/Password.svg";
   changePasswordIcon.alt = "Ícone de alteração de senha";
-  changePasswordIcon.classList.add("password-icon");
+  changePasswordIcon.classList.add("sidebar-icon");
 
   finishSessionIcon.src = "/assets/SignOut.svg";
   finishSessionIcon.alt = "Ícone de finalizar sessão";
-  finishSessionIcon.classList.add("finish-session-icon");
+  finishSessionIcon.classList.add("sidebar-icon");
 
   sidebarPassword.appendChild(changePasswordIcon);
   sidebarPassword.appendChild(changePasswordText);

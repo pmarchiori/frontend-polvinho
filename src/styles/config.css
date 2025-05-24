@@ -32,3 +32,13 @@
 body {
   font-family: "Opens Sans", sans-serif;
 }
+
+html,
+body {
+  height: 100%;
+}
+
+#container {
+  height: 100vh;
+  display: flex;
+}

@@ -1,7 +1,11 @@
-import { createSidebar } from "../components/Sidebar.js";
+import { createTitle } from "../components/Titles.js";
 
-window.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("container");
-  const sidebar = createSidebar();
-  container.appendChild(sidebar);
-});
+export function Dashboard() {
+  const dashboard = document.createElement("div");
+  dashboard.classList.add("dashboard");
+
+  const titleContent = createTitle("Dashboard", "Bem vindo, Admin!");
+
+  dashboard.appendChild(titleContent);
+  return dashboard;
+}

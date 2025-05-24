@@ -29,11 +29,11 @@ export function SidebarTop() {
 
   dashboardIcon.src = "/assets/House.svg";
   dashboardIcon.alt = "Ícone do dashboard";
-  dashboardIcon.classList.add("dashboard-icon");
+  dashboardIcon.classList.add("sidebar-icon");
 
   disciplinesIcon.src = "/assets/Books.svg";
   disciplinesIcon.alt = "Ícone de disciplinas";
-  disciplinesIcon.classList.add("disciplines-icon");
+  disciplinesIcon.classList.add("sidebar-icon");
 
   sidebarDashboard.appendChild(dashboardIcon);
   sidebarDashboard.appendChild(dashboardText);
