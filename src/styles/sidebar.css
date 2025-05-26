@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  width: 16%;
+  width: 18%;
   background-color: var(--indigo-950);
 }
 
@@ -14,7 +14,7 @@
 
 .sidebar-bottom {
   width: 100%;
-  height: 14%;
+  height: 18%;
 }
 
 .polvo-logo {
@@ -43,4 +43,11 @@
 
   width: 100%;
   height: 30%;
+}
+
+.sidebar-dashboard:hover,
+.sidebar-disciplines:hover,
+.sidebar-password:hover,
+.sidebar-finish-session:hover {
+  cursor: pointer;
 }

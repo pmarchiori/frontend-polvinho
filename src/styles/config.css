@@ -41,4 +41,5 @@ body {
 #container {
   height: 100vh;
   display: flex;
+  background-color: var(--indigo-950);
 }

@@ -22,6 +22,7 @@ export function SidebarTop() {
   const polvoLogo = document.createElement("img");
   const dashboardIcon = document.createElement("img");
   const disciplinesIcon = document.createElement("img");
+  const dropdownIcon = document.createElement("img");
 
   polvoLogo.src = "/assets/polvo-logo-light.svg";
   polvoLogo.alt = "Logo do polvinho escura";
@@ -35,11 +36,16 @@ export function SidebarTop() {
   disciplinesIcon.alt = "Ícone de disciplinas";
   disciplinesIcon.classList.add("sidebar-icon");
 
+  dropdownIcon.src = "/assets/caret-down.svg";
+  dropdownIcon.alt = "Ícone de expandir menu";
+  dropdownIcon.classList.add("sidebar-icon");
+
   sidebarDashboard.appendChild(dashboardIcon);
   sidebarDashboard.appendChild(dashboardText);
 
   sidebarDisciplines.appendChild(disciplinesIcon);
   sidebarDisciplines.appendChild(disciplinesText);
+  sidebarDisciplines.appendChild(dropdownIcon);
 
   sidebarTop.appendChild(polvoLogo);
   sidebarTop.appendChild(sidebarDashboard);
