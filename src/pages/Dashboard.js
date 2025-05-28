@@ -1,11 +1,18 @@
 import { DashboardItem } from "../components/DashboardItem.js";
-import { createTitle } from "../components/Titles.js";
+import { Title } from "../components/Title.js";
 
 export function Dashboard() {
   const dashboard = document.createElement("div");
   dashboard.classList.add("dashboard");
 
-  const titleContent = createTitle("Dashboard", "Bem vindo, Admin!");
+  const titleContent = Title({
+    title: "Dashboard",
+    subtitle: "Bem vindo, Admin!",
+    titleClass: "title2",
+    subtitleClass: "textXl",
+    titleColor: "var(--stone-900)",
+    subtitleColor: "var(--stone-700)",
+  });
   titleContent.classList.add("dashboard-title");
 
   const itemsArea = document.createElement("div");

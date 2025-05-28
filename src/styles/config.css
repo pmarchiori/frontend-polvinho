@@ -43,3 +43,52 @@ body {
   display: flex;
   background-color: var(--indigo-950);
 }
+
+.title1 {
+  font-weight: 600;
+  font-size: 2.25rem;
+  font-size: 2.5rem;
+}
+
+.title2 {
+  font-weight: bold;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.title3 {
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.title4 {
+  font-weight: bold;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.textXl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.textLg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.textMd {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.textMdBold {
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+
+.textSm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}

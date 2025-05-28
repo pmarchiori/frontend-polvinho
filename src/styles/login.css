@@ -1,0 +1,12 @@
+.login-background {
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  background: var(--neutral-100) url("../../assets/background-ia.png") no-repeat
+    left top fixed;
+  background-size: cover;
+
+  /* bg padrão do polvinho */
+  /* background: var(--neutral-100) url("../../assets/bg.svg") no-repeat left top
+    fixed; */
+}

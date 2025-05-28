@@ -21,11 +21,11 @@
   margin: 1.5rem;
 }
 
-.sidebar-menu-text {
+/* .sidebar-menu-text {
   color: var(--indigo-50);
   font-weight: 400;
   line-height: 24px;
-}
+} */
 
 .sidebar-icon {
   margin-left: 2rem;
@@ -33,10 +33,10 @@
   height: 1.6rem;
 }
 
-.sidebar-dashboard,
-.sidebar-disciplines,
-.sidebar-password,
-.sidebar-finish-session {
+.sidebar-item,
+.sidebar-item,
+.sidebar-item,
+.sidebar-item {
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -45,9 +45,9 @@
   height: 30%;
 }
 
-.sidebar-dashboard:hover,
-.sidebar-disciplines:hover,
-.sidebar-password:hover,
-.sidebar-finish-session:hover {
+.sidebar-item:hover,
+.sidebar-item:hover,
+.sidebar-item:hover,
+.sidebar-item:hover {
   cursor: pointer;
 }

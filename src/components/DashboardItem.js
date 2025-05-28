@@ -4,10 +4,11 @@ export function DashboardItem(title, description) {
 
   const dashboardItemTitle = document.createElement("p");
   dashboardItemTitle.textContent = title;
+  dashboardItemTitle.classList.add("textMd");
 
-  //CRIAR AS CLASSES DE TEXTO DO FIGMA E APLICAR AQUI
   const dashboardItemDescription = document.createElement("a");
   dashboardItemDescription.textContent = description;
+  dashboardItemDescription.classList.add("textMd");
   dashboardItemDescription.style.color = "var(--indigo-700)";
 
   dashboardItem.appendChild(dashboardItemTitle);
