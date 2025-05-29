@@ -33,9 +33,6 @@
   height: 1.6rem;
 }
 
-.sidebar-item,
-.sidebar-item,
-.sidebar-item,
 .sidebar-item {
   display: flex;
   align-items: center;
@@ -45,9 +42,6 @@
   height: 30%;
 }
 
-.sidebar-item:hover,
-.sidebar-item:hover,
-.sidebar-item:hover,
 .sidebar-item:hover {
   cursor: pointer;
 }

@@ -1,0 +1,9 @@
+.form-btn {
+  width: 262px;
+  height: 48px;
+  cursor: pointer;
+  color: var(--neutral-50);
+  background-color: var(--indigo-500);
+  border: none;
+  border-radius: 6px;
+}
