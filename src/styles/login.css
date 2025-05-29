@@ -9,10 +9,10 @@
   /* bg padrão do polvinho */
   /* background: var(--neutral-100) url("../../assets/bg.svg") no-repeat left top
     fixed; */
-
+  /* 
   background: var(--neutral-100) url("../../assets/background-ia.png") no-repeat
     left top fixed;
-  background-size: cover;
+  background-size: cover; */
 }
 
 .polvo-logo-login {
@@ -60,4 +60,17 @@
   height: 1px;
   width: 206px;
   background-color: var(--neutral-300);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+
+  cursor: pointer;
 }

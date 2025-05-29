@@ -37,6 +37,7 @@ export function Login() {
     inputType: "password",
     fieldClass: "input-field",
     inputClass: "form-input",
+    showPasswordToggle: true,
   });
 
   const forgotPassword = document.createElement("a");
