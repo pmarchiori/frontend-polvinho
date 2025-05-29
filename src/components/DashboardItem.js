@@ -1,4 +1,4 @@
-export function DashboardItem(title, description) {
+export function DashboardItem({ title, description }) {
   const dashboardItem = document.createElement("div");
   dashboardItem.classList.add("dashboard-item");
 

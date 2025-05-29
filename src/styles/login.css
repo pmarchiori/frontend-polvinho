@@ -1,12 +1,63 @@
 .login-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   width: 100vw;
   box-sizing: border-box;
-  background: var(--neutral-100) url("../../assets/background-ia.png") no-repeat
-    left top fixed;
-  background-size: cover;
 
   /* bg padrão do polvinho */
   /* background: var(--neutral-100) url("../../assets/bg.svg") no-repeat left top
     fixed; */
+
+  background: var(--neutral-100) url("../../assets/background-ia.png") no-repeat
+    left top fixed;
+  background-size: cover;
+}
+
+.polvo-logo-login {
+  position: absolute;
+  top: 26px;
+  left: 23px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 32px;
+  width: 35vw;
+  height: 75vh;
+
+  background-color: var(--neutral-50);
+  border: 1px solid var(--neutral-200);
+  border-radius: 20px;
+  box-shadow: 5px 7px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-input {
+  width: 415px;
+  height: 48px;
+  background-color: var(--neutral-100);
+  border: 1px solid var(--neutral-200);
+  border-radius: 6px;
+  outline: none;
+}
+
+.forgot-password {
+  color: var(--indigo-900);
+  cursor: pointer;
+}
+
+.split-line {
+  height: 1px;
+  width: 206px;
+  background-color: var(--neutral-300);
 }

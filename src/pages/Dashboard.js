@@ -18,10 +18,18 @@ export function Dashboard() {
   const itemsArea = document.createElement("div");
   itemsArea.classList.add("items-area");
 
-  //COMPONENTIZAR O CORPO DO DASHBOARD, PARA FUNCIONAR COM DIFERENTES PERFIS
-  const studentsItem = DashboardItem("Alunos", "Cadastrar novo");
-  const teachersItem = DashboardItem("Professores", "Cadastrar novo");
-  const disciplinesItem = DashboardItem("Disciplinas", "Cadastrar novo");
+  const studentsItem = DashboardItem({
+    title: "Alunos",
+    description: "Cadastrar novo",
+  });
+  const teachersItem = DashboardItem({
+    title: "Professores",
+    description: "Cadastrar novo",
+  });
+  const disciplinesItem = DashboardItem({
+    title: "Disciplinas",
+    description: "Cadastrar novo",
+  });
 
   itemsArea.appendChild(studentsItem);
   itemsArea.appendChild(teachersItem);
