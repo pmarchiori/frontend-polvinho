@@ -20,7 +20,7 @@ export function Login() {
     titleColor: "var(--stone-900)",
   });
 
-  loginFormTitle.style.marginTop = "45px";
+  loginFormTitle.style.marginTop = "2rem";
 
   const splitLine = document.createElement("div");
   splitLine.classList.add("split-line");
@@ -30,6 +30,7 @@ export function Login() {
     inputType: "text",
     fieldClass: "input-field",
     inputClass: "form-input",
+    placeholder: "usuario@gmail.com",
   });
 
   const userPasswordField = InputField({
@@ -38,6 +39,7 @@ export function Login() {
     fieldClass: "input-field",
     inputClass: "form-input",
     showPasswordToggle: true,
+    placeholder: "•••••••",
   });
 
   const forgotPassword = document.createElement("a");
@@ -56,6 +58,44 @@ export function Login() {
 
   loginBackground.appendChild(polvoLogoLogin);
   loginBackground.appendChild(loginForm);
+
+  //ORGANIZAR ESSA VALIDAÇÃO, TIRAR TUDO DO LOGIN.JS
+  //ADICIONAR VALIDAÇÃO DE MATRÍCULA
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const emailInput = userLoginField.input;
+    const passwordInput = userPasswordField.input;
+
+    const inputError = userPasswordField.errorSpan;
+    inputError.classList.add("textSm");
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{5,}$/;
+
+    let isValid = true;
+
+    inputError.style.display = "none";
+    emailInput.classList.remove("error");
+    passwordInput.classList.remove("error");
+
+    if (!passwordRegex.test(password) || !emailRegex.test(email)) {
+      inputError.textContent = "Usuário ou senha incorreta!";
+      inputError.style.display = "block";
+
+      emailInput.classList.add("error");
+      passwordInput.classList.add("error");
+
+      isValid = false;
+    }
+
+    if (isValid) {
+      console.log("Login válido!");
+    }
+  });
 
   return loginBackground;
 }

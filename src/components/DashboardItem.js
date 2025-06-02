@@ -1,4 +1,4 @@
-export function DashboardItem({ title, description }) {
+export function DashboardItem({ title, description = "" }) {
   const dashboardItem = document.createElement("div");
   dashboardItem.classList.add("dashboard-item");
 
@@ -6,13 +6,16 @@ export function DashboardItem({ title, description }) {
   dashboardItemTitle.textContent = title;
   dashboardItemTitle.classList.add("textMd");
 
-  const dashboardItemDescription = document.createElement("a");
-  dashboardItemDescription.textContent = description;
-  dashboardItemDescription.classList.add("textMd");
-  dashboardItemDescription.style.color = "var(--indigo-700)";
-
   dashboardItem.appendChild(dashboardItemTitle);
-  dashboardItem.appendChild(dashboardItemDescription);
+
+  if (dashboardItem) {
+    const dashboardItemDescription = document.createElement("a");
+    dashboardItemDescription.textContent = description;
+    dashboardItemDescription.classList.add("textMd");
+    dashboardItemDescription.style.color = "var(--indigo-700)";
+
+    dashboardItem.appendChild(dashboardItemDescription);
+  }
 
   return dashboardItem;
 }
