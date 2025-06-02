@@ -4,6 +4,7 @@ export function InputField({
   fieldClass,
   inputClass,
   showPasswordToggle = false,
+  placeholder = "",
 }) {
   const inputField = document.createElement("div");
   inputField.classList.add(fieldClass);
@@ -18,6 +19,7 @@ export function InputField({
 
   const input = document.createElement("input");
   input.type = inputType;
+  input.placeholder = placeholder;
   input.classList.add(inputClass);
 
   inputWrapper.appendChild(input);
@@ -38,8 +40,16 @@ export function InputField({
     inputWrapper.appendChild(toggleIcon);
   }
 
+  const errorSpan = document.createElement("span");
+  errorSpan.classList.add("input-error");
+  errorSpan.style.display = "none";
+
   inputField.appendChild(inputLabel);
   inputField.appendChild(inputWrapper);
+  inputField.appendChild(errorSpan);
+
+  inputField.input = input;
+  inputField.errorSpan = errorSpan;
 
   return inputField;
 }
