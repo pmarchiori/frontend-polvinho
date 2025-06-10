@@ -1,6 +1,7 @@
 import { FormButton } from "../components/FormButton.js";
-import { InputField } from "../components/InputField.js";
+import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
+import { validateLoginCredentials } from "../utils/validators.js";
 
 export function Login() {
   const loginBackground = document.createElement("div");
@@ -25,15 +26,14 @@ export function Login() {
   const splitLine = document.createElement("div");
   splitLine.classList.add("split-line");
 
-  const userLoginField = InputField({
+  const userLoginField = TextInputField({
     label: "Matrícula ou Email",
-    inputType: "text",
     fieldClass: "input-field",
     inputClass: "form-input",
     placeholder: "usuario@gmail.com",
   });
 
-  const userPasswordField = InputField({
+  const userPasswordField = TextInputField({
     label: "Senha",
     inputType: "password",
     fieldClass: "input-field",
@@ -59,9 +59,7 @@ export function Login() {
   loginBackground.appendChild(polvoLogoLogin);
   loginBackground.appendChild(loginForm);
 
-  //ORGANIZAR ESSA VALIDAÇÃO, TIRAR TUDO DO LOGIN.JS
-  //ADICIONAR VALIDAÇÃO DE MATRÍCULA
-  loginForm.addEventListener("submit", (event) => {
+  loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const emailInput = userLoginField.input;
@@ -69,31 +67,59 @@ export function Login() {
 
     const inputError = userPasswordField.errorSpan;
     inputError.classList.add("textSm");
+    inputError.classList.add("input-error");
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{5,}$/;
-
-    let isValid = true;
-
     inputError.style.display = "none";
+    inputError.textContent = "";
     emailInput.classList.remove("error");
     passwordInput.classList.remove("error");
 
-    if (!passwordRegex.test(password) || !emailRegex.test(email)) {
-      inputError.textContent = "Usuário ou senha incorreta!";
-      inputError.style.display = "block";
+    const { isValid, message } = validateLoginCredentials(email, password);
 
+    if (!isValid) {
+      inputError.textContent = message;
+      inputError.style.display = "block";
       emailInput.classList.add("error");
       passwordInput.classList.add("error");
-
-      isValid = false;
+      return;
     }
 
-    if (isValid) {
-      console.log("Login válido!");
+    try {
+      const response = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("login successful!", data);
+        localStorage.setItem("authToken", data.token);
+
+        inputError.textContent = "";
+        inputError.style.display = "none";
+        // window.location.href = '/dashboard'; // redirect se o login der bom
+      } else {
+        console.error("login error:", data.error || "unknown error");
+        inputError.textContent =
+          data.error || "Erro ao tentar fazer login. Credenciais inválidas.";
+        inputError.style.display = "block";
+        emailInput.classList.add("error");
+        passwordInput.classList.add("error");
+      }
+    } catch (error) {
+      console.error("backend error:", error);
+      inputError.textContent =
+        "Não foi possível conectar ao servidor. Verifique sua conexão ou tente novamente mais tarde.";
+      inputError.style.display = "block";
+      emailInput.classList.add("error");
+      passwordInput.classList.add("error");
     }
   });
 

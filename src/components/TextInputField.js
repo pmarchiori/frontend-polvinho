@@ -1,13 +1,13 @@
-export function InputField({
+export function TextInputField({
   label,
-  inputType,
+  inputType = "text",
   fieldClass,
   inputClass,
   showPasswordToggle = false,
   placeholder = "",
 }) {
-  const inputField = document.createElement("div");
-  inputField.classList.add(fieldClass);
+  const textInputField = document.createElement("div");
+  textInputField.classList.add(fieldClass);
 
   const inputLabel = document.createElement("label");
   inputLabel.textContent = label;
@@ -44,12 +44,12 @@ export function InputField({
   errorSpan.classList.add("input-error");
   errorSpan.style.display = "none";
 
-  inputField.appendChild(inputLabel);
-  inputField.appendChild(inputWrapper);
-  inputField.appendChild(errorSpan);
+  textInputField.appendChild(inputLabel);
+  textInputField.appendChild(inputWrapper);
+  textInputField.appendChild(errorSpan);
 
-  inputField.input = input;
-  inputField.errorSpan = errorSpan;
+  textInputField.input = input;
+  textInputField.errorSpan = errorSpan;
 
-  return inputField;
+  return textInputField;
 }

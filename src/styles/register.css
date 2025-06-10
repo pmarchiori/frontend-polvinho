@@ -1,0 +1,46 @@
+.student-register {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--neutral-50);
+  border-radius: 24px 0 0 24px;
+  width: 100%;
+  height: 100vh;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.register-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.return-button {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
