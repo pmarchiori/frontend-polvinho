@@ -4,6 +4,7 @@ export function SelectInputField({
   inputClass,
   placeholder,
   disciplines,
+  name,
 }) {
   const selectInputField = document.createElement("div");
   selectInputField.classList.add(fieldClass);
@@ -17,8 +18,13 @@ export function SelectInputField({
   inputWrapper.classList.add("input-wrapper");
 
   const select = document.createElement("select");
-  select.placeholder = placeholder;
   select.classList.add(inputClass);
+  select.name = name;
+
+  const dropdownIcon = document.createElement("img");
+  dropdownIcon.src = "/assets/caret-down-dark.svg";
+  dropdownIcon.alt = "Abrir lista";
+  dropdownIcon.classList.add("dropdown-icon");
 
   const placeholderOption = document.createElement("option");
   placeholderOption.textContent = placeholder;
@@ -28,12 +34,13 @@ export function SelectInputField({
 
   disciplines.forEach((discipline) => {
     const option = document.createElement("option");
-    option.value = discipline;
-    option.textContent = discipline;
+    option.value = discipline._id;
+    option.textContent = discipline.name;
     select.appendChild(option);
   });
 
   inputWrapper.appendChild(select);
+  inputWrapper.appendChild(dropdownIcon);
 
   selectInputField.appendChild(inputLabel);
   selectInputField.appendChild(inputWrapper);

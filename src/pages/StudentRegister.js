@@ -2,9 +2,10 @@ import { FormButton } from "../components/FormButton.js";
 import { SelectInputField } from "../components/SelectInputField.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
+import { handleRegisterSubmit } from "../utils/handlers/registerHandler.js";
 
 export function StudentRegister() {
-  const studentRegister = document.createElement("div");
+  const studentRegister = document.createElement("form");
   studentRegister.classList.add("student-register");
 
   const header = document.createElement("div");
@@ -23,11 +24,12 @@ export function StudentRegister() {
   header.appendChild(returnButton);
   header.appendChild(title);
 
-  const registerContainer = document.createElement("div");
-  registerContainer.classList.add("register-container");
+  const registerForm = document.createElement("form");
+  registerForm.classList.add("register-container");
 
   const upperInputRow = document.createElement("div");
   upperInputRow.classList.add("input-row");
+
   const lowerInputRow = document.createElement("div");
   lowerInputRow.classList.add("input-row");
 
@@ -36,6 +38,7 @@ export function StudentRegister() {
     fieldClass: "input-field",
     inputClass: "register-input",
     placeholder: "Nome Sobrenome",
+    name: "name",
   });
 
   const registrationInput = TextInputField({
@@ -43,6 +46,7 @@ export function StudentRegister() {
     fieldClass: "input-field",
     inputClass: "register-input",
     placeholder: "000000",
+    name: "registration",
   });
 
   const emailInput = TextInputField({
@@ -50,14 +54,19 @@ export function StudentRegister() {
     fieldClass: "input-field",
     inputClass: "register-input",
     placeholder: "email@email.com",
+    name: "email",
   });
 
   const subjectsInput = SelectInputField({
     label: "Disciplinas",
     fieldClass: "input-field",
-    inputClass: "register-input",
+    inputClass: "select-input",
     placeholder: "Disciplinas do usuário",
-    disciplines: ["disciplina1", "disciplina2", "disciplina3"],
+    disciplines: [
+      { _id: "666b5a7a93be74d1c1e3271c", name: "disciplina 1" },
+      { _id: "566b5a7a93be74d1c1e3271c", name: "disciplina 2" },
+    ],
+    name: "subject",
   });
 
   const buttonContainer = document.createElement("div");
@@ -75,12 +84,16 @@ export function StudentRegister() {
   lowerInputRow.appendChild(emailInput);
   lowerInputRow.appendChild(subjectsInput);
 
-  registerContainer.appendChild(upperInputRow);
-  registerContainer.appendChild(lowerInputRow);
+  registerForm.appendChild(upperInputRow);
+  registerForm.appendChild(lowerInputRow);
 
   studentRegister.appendChild(header);
-  studentRegister.appendChild(registerContainer);
+  studentRegister.appendChild(registerForm);
   studentRegister.appendChild(buttonContainer);
+
+  studentRegister.addEventListener("submit", async (event) => {
+    handleRegisterSubmit(event, emailInput);
+  });
 
   return studentRegister;
 }

@@ -5,6 +5,7 @@ export function TextInputField({
   inputClass,
   showPasswordToggle = false,
   placeholder = "",
+  name,
 }) {
   const textInputField = document.createElement("div");
   textInputField.classList.add(fieldClass);
@@ -21,6 +22,7 @@ export function TextInputField({
   input.type = inputType;
   input.placeholder = placeholder;
   input.classList.add(inputClass);
+  input.name = name;
 
   inputWrapper.appendChild(input);
 
