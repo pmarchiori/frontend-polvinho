@@ -1,6 +1,8 @@
 import { FormButton } from "../components/FormButton.js";
-import { InputField } from "../components/InputField.js";
+import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
+import { validateLoginCredentials } from "../utils/validators.js";
+import { handleLoginSubmit } from "../utils/handlers/loginHandler.js";
 
 export function Login() {
   const loginBackground = document.createElement("div");
@@ -25,15 +27,14 @@ export function Login() {
   const splitLine = document.createElement("div");
   splitLine.classList.add("split-line");
 
-  const userLoginField = InputField({
+  const userLoginField = TextInputField({
     label: "Matrícula ou Email",
-    inputType: "text",
     fieldClass: "input-field",
     inputClass: "form-input",
     placeholder: "usuario@gmail.com",
   });
 
-  const userPasswordField = InputField({
+  const userPasswordField = TextInputField({
     label: "Senha",
     inputType: "password",
     fieldClass: "input-field",
@@ -59,42 +60,8 @@ export function Login() {
   loginBackground.appendChild(polvoLogoLogin);
   loginBackground.appendChild(loginForm);
 
-  //ORGANIZAR ESSA VALIDAÇÃO, TIRAR TUDO DO LOGIN.JS
-  //ADICIONAR VALIDAÇÃO DE MATRÍCULA
   loginForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const emailInput = userLoginField.input;
-    const passwordInput = userPasswordField.input;
-
-    const inputError = userPasswordField.errorSpan;
-    inputError.classList.add("textSm");
-
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{5,}$/;
-
-    let isValid = true;
-
-    inputError.style.display = "none";
-    emailInput.classList.remove("error");
-    passwordInput.classList.remove("error");
-
-    if (!passwordRegex.test(password) || !emailRegex.test(email)) {
-      inputError.textContent = "Usuário ou senha incorreta!";
-      inputError.style.display = "block";
-
-      emailInput.classList.add("error");
-      passwordInput.classList.add("error");
-
-      isValid = false;
-    }
-
-    if (isValid) {
-      console.log("Login válido!");
-    }
+    handleLoginSubmit(event, userLoginField, userPasswordField);
   });
 
   return loginBackground;
