@@ -1,4 +1,4 @@
-.student-register {
+.user-list {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -10,31 +10,17 @@
   box-sizing: border-box;
 }
 
-.register-header {
+.list-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   margin-bottom: 40px;
 }
 
-.register-container {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  width: 100%;
-  max-width: 1024px;
-  margin: 0 auto;
-  flex-grow: 1;
-}
-
-.input-row {
+.title-area {
   display: flex;
   flex-direction: row;
-  gap: 32px;
-}
-
-.button-container {
-  display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 16px;
 }

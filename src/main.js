@@ -5,11 +5,12 @@ import { RetrievePassword } from "./pages/RetrievePassword.js";
 import { ChangePassword } from "./pages/ChangePassword.js";
 import { PageNotFound } from "./pages/PageNotFound.js";
 import { StudentRegister } from "./pages/StudentRegister.js";
+import { StudentList } from "./pages/StudentList.js";
 
 window.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("container");
-  // const sidebar = Sidebar();
-  // container.appendChild(sidebar);
+  const sidebar = Sidebar();
+  container.appendChild(sidebar);
 
   // const dashboard = Dashboard();
   // container.appendChild(dashboard);
@@ -17,12 +18,15 @@ window.addEventListener("DOMContentLoaded", () => {
   // const studentRegister = StudentRegister();
   // container.appendChild(studentRegister);
 
+  const studentList = StudentList();
+  container.appendChild(studentList);
+
   //TESTANDO/DESENVOLVENDO A TELA LOGIN
   // const login = Login();
   // container.appendChild(login);
 
-  const retrievePassword = RetrievePassword();
-  container.appendChild(retrievePassword);
+  // const retrievePassword = RetrievePassword();
+  // container.appendChild(retrievePassword);
 
   // const changePassword = ChangePassword();
   // container.appendChild(changePassword);
