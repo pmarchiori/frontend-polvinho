@@ -14,7 +14,7 @@ export function StudentRegister() {
 
   const returnButton = document.createElement("img");
   returnButton.src = "/assets/caret-left.svg";
-  returnButton.classList.add("return-button");
+  returnButton.classList.add("return-btn");
 
   const title = Title({
     title: "Cadastro do Aluno",

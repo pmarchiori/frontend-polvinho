@@ -1,5 +1,6 @@
 import { CreationButton } from "../components/CreationButton.js";
 import { Title } from "../components/Title.js";
+import { UserListing } from "../components/UserListing.js";
 
 export function StudentList() {
   const studentList = document.createElement("div");
@@ -14,7 +15,7 @@ export function StudentList() {
 
   const returnButton = document.createElement("img");
   returnButton.src = "/assets/caret-left.svg";
-  returnButton.classList.add("return-button");
+  returnButton.classList.add("return-btn");
 
   const title = Title({
     title: "Alunos",
@@ -30,6 +31,22 @@ export function StudentList() {
     btnClass: "creation-btn",
   });
 
+  const chartNames = document.createElement("div");
+  chartNames.classList.add("chart-names");
+
+  const registration = document.createElement("p");
+  registration.textContent = "Matrícula";
+  const name = document.createElement("p");
+  name.textContent = "Nome";
+  const subjects = document.createElement("p");
+  subjects.textContent = "Disciplinas";
+  const actions = document.createElement("p");
+  actions.textContent = "Ações";
+
+  chartNames.append(registration, name, subjects, actions);
+
+  const userList = UserListing();
+
   titleArea.appendChild(returnButton);
   titleArea.appendChild(title);
   btnArea.appendChild(addQuizButton);
@@ -38,6 +55,8 @@ export function StudentList() {
   header.appendChild(btnArea);
 
   studentList.appendChild(header);
+  studentList.appendChild(chartNames);
+  studentList.appendChild(userList);
 
   return studentList;
 }

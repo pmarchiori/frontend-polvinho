@@ -1,7 +1,7 @@
 .user-list {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   background-color: var(--neutral-50);
   border-radius: 24px 0 0 24px;
   width: 100%;
@@ -23,4 +23,39 @@
   flex-direction: row;
   align-items: center;
   gap: 16px;
+}
+
+.chart-names {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  align-self: center;
+  margin-bottom: 15px;
+}
+
+.user-listing {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 4vh;
+  width: 90%;
+  align-self: center;
+  background-color: var(--neutral-100);
+  box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 2.6px;
+  border: 1px solid var(--neutral-200);
+  border-radius: 12px;
+  padding: 16px 20px 16px 20px;
+}
+
+.user-listing:hover {
+  cursor: pointer;
+  background-color: var(--neutral-200);
+}
+
+.actions-area {
+  display: flex;
+  gap: 32px;
 }
