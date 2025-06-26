@@ -1,0 +1,93 @@
+.user-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: var(--neutral-50);
+  border-radius: 24px 0 0 24px;
+  width: 100%;
+  height: 100vh;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.title-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.chart-names,
+.user-listing {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  align-self: center;
+}
+
+.chart-names {
+  margin-bottom: 15px;
+}
+
+.chart-names-text {
+  color: var(--stone-500);
+}
+
+.users-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user-listing {
+  height: 4vh;
+  background-color: var(--neutral-100);
+  box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 2.6px;
+  border: 1px solid var(--neutral-200);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.user-listing:hover {
+  cursor: pointer;
+  background-color: var(--neutral-200);
+}
+
+.actions-area {
+  display: flex;
+  gap: 32px;
+}
+
+.col-registration {
+  flex-basis: 30%;
+  min-width: 100px;
+}
+
+.col-name {
+  flex-basis: 30%;
+  min-width: 100px;
+}
+
+.col-subjects {
+  flex-basis: 20%;
+  min-width: 100px;
+}
+
+.col-actions {
+  flex-basis: 15%;
+  min-width: 150px;
+}
+
+.list-text {
+  color: var(--stone-900);
+}

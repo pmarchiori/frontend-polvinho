@@ -1,4 +1,5 @@
 import { isValidEmail } from "../validators.js";
+import { Toaster } from "../../components/Toaster.js";
 
 export async function handleRegisterSubmit(event, emailInputField) {
   event.preventDefault();
@@ -14,7 +15,11 @@ export async function handleRegisterSubmit(event, emailInputField) {
   });
 
   if (!isValidEmail(data.email)) {
-    console.log("E-mail inválido!");
+    Toaster({
+      title: "Email inválido",
+      description: "Por favor, insira um e-mail válido.",
+      type: "error",
+    });
     return;
   }
 
@@ -37,13 +42,25 @@ export async function handleRegisterSubmit(event, emailInputField) {
     const result = await response.json();
 
     if (response.ok) {
-      console.log("Usuário cadastrado com sucesso!");
+      Toaster({
+        title: "Sucesso!",
+        description: "Aluno cadastrado com sucesso.",
+        type: "success",
+      });
       form.reset();
     } else {
-      console.log(`Erro: ${result.error}`);
+      Toaster({
+        title: "Erro",
+        description: result.error || "Algo deu errado.",
+        type: "error",
+      });
     }
   } catch (error) {
-    console.error("Erro na requisição:", error);
-    console.log("Erro ao cadastrar usuário.");
+    console.error("Erro:", error);
+    Toaster({
+      title: "Erro",
+      description: "Não foi possível conectar com o servidor.",
+      type: "error",
+    });
   }
 }

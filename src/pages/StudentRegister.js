@@ -3,6 +3,7 @@ import { SelectInputField } from "../components/SelectInputField.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
 import { handleRegisterSubmit } from "../utils/handlers/registerHandler.js";
+import { Toaster } from "../components/Toaster.js";
 
 export function StudentRegister() {
   const studentRegister = document.createElement("form");
@@ -13,7 +14,7 @@ export function StudentRegister() {
 
   const returnButton = document.createElement("img");
   returnButton.src = "/assets/caret-left.svg";
-  returnButton.classList.add("return-button");
+  returnButton.classList.add("return-btn");
 
   const title = Title({
     title: "Cadastro do Aluno",
