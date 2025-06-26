@@ -47,7 +47,6 @@ export async function handleLoginSubmit(
       localStorage.setItem("authToken", data.token);
       inputError.textContent = "";
       inputError.style.display = "none";
-      // window.location.href = '/dashboard';
     } else {
       console.error("login error:", data.error || "unknown error");
       inputError.textContent =

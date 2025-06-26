@@ -1,21 +1,21 @@
-export function UserListing() {
+export function UserListing({ registration, name, subjects }) {
   const userListing = document.createElement("div");
   userListing.classList.add("user-listing");
 
   const userRegistration = document.createElement("p");
-  userRegistration.textContent = "registration";
-  userRegistration.classList.add("textMd");
+  userRegistration.textContent = registration;
+  userRegistration.classList.add("textMd", "col-registration", "list-text");
 
   const userName = document.createElement("p");
-  userName.textContent = "name";
-  userName.classList.add("textMd");
+  userName.textContent = name;
+  userName.classList.add("textMd", "col-name", "list-text");
 
   const userSubjects = document.createElement("p");
-  userSubjects.textContent = "subjects";
-  userSubjects.classList.add("textMd");
+  userSubjects.textContent = subjects.length;
+  userSubjects.classList.add("textMd", "col-subjects", "list-text");
 
   const actionsArea = document.createElement("div");
-  actionsArea.classList.add("actions-area");
+  actionsArea.classList.add("actions-area", "col-actions");
 
   const editButton = document.createElement("p");
   editButton.textContent = "Editar";

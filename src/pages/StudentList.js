@@ -1,6 +1,8 @@
 import { CreationButton } from "../components/CreationButton.js";
+import { EmptyData } from "../components/EmptyData.js";
 import { Title } from "../components/Title.js";
 import { UserListing } from "../components/UserListing.js";
+import { fetchStudents } from "../utils/handlers/userHandler.js";
 
 export function StudentList() {
   const studentList = document.createElement("div");
@@ -21,13 +23,13 @@ export function StudentList() {
     title: "Alunos",
     titleClass: "title2",
     titleColor: "var(--stone-900)",
-    subtitle: "X Cadastrados",
+    subtitle: "0 Cadastrados",
     subtitleClass: "textLg",
     subtitleColor: "var(--stone-700)",
   });
 
   const addQuizButton = CreationButton({
-    btnName: "Criar Quiz",
+    btnName: "Cadastrar",
     btnClass: "creation-btn",
   });
 
@@ -36,16 +38,51 @@ export function StudentList() {
 
   const registration = document.createElement("p");
   registration.textContent = "Matrícula";
+  registration.classList.add("col-registration", "textSm", "chart-names-text");
+
   const name = document.createElement("p");
   name.textContent = "Nome";
+  name.classList.add("col-name", "textSm", "chart-names-text");
+
   const subjects = document.createElement("p");
   subjects.textContent = "Disciplinas";
+  subjects.classList.add("col-subjects", "textSm", "chart-names-text");
+
   const actions = document.createElement("p");
   actions.textContent = "Ações";
+  actions.classList.add("col-actions", "textSm", "chart-names-text");
 
   chartNames.append(registration, name, subjects, actions);
 
-  const userList = UserListing();
+  const usersArea = document.createElement("div");
+  usersArea.classList.add("users-area");
+
+  fetchStudents()
+    .then((alunos) => {
+      title.querySelector(
+        ".textLg"
+      ).textContent = `${alunos.length} Cadastrados`;
+
+      if (alunos.length === 0) {
+        const emptyComponent = EmptyData({ text: "Nenhum aluno cadastrado" });
+        studentList.appendChild(emptyComponent);
+      } else {
+        alunos.forEach((user) => {
+          const userComponent = UserListing({
+            registration: user.registration,
+            name: user.name,
+            subjects: user.subject ? [user.subject] : [],
+          });
+          usersArea.appendChild(userComponent);
+        });
+
+        studentList.appendChild(chartNames);
+        studentList.appendChild(usersArea);
+      }
+    })
+    .catch((err) => {
+      title.querySelector(".textLg").textContent = "Erro ao carregar";
+    });
 
   titleArea.appendChild(returnButton);
   titleArea.appendChild(title);
@@ -55,8 +92,6 @@ export function StudentList() {
   header.appendChild(btnArea);
 
   studentList.appendChild(header);
-  studentList.appendChild(chartNames);
-  studentList.appendChild(userList);
 
   return studentList;
 }
