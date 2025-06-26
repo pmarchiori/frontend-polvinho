@@ -22,6 +22,10 @@ export function PageNotFound() {
     btnClass: "form-btn",
   });
 
+  notFoundButton.addEventListener("click", () => {
+    window.location.hash = "#/login";
+  });
+
   notFoundContainer.appendChild(notFoundImage);
   notFoundContainer.appendChild(notFoundTitle);
   notFoundContainer.appendChild(notFoundButton);

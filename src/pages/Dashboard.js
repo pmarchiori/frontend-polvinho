@@ -21,11 +21,16 @@ export function Dashboard() {
   const studentsItem = DashboardItem({
     title: "Alunos",
     description: "Cadastrar novo",
+    onClick: () => {
+      window.location.hash = "#/students";
+    },
   });
+
   const teachersItem = DashboardItem({
     title: "Professores",
     description: "Cadastrar novo",
   });
+
   const disciplinesItem = DashboardItem({
     title: "Disciplinas",
     description: "Cadastrar novo",

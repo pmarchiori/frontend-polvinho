@@ -1,7 +1,6 @@
 import { FormButton } from "../components/FormButton.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
-import { validateLoginCredentials } from "../utils/validators.js";
 import { handleLoginSubmit } from "../utils/handlers/loginHandler.js";
 
 export function Login() {
@@ -62,6 +61,8 @@ export function Login() {
 
   loginForm.addEventListener("submit", (event) => {
     handleLoginSubmit(event, userLoginField, userPasswordField);
+    //TEMPORARIO PARA TESTE DE ROTAS
+    window.location.hash = "#/dashboard";
   });
 
   return loginBackground;
