@@ -1,4 +1,4 @@
-export function SidebarItem({ text, iconSrc, helperIconSrc = "" }) {
+export function SidebarItem({ text, iconSrc, helperIconSrc = "", onClick }) {
   const sidebarItem = document.createElement("div");
   sidebarItem.classList.add("sidebar-item");
 
@@ -21,6 +21,13 @@ export function SidebarItem({ text, iconSrc, helperIconSrc = "" }) {
     sidebarHelperIcon.alt = "Ícone de dropdown";
     sidebarHelperIcon.classList.add("sidebar-icon");
     sidebarItem.appendChild(sidebarHelperIcon);
+  }
+
+  if (typeof onClick === "function") {
+    sidebarItem.addEventListener("click", (e) => {
+      e.preventDefault();
+      onClick();
+    });
   }
 
   return sidebarItem;

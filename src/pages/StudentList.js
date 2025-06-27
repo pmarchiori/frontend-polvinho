@@ -1,5 +1,6 @@
 import { CreationButton } from "../components/CreationButton.js";
 import { EmptyData } from "../components/EmptyData.js";
+import { ReturnButton } from "../components/ReturnButton.js";
 import { Title } from "../components/Title.js";
 import { UserListing } from "../components/UserListing.js";
 import { fetchStudents } from "../utils/handlers/userHandler.js";
@@ -15,9 +16,7 @@ export function StudentList() {
   titleArea.classList.add("title-area");
   const btnArea = document.createElement("div");
 
-  const returnButton = document.createElement("img");
-  returnButton.src = "/assets/caret-left.svg";
-  returnButton.classList.add("return-btn");
+  const returnButton = ReturnButton();
 
   const title = Title({
     title: "Alunos",
@@ -28,9 +27,10 @@ export function StudentList() {
     subtitleColor: "var(--stone-700)",
   });
 
-  const addQuizButton = CreationButton({
+  const createButton = CreationButton({
     btnName: "Cadastrar",
     btnClass: "creation-btn",
+    route: "#/student-register",
   });
 
   const chartNames = document.createElement("div");
@@ -86,7 +86,7 @@ export function StudentList() {
 
   titleArea.appendChild(returnButton);
   titleArea.appendChild(title);
-  btnArea.appendChild(addQuizButton);
+  btnArea.appendChild(createButton);
 
   header.appendChild(titleArea);
   header.appendChild(btnArea);

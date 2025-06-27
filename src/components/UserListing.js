@@ -13,6 +13,9 @@ export function UserListing({ registration, name, subjects }) {
   const userSubjects = document.createElement("p");
   userSubjects.textContent = subjects.length;
   userSubjects.classList.add("textMd", "col-subjects", "list-text");
+  if (subjects.length === 0) {
+    userSubjects.classList.add("empty-subjects");
+  }
 
   const actionsArea = document.createElement("div");
   actionsArea.classList.add("actions-area", "col-actions");

@@ -1,5 +1,6 @@
 import { DashboardItem } from "../components/DashboardItem.js";
 import { Title } from "../components/Title.js";
+import { navigateTo } from "../routes/navigate.js";
 
 export function Dashboard() {
   const dashboard = document.createElement("div");
@@ -22,7 +23,7 @@ export function Dashboard() {
     title: "Alunos",
     description: "Cadastrar novo",
     onClick: () => {
-      window.location.hash = "#/students";
+      navigateTo("#/students");
     },
   });
 

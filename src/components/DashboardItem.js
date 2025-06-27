@@ -13,7 +13,6 @@ export function DashboardItem({ title, description = "", onClick }) {
     dashboardItemDescription.textContent = description;
     dashboardItemDescription.classList.add("textMd");
     dashboardItemDescription.style.color = "var(--indigo-700)";
-    dashboardItemDescription.href = "#";
 
     if (typeof onClick === "function") {
       dashboardItemDescription.addEventListener("click", (e) => {

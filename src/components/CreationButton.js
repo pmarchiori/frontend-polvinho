@@ -1,4 +1,6 @@
-export function CreationButton({ btnName, btnClass }) {
+import { navigateTo } from "../routes/navigate.js";
+
+export function CreationButton({ btnName, btnClass, route }) {
   const creationButton = document.createElement("button");
   creationButton.classList.add(btnClass);
   creationButton.classList.add("textMd");
@@ -12,6 +14,12 @@ export function CreationButton({ btnName, btnClass }) {
 
   creationButton.appendChild(creationIcon);
   creationButton.appendChild(textSpan);
+
+  if (route) {
+    creationButton.addEventListener("click", () => {
+      navigateTo(route);
+    });
+  }
 
   return creationButton;
 }

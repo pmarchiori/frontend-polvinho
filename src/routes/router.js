@@ -1,16 +1,22 @@
 import { Login } from "../pages/Login.js";
+import { ChangePassword } from "../pages/ChangePassword.js";
+import { RetrievePassword } from "../pages/RetrievePassword.js";
 import { Dashboard } from "../pages/Dashboard.js";
 import { StudentList } from "../pages/StudentList.js";
+import { StudentRegister } from "../pages/StudentRegister.js";
 import { Sidebar } from "../components/Sidebar.js";
 import { PageNotFound } from "../pages/PageNotFound.js";
 
-const routesWithSidebar = ["#/dashboard", "#/students"];
+const routesWithSidebar = ["#/dashboard", "#/students", "#/student-register"];
 
 const routes = {
   404: PageNotFound,
   "#/login": Login,
+  "#/change-password": ChangePassword,
+  "#/retrieve-password": RetrievePassword,
   "#/dashboard": Dashboard,
   "#/students": StudentList,
+  "#/student-register": StudentRegister,
 };
 
 export function router() {

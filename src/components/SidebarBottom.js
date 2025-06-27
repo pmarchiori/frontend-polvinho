@@ -1,3 +1,4 @@
+import { navigateTo } from "../routes/navigate.js";
 import { SidebarItem } from "./SidebarItem.js";
 
 export function SidebarBottom() {
@@ -7,11 +8,17 @@ export function SidebarBottom() {
   const sidebarPassword = SidebarItem({
     text: "Trocar senha",
     iconSrc: "/assets/Password.svg",
+    onClick: () => {
+      navigateTo("#/change-password");
+    },
   });
 
   const sidebarFinishSession = SidebarItem({
     text: "Encerrar sessão",
     iconSrc: "/assets/SignOut.svg",
+    onClick: () => {
+      navigateTo("#/login");
+    },
   });
 
   sidebarBottom.appendChild(sidebarPassword);

@@ -91,3 +91,7 @@
 .list-text {
   color: var(--stone-900);
 }
+
+.empty-subjects {
+  color: var(--stone-400);
+}
