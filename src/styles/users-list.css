@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .title-area {
@@ -36,7 +36,7 @@
 }
 
 .chart-names {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .chart-names-text {
@@ -50,7 +50,7 @@
 }
 
 .user-listing {
-  height: 4vh;
+  height: 2.8vh;
   background-color: var(--neutral-100);
   box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 2.6px;
   border: 1px solid var(--neutral-200);

@@ -1,4 +1,4 @@
-export function UserListing({ registration, name, subjects }) {
+export function UserListing({ registration, name, subjects, onEdit }) {
   const userListing = document.createElement("div");
   userListing.classList.add("user-listing");
 
@@ -23,10 +23,18 @@ export function UserListing({ registration, name, subjects }) {
   const editButton = document.createElement("p");
   editButton.textContent = "Editar";
   editButton.classList.add("actions-btn");
+  editButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    onEdit?.();
+  });
 
   const removeButton = document.createElement("p");
   removeButton.textContent = "Remover";
   removeButton.classList.add("actions-btn");
+  removeButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    //onRemove?.();
+  });
 
   actionsArea.appendChild(editButton);
   actionsArea.appendChild(removeButton);

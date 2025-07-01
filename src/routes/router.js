@@ -6,8 +6,14 @@ import { StudentList } from "../pages/StudentList.js";
 import { StudentRegister } from "../pages/StudentRegister.js";
 import { Sidebar } from "../components/Sidebar.js";
 import { PageNotFound } from "../pages/PageNotFound.js";
+import { StudentEdit } from "../pages/StudentEdit.js";
 
-const routesWithSidebar = ["#/dashboard", "#/students", "#/student-register"];
+const routesWithSidebar = [
+  "#/dashboard",
+  "#/students",
+  "#/student-register",
+  "#/student-edit",
+];
 
 const routes = {
   404: PageNotFound,
@@ -17,6 +23,7 @@ const routes = {
   "#/dashboard": Dashboard,
   "#/students": StudentList,
   "#/student-register": StudentRegister,
+  "#/student-edit": StudentEdit,
 };
 
 export function router() {
@@ -27,8 +34,13 @@ export function router() {
     document.body.appendChild(container);
   }
 
-  const path = window.location.hash || "#/login";
-  const PageComponent = routes[path];
+  const fullPath = window.location.hash || "#/login";
+  const [basePath, param] =
+    fullPath.split("/").length > 2
+      ? [fullPath.split("/").slice(0, 2).join("/"), fullPath.split("/")[2]]
+      : [fullPath, null];
+
+  const PageComponent = routes[basePath];
 
   container.innerHTML = "";
 
@@ -37,13 +49,12 @@ export function router() {
     return;
   }
 
-  if (routesWithSidebar.includes(path)) {
+  if (routesWithSidebar.includes(basePath)) {
     const sidebar = Sidebar();
-    const page = PageComponent();
-
+    const page = param ? PageComponent(param) : PageComponent();
     container.appendChild(sidebar);
     container.appendChild(page);
   } else {
-    container.appendChild(PageComponent());
+    container.appendChild(param ? PageComponent(param) : PageComponent());
   }
 }

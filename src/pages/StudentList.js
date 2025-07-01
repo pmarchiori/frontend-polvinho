@@ -72,9 +72,22 @@ export function StudentList() {
             registration: user.registration,
             name: user.name,
             subjects: user.subject ? [user.subject] : [],
+            onEdit: () => {
+              window.location.hash = `#/student-edit/${user._id}`;
+            },
           });
           usersArea.appendChild(userComponent);
         });
+
+        //TESTANDO PRA FAZER A PAGINAÇÃO
+        // alunos.forEach((user) => {
+        //   const userComponent2 = UserListing({
+        //     registration: user.registration,
+        //     name: user.name,
+        //     subjects: user.subject ? [user.subject] : [],
+        //   });
+        //   usersArea.appendChild(userComponent2);
+        // });
 
         studentList.appendChild(chartNames);
         studentList.appendChild(usersArea);
