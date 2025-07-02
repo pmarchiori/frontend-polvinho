@@ -1,6 +1,7 @@
 import { FormButton } from "../components/FormButton.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
+import { navigateTo } from "../routes/navigate.js";
 import { handleLoginSubmit } from "../utils/handlers/loginHandler.js";
 
 export function Login() {
@@ -47,6 +48,10 @@ export function Login() {
   forgotPassword.classList.add("textMd");
   forgotPassword.classList.add("forgot-password");
 
+  forgotPassword.addEventListener("click", () => {
+    window.location.hash = "#/retrieve-password";
+  });
+
   const loginButton = FormButton({ btnName: "Entrar", btnClass: "form-btn" });
 
   loginForm.appendChild(loginFormTitle);
@@ -61,8 +66,7 @@ export function Login() {
 
   loginForm.addEventListener("submit", (event) => {
     handleLoginSubmit(event, userLoginField, userPasswordField);
-    //TEMPORARIO PARA TESTE DE ROTAS
-    window.location.hash = "#/dashboard";
+    navigateTo("#/dashboard");
   });
 
   return loginBackground;

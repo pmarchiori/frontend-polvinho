@@ -1,5 +1,6 @@
 import { FormButton } from "../components/FormButton.js";
 import { Title } from "../components/Title.js";
+import { navigateTo } from "../routes/navigate.js";
 
 export function PageNotFound() {
   const notFoundContainer = document.createElement("div");
@@ -23,7 +24,7 @@ export function PageNotFound() {
   });
 
   notFoundButton.addEventListener("click", () => {
-    window.location.hash = "#/login";
+    navigateTo("#/login");
   });
 
   notFoundContainer.appendChild(notFoundImage);

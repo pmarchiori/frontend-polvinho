@@ -1,3 +1,4 @@
+import { navigateTo } from "../routes/navigate.js";
 import { SidebarItem } from "./SidebarItem.js";
 
 export function SidebarTop() {
@@ -7,12 +8,18 @@ export function SidebarTop() {
   const sidebarDashboard = SidebarItem({
     text: "Dashboard",
     iconSrc: "/assets/House.svg",
+    onClick: () => {
+      navigateTo("#/dashboard");
+    },
   });
 
   const sidebarPanel = SidebarItem({
     text: "Painel",
     iconSrc: "/assets/Books.svg",
     helperIconSrc: "/assets/caret-down.svg",
+    onClick: () => {
+      navigateTo("#/students"); //TEMPORARIO, ATE FAZER LOGICA DE PERFIS
+    },
   });
 
   const polvoLogo = document.createElement("img");
