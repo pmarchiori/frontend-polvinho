@@ -1,3 +1,5 @@
+import { AlertModal } from "./AlertModal.js";
+
 export function UserListing({ registration, name, subjects, onEdit }) {
   const userListing = document.createElement("div");
   userListing.classList.add("user-listing");
@@ -24,7 +26,6 @@ export function UserListing({ registration, name, subjects, onEdit }) {
   editButton.textContent = "Editar";
   editButton.classList.add("actions-btn");
   editButton.addEventListener("click", (e) => {
-    e.stopPropagation();
     onEdit?.();
   });
 
@@ -32,8 +33,14 @@ export function UserListing({ registration, name, subjects, onEdit }) {
   removeButton.textContent = "Remover";
   removeButton.classList.add("actions-btn");
   removeButton.addEventListener("click", (e) => {
-    e.stopPropagation();
-    //onRemove?.();
+    const confirmDeleteModal = AlertModal({
+      title: "Tem certeza?",
+      message: `Você irá eliminar o aluno X. Esta ação não pode ser desfeita.`,
+      type: "delete",
+      onConfirm: () => {},
+      onCancel: () => {},
+    });
+    document.body.appendChild(confirmDeleteModal);
   });
 
   actionsArea.appendChild(editButton);

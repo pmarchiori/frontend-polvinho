@@ -4,6 +4,7 @@ import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
 import { ReturnButton } from "../components/ReturnButton.js";
 import { fetchStudentById, API_URL } from "../utils/handlers/userHandler.js";
+import { Toaster } from "../components/Toaster.js";
 
 export function StudentEdit(studentId) {
   const studentEdit = document.createElement("form");
@@ -98,10 +99,11 @@ export function StudentEdit(studentId) {
       subjectsInput.querySelector("select").value = student.subject?._id || "";
     })
     .catch((err) => {
-      const errorMessage = document.createElement("p");
-      errorMessage.textContent = "Erro ao carregar dados do aluno.";
-      errorMessage.style.color = "red";
-      studentEdit.appendChild(errorMessage);
+      Toaster({
+        title: "Erro",
+        description: "Erro ao carregar dados do aluno.",
+        type: "error",
+      });
     });
 
   registerButton.addEventListener("click", async (e) => {
@@ -125,9 +127,22 @@ export function StudentEdit(studentId) {
 
       if (!res.ok) throw new Error("Erro ao atualizar aluno");
 
+      Toaster({
+        title: "Sucesso!",
+        description: `Alterações salvas do aluno ${
+          nameInput.querySelector("input").value
+        }!`,
+        type: "success",
+      });
+
       window.location.hash = "#/students";
     } catch (err) {
       console.error("Erro ao atualizar aluno:", err);
+      Toaster({
+        title: "Erro",
+        description: "Erro ao atualizar aluno.",
+        type: "error",
+      });
     }
   });
 

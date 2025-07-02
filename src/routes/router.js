@@ -1,12 +1,12 @@
 import { Login } from "../pages/Login.js";
 import { ChangePassword } from "../pages/ChangePassword.js";
 import { RetrievePassword } from "../pages/RetrievePassword.js";
+import { Sidebar } from "../components/Sidebar.js";
 import { Dashboard } from "../pages/Dashboard.js";
 import { StudentList } from "../pages/StudentList.js";
 import { StudentRegister } from "../pages/StudentRegister.js";
-import { Sidebar } from "../components/Sidebar.js";
-import { PageNotFound } from "../pages/PageNotFound.js";
 import { StudentEdit } from "../pages/StudentEdit.js";
+import { PageNotFound } from "../pages/PageNotFound.js";
 
 const routesWithSidebar = [
   "#/dashboard",

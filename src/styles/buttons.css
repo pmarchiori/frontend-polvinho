@@ -54,3 +54,35 @@
   color: var(--indigo-900);
   text-decoration: underline;
 }
+
+.modal-btn {
+  display: flex;
+  gap: 16px;
+  width: 102px;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cancel-modal-btn {
+  border: 1px solid var(--stone-400);
+  background: none;
+  color: var(--stone-500);
+}
+
+.red-action-modal-btn {
+  border: 1px solid var(--red-500);
+  background-color: var(--red-500);
+  color: var(--neutral-50);
+}
+
+.blue-action-modal-btn {
+  border: 1px solid var(--indigo-500);
+  background-color: var(--indigo-500);
+  color: var(--neutral-50);
+}
