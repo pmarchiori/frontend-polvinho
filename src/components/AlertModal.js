@@ -1,6 +1,14 @@
 import { Title } from "../components/Title.js";
 
-export function AlertModal({ title, message, type, onConfirm, onCancel }) {
+export function AlertModal({
+  title,
+  message,
+  type,
+  cancelText = "Cancelar",
+  confirmText = "Continuar",
+  onConfirm,
+  onCancel,
+}) {
   const overlay = document.createElement("div");
   overlay.classList.add("modal-overlay");
 
@@ -20,7 +28,7 @@ export function AlertModal({ title, message, type, onConfirm, onCancel }) {
   btns.classList.add("modal-btns-area");
 
   const cancelBtn = document.createElement("button");
-  cancelBtn.textContent = "Cancelar";
+  cancelBtn.textContent = cancelText;
   cancelBtn.classList.add("modal-btn", "cancel-modal-btn");
   cancelBtn.addEventListener("click", () => {
     onCancel?.();
@@ -28,7 +36,7 @@ export function AlertModal({ title, message, type, onConfirm, onCancel }) {
   });
 
   const confirmBtn = document.createElement("button");
-  confirmBtn.textContent = "Eliminar";
+  confirmBtn.textContent = confirmText;
   confirmBtn.classList.add("modal-btn");
   type === "delete"
     ? confirmBtn.classList.add("red-action-modal-btn")

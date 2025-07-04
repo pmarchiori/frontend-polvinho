@@ -1,7 +1,7 @@
 import { isValidEmail } from "../validators.js";
 import { Toaster } from "../../components/Toaster.js";
 
-export async function handleRegisterSubmit(event, emailInputField) {
+export async function handleRegisterSubmit(event) {
   event.preventDefault();
 
   const form = event.target;

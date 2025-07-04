@@ -1,9 +1,10 @@
-import { CreationButton } from "../components/CreationButton.js";
+import { CreationButton } from "../components/Buttons/CreationButton.js";
 import { EmptyData } from "../components/EmptyData.js";
-import { ReturnButton } from "../components/ReturnButton.js";
+import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { Title } from "../components/Title.js";
 import { UserListing } from "../components/UserListing.js";
-import { fetchStudents } from "../utils/handlers/userHandler.js";
+import { fetchStudents, removeStudent } from "../utils/handlers/userHandler.js";
+import { Toaster } from "../components/Toaster.js";
 
 export function StudentList() {
   const studentList = document.createElement("div");
@@ -75,6 +76,25 @@ export function StudentList() {
             onEdit: () => {
               window.location.hash = `#/student-edit/${user._id}`;
             },
+            onRemove: () => {
+              removeStudent(user._id)
+                .then(() => {
+                  Toaster({
+                    title: "Aluno removido!",
+                    description: "O aluno foi eliminado com sucesso.",
+                    type: "success",
+                  });
+                  //setTimeout(() => window.location.reload(), 3000);
+                })
+                .catch((error) => {
+                  console.error(error);
+                  Toaster({
+                    title: "Erro ao remover",
+                    description: "Não foi possível eliminar o aluno.",
+                    type: "error",
+                  });
+                });
+            },
           });
           usersArea.appendChild(userComponent);
         });
@@ -105,6 +125,10 @@ export function StudentList() {
   header.appendChild(btnArea);
 
   studentList.appendChild(header);
+
+  returnButton.addEventListener("click", () => {
+    window.history.back();
+  });
 
   return studentList;
 }
