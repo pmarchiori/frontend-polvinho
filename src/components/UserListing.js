@@ -1,6 +1,12 @@
 import { AlertModal } from "./AlertModal.js";
 
-export function UserListing({ registration, name, subjects, onEdit }) {
+export function UserListing({
+  registration,
+  name,
+  subjects,
+  onEdit,
+  onRemove,
+}) {
   const userListing = document.createElement("div");
   userListing.classList.add("user-listing");
 
@@ -35,9 +41,12 @@ export function UserListing({ registration, name, subjects, onEdit }) {
   removeButton.addEventListener("click", (e) => {
     const confirmDeleteModal = AlertModal({
       title: "Tem certeza?",
-      message: `Você irá eliminar o aluno X. Esta ação não pode ser desfeita.`,
+      message: `Você irá eliminar o aluno ${name}. Esta ação não pode ser desfeita.`,
       type: "delete",
-      onConfirm: () => {},
+      confirmText: "Eliminar",
+      onConfirm: () => {
+        onRemove?.();
+      },
       onCancel: () => {},
     });
     document.body.appendChild(confirmDeleteModal);

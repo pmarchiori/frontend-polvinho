@@ -3,9 +3,5 @@ export function ReturnButton() {
   returnButton.src = "/assets/caret-left.svg";
   returnButton.classList.add("return-btn");
 
-  returnButton.addEventListener("click", () => {
-    window.history.back();
-  });
-
   return returnButton;
 }

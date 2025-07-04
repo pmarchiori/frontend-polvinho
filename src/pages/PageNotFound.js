@@ -1,4 +1,4 @@
-import { FormButton } from "../components/FormButton.js";
+import { FormButton } from "../components/Buttons/FormButton.js";
 import { Title } from "../components/Title.js";
 import { navigateTo } from "../routes/navigate.js";
 

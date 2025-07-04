@@ -1,9 +1,9 @@
-import { FormButton } from "../components/FormButton.js";
+import { FormButton } from "../components/Buttons/FormButton.js";
 import { SelectInputField } from "../components/SelectInputField.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
 import { handleRegisterSubmit } from "../utils/handlers/registerHandler.js";
-import { ReturnButton } from "../components/ReturnButton.js";
+import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 
 export function StudentRegister() {
   const studentRegister = document.createElement("form");
@@ -89,6 +89,10 @@ export function StudentRegister() {
   studentRegister.appendChild(header);
   studentRegister.appendChild(registerForm);
   studentRegister.appendChild(buttonContainer);
+
+  returnButton.addEventListener("click", () => {
+    window.history.back();
+  });
 
   studentRegister.addEventListener("submit", async (event) => {
     handleRegisterSubmit(event, emailInput);

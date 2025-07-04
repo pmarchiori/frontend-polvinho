@@ -1,4 +1,4 @@
-import { navigateTo } from "../routes/navigate.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export function CreationButton({ btnName, btnClass, route }) {
   const creationButton = document.createElement("button");

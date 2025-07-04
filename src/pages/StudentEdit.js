@@ -1,10 +1,11 @@
-import { FormButton } from "../components/FormButton.js";
+import { FormButton } from "../components/Buttons/FormButton.js";
 import { SelectInputField } from "../components/SelectInputField.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
-import { ReturnButton } from "../components/ReturnButton.js";
+import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { fetchStudentById, API_URL } from "../utils/handlers/userHandler.js";
 import { Toaster } from "../components/Toaster.js";
+import { AlertModal } from "../components/AlertModal.js";
 
 export function StudentEdit(studentId) {
   const studentEdit = document.createElement("form");
@@ -90,6 +91,8 @@ export function StudentEdit(studentId) {
   studentEdit.appendChild(editForm);
   studentEdit.appendChild(buttonContainer);
 
+  let originalValues = {};
+
   fetchStudentById(studentId)
     .then((student) => {
       nameInput.querySelector("input").value = student.name || "";
@@ -97,6 +100,13 @@ export function StudentEdit(studentId) {
         student.registration || "";
       emailInput.querySelector("input").value = student.email || "";
       subjectsInput.querySelector("select").value = student.subject?._id || "";
+
+      originalValues = {
+        name: student.name || "",
+        registration: student.registration || "",
+        email: student.email || "",
+        subject: student.subject?._id || "",
+      };
     })
     .catch((err) => {
       Toaster({
@@ -105,6 +115,35 @@ export function StudentEdit(studentId) {
         type: "error",
       });
     });
+
+  function hasChanges() {
+    return (
+      nameInput.querySelector("input").value !== originalValues.name ||
+      registrationInput.querySelector("input").value !==
+        originalValues.registration ||
+      emailInput.querySelector("input").value !== originalValues.email ||
+      subjectsInput.querySelector("select").value !== originalValues.subject
+    );
+  }
+
+  returnButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (hasChanges()) {
+      const modal = AlertModal({
+        title: "Alterações serão perdidas",
+        message:
+          "Se voltar agora as alterações feitas não serão salvas. Deseja continuar?",
+        type: "delete",
+        onConfirm: () => {
+          window.location.hash = "#/students";
+        },
+        onCancel: () => {},
+      });
+      document.body.appendChild(modal);
+    } else {
+      window.location.hash = "#/students";
+    }
+  });
 
   registerButton.addEventListener("click", async (e) => {
     e.preventDefault();

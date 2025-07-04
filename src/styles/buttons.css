@@ -74,11 +74,16 @@
   background: none;
   color: var(--stone-500);
 }
+.cancel-modal-btn:hover {
+  background-color: var(--neutral-200);
+}
 
 .red-action-modal-btn {
-  border: 1px solid var(--red-500);
   background-color: var(--red-500);
   color: var(--neutral-50);
+}
+.red-action-modal-btn:hover {
+  background-color: rgb(190, 54, 54);
 }
 
 .blue-action-modal-btn {
