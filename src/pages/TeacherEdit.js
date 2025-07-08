@@ -1,8 +1,8 @@
 import { FormButton } from "../components/Buttons/FormButton.js";
+import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { SelectInputField } from "../components/SelectInputField.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
-import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { AlertModal } from "../components/AlertModal.js";
 import {
   loadUserData,
@@ -10,22 +10,22 @@ import {
   submitUserEdit,
 } from "../utils/handlers/userEditHandler.js";
 
-export function StudentEdit(studentId) {
-  const studentEdit = document.createElement("form");
-  studentEdit.classList.add("user-register");
+export function TeacherEdit(teacherId) {
+  const teacherEdit = document.createElement("form");
+  teacherEdit.classList.add("user-register");
 
   const header = document.createElement("div");
   header.classList.add("register-header");
 
   const returnButton = ReturnButton();
+
   const title = Title({
-    title: "Edição do Aluno",
+    title: "Edição do Professor",
     titleClass: "title2",
     titleColor: "var(--stone-900)",
   });
 
-  header.appendChild(returnButton);
-  header.appendChild(title);
+  header.append(returnButton, title);
 
   const editForm = document.createElement("form");
   editForm.classList.add("register-container");
@@ -82,17 +82,14 @@ export function StudentEdit(studentId) {
 
   buttonContainer.appendChild(registerButton);
 
-  upperInputRow.appendChild(nameInput);
-  upperInputRow.appendChild(registrationInput);
-  lowerInputRow.appendChild(emailInput);
-  lowerInputRow.appendChild(subjectsInput);
+  upperInputRow.append(nameInput, registrationInput);
+  lowerInputRow.append(emailInput, subjectsInput);
 
-  editForm.appendChild(upperInputRow);
-  editForm.appendChild(lowerInputRow);
+  editForm.append(upperInputRow, lowerInputRow);
 
-  studentEdit.appendChild(header);
-  studentEdit.appendChild(editForm);
-  studentEdit.appendChild(buttonContainer);
+  teacherEdit.appendChild(header);
+  teacherEdit.appendChild(editForm);
+  teacherEdit.appendChild(buttonContainer);
 
   const inputs = {
     name: nameInput.querySelector("input"),
@@ -103,7 +100,7 @@ export function StudentEdit(studentId) {
 
   let originalValues = {};
 
-  loadUserData(studentId, inputs, (values) => {
+  loadUserData(teacherId, inputs, (values) => {
     originalValues = values;
   });
 
@@ -116,20 +113,20 @@ export function StudentEdit(studentId) {
           "Se voltar agora as alterações feitas não serão salvas. Deseja continuar?",
         type: "delete",
         onConfirm: () => {
-          window.location.hash = "#/students";
+          window.location.hash = "#/teachers";
         },
         onCancel: () => {},
       });
       document.body.appendChild(modal);
     } else {
-      window.location.hash = "#/students";
+      window.location.hash = "#/teachers";
     }
   });
 
   registerButton.addEventListener("click", (e) => {
     e.preventDefault();
-    submitUserEdit(studentId, inputs, originalValues);
+    submitUserEdit(teacherId, inputs, originalValues);
   });
 
-  return studentEdit;
+  return teacherEdit;
 }

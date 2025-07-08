@@ -41,7 +41,7 @@ export function UserListing({
   removeButton.addEventListener("click", (e) => {
     const confirmDeleteModal = AlertModal({
       title: "Tem certeza?",
-      message: `Você irá eliminar o aluno ${name}. Esta ação não pode ser desfeita.`,
+      message: `Você irá eliminar o usuário ${name}. Esta ação não pode ser desfeita.`,
       type: "delete",
       confirmText: "Eliminar",
       onConfirm: () => {
