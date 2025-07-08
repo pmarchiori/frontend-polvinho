@@ -48,9 +48,7 @@ export function Login() {
   forgotPassword.classList.add("textMd");
   forgotPassword.classList.add("forgot-password");
 
-  forgotPassword.addEventListener("click", () => {
-    window.location.hash = "#/retrieve-password";
-  });
+  forgotPassword.href = "#/retrieve-password";
 
   const loginButton = FormButton({ btnName: "Entrar", btnClass: "form-btn" });
 

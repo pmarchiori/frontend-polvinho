@@ -7,12 +7,18 @@ import { StudentList } from "../pages/StudentList.js";
 import { StudentRegister } from "../pages/StudentRegister.js";
 import { StudentEdit } from "../pages/StudentEdit.js";
 import { PageNotFound } from "../pages/PageNotFound.js";
+import { TeacherRegister } from "../pages/TeacherRegister.js";
+import { TeacherList } from "../pages/TeacherList.js";
+import { TeacherEdit } from "../pages/TeacherEdit.js";
 
 const routesWithSidebar = [
   "#/dashboard",
   "#/students",
   "#/student-register",
   "#/student-edit",
+  "#/teachers",
+  "#/teacher-register",
+  "#/teacher-edit",
 ];
 
 const routes = {
@@ -24,6 +30,9 @@ const routes = {
   "#/students": StudentList,
   "#/student-register": StudentRegister,
   "#/student-edit": StudentEdit,
+  "#/teachers": TeacherList,
+  "#/teacher-register": TeacherRegister,
+  "#/teacher-edit": TeacherEdit,
 };
 
 export function router() {

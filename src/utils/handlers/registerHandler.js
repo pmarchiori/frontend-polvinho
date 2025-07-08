@@ -1,7 +1,7 @@
 import { isValidEmail } from "../validators.js";
 import { Toaster } from "../../components/Toaster.js";
 
-export async function handleRegisterSubmit(event) {
+export async function handleRegisterSubmit(event, role) {
   event.preventDefault();
 
   const form = event.target;
@@ -28,6 +28,7 @@ export async function handleRegisterSubmit(event) {
     email: data.email,
     registration: data.registration,
     subject: data.subject || null,
+    role: role,
   };
 
   try {
@@ -44,7 +45,7 @@ export async function handleRegisterSubmit(event) {
     if (response.ok) {
       Toaster({
         title: "Sucesso!",
-        description: "Aluno cadastrado com sucesso.",
+        description: "Usuário cadastrado com sucesso.",
         type: "success",
       });
       form.reset();

@@ -1,26 +1,27 @@
 import { CreationButton } from "../components/Buttons/CreationButton.js";
-import { EmptyData } from "../components/EmptyData.js";
 import { ReturnButton } from "../components/Buttons/ReturnButton.js";
+import { EmptyData } from "../components/EmptyData.js";
 import { Title } from "../components/Title.js";
-import { UserListing } from "../components/UserListing.js";
-import { fetchStudents, removeStudent } from "../utils/handlers/userHandler.js";
 import { Toaster } from "../components/Toaster.js";
+import { UserListing } from "../components/UserListing.js";
+import { fetchTeachers, removeTeacher } from "../utils/handlers/userHandler.js";
 
-export function StudentList() {
-  const studentList = document.createElement("div");
-  studentList.classList.add("user-list");
+export function TeacherList() {
+  const teacherList = document.createElement("div");
+  teacherList.classList.add("user-list");
 
   const header = document.createElement("div");
   header.classList.add("list-header");
 
   const titleArea = document.createElement("div");
   titleArea.classList.add("title-area");
+
   const btnArea = document.createElement("div");
 
   const returnButton = ReturnButton();
 
   const title = Title({
-    title: "Alunos",
+    title: "Professores",
     titleClass: "title2",
     titleColor: "var(--stone-900)",
     subtitle: "0 Cadastrados",
@@ -31,7 +32,7 @@ export function StudentList() {
   const createButton = CreationButton({
     btnName: "Cadastrar",
     btnClass: "creation-btn",
-    route: "#/student-register",
+    route: "#/teacher-register",
   });
 
   const chartNames = document.createElement("div");
@@ -58,33 +59,34 @@ export function StudentList() {
   const usersArea = document.createElement("div");
   usersArea.classList.add("users-area");
 
-  fetchStudents()
-    .then((students) => {
+  fetchTeachers()
+    .then((teachers) => {
       title.querySelector(
         ".textLg"
-      ).textContent = `${students.length} Cadastrados`;
+      ).textContent = `${teachers.length} Cadastrados`;
 
-      if (students.length === 0) {
-        const emptyComponent = EmptyData({ text: "Nenhum aluno cadastrado" });
-        studentList.appendChild(emptyComponent);
+      if (teachers.length === 0) {
+        const emptyComponent = EmptyData({
+          text: "Nenhum professor cadastrado",
+        });
+        teacherList.appendChild(emptyComponent);
       } else {
-        students.forEach((user) => {
+        teachers.forEach((user) => {
           const userComponent = UserListing({
             registration: user.registration,
             name: user.name,
             subjects: user.subject ? [user.subject] : [],
             onEdit: () => {
-              window.location.hash = `#/student-edit/${user._id}`;
+              window.location.hash = `#/teacher-edit/${user._id}`;
             },
             onRemove: () => {
-              removeStudent(user._id)
+              removeTeacher(user._id)
                 .then(() => {
                   Toaster({
-                    title: "Aluno removido!",
-                    description: "O aluno foi eliminado com sucesso.",
+                    title: "Professor removido",
+                    description: "O professor foi eliminado com sucesso.",
                     type: "success",
                   });
-                  //setTimeout(() => window.location.reload(), 3000);
                 })
                 .catch((error) => {
                   console.error(error);
@@ -96,39 +98,27 @@ export function StudentList() {
                 });
             },
           });
-          usersArea.appendChild(userComponent);
+          usersArea.append(userComponent);
         });
 
-        //TESTANDO PRA FAZER A PAGINAÇÃO
-        // alunos.forEach((user) => {
-        //   const userComponent2 = UserListing({
-        //     registration: user.registration,
-        //     name: user.name,
-        //     subjects: user.subject ? [user.subject] : [],
-        //   });
-        //   usersArea.appendChild(userComponent2);
-        // });
-
-        studentList.appendChild(chartNames);
-        studentList.appendChild(usersArea);
+        teacherList.appendChild(chartNames);
+        teacherList.appendChild(usersArea);
       }
     })
     .catch((err) => {
       title.querySelector(".textLg").textContent = "Erro ao carregar";
     });
 
-  titleArea.appendChild(returnButton);
-  titleArea.appendChild(title);
+  titleArea.append(returnButton, title);
   btnArea.appendChild(createButton);
 
-  header.appendChild(titleArea);
-  header.appendChild(btnArea);
+  header.append(titleArea, btnArea);
 
-  studentList.appendChild(header);
+  teacherList.appendChild(header);
 
   returnButton.addEventListener("click", () => {
     window.history.back();
   });
 
-  return studentList;
+  return teacherList;
 }

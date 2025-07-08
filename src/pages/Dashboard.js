@@ -30,6 +30,9 @@ export function Dashboard() {
   const teachersItem = DashboardItem({
     title: "Professores",
     description: "Cadastrar novo",
+    onClick: () => {
+      navigateTo("#/teachers");
+    },
   });
 
   const disciplinesItem = DashboardItem({
