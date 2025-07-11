@@ -7,7 +7,7 @@ export async function loadUserData(userId, inputs, setOriginalValues) {
     inputs.name.value = user.name || "";
     inputs.registration.value = user.registration || "";
     inputs.email.value = user.email || "";
-    inputs.subject.value = user.subject?._id || "";
+    inputs.subject.value = user.subjects?._id || "";
 
     setOriginalValues({
       name: user.name || "",

@@ -9,7 +9,6 @@ export function Title({
   const titleContent = document.createElement("div");
   titleContent.classList.add("title-content");
 
-  //título
   const pageTitle = document.createElement("p");
   pageTitle.textContent = title;
 
@@ -22,7 +21,6 @@ export function Title({
 
   titleContent.appendChild(pageTitle);
 
-  //subtítulo
   if (subtitle) {
     const pageSubtitle = document.createElement("p");
     pageSubtitle.textContent = subtitle;

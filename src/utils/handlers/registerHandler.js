@@ -27,7 +27,7 @@ export async function handleRegisterSubmit(event, role) {
     name: data.name,
     email: data.email,
     registration: data.registration,
-    subject: data.subject || null,
+    subject: data.subjects || null,
     role: role,
   };
 

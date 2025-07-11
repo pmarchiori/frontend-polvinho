@@ -1,21 +1,31 @@
 export const API_URL = "http://localhost:8000";
 
-export async function fetchUsersByRole(role) {
+export async function fetchUsersByRole(role, page = 1) {
   try {
-    const res = await fetch(`${API_URL}/users`);
+    const res = await fetch(`${API_URL}/users?role=${role}&page=${page}`);
     if (!res.ok) {
       throw new Error("Erro ao buscar usuários");
     }
-    const users = await res.json();
-    return users.filter((user) => user.role === role);
+    const data = await res.json();
+    return {
+      users: data.users.filter((user) => user.role === role),
+      total: data.total,
+      currentPage: data.page,
+      totalPages: data.totalPages,
+    };
   } catch (err) {
     console.error(`Erro ao fazer o fetch de usuários com role ${role}:`, err);
     throw err;
   }
 }
 
-export const fetchStudents = () => fetchUsersByRole("student");
-export const fetchTeachers = () => fetchUsersByRole("teacher");
+export async function fetchStudents(page = 1) {
+  return await fetchUsersByRole("student", page);
+}
+
+export async function fetchTeachers(page = 1) {
+  return await fetchUsersByRole("teacher", page);
+}
 
 export async function fetchUserById(id) {
   try {

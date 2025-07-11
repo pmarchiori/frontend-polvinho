@@ -91,3 +91,18 @@
   background-color: var(--indigo-500);
   color: var(--neutral-50);
 }
+
+.pagination-btn {
+  background: none;
+  color: var(--stone-500);
+  border: 1px solid var(--stone-400);
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.pagination-btn:disabled {
+  color: var(--neutral-300);
+  border: 1px solid var(--neutral-300);
+  cursor: default;
+}
