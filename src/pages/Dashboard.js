@@ -38,6 +38,9 @@ export function Dashboard() {
   const disciplinesItem = DashboardItem({
     title: "Disciplinas",
     description: "Cadastrar novo",
+    onClick: () => {
+      navigateTo("#/subjects");
+    },
   });
 
   itemsArea.appendChild(studentsItem);

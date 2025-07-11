@@ -10,6 +10,7 @@ import { PageNotFound } from "../pages/PageNotFound.js";
 import { TeacherRegister } from "../pages/TeacherRegister.js";
 import { TeacherList } from "../pages/TeacherList.js";
 import { TeacherEdit } from "../pages/TeacherEdit.js";
+import { SubjectList } from "../pages/SubjectList.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -19,6 +20,7 @@ const routesWithSidebar = [
   "#/teachers",
   "#/teacher-register",
   "#/teacher-edit",
+  "#/subjects",
 ];
 
 const routes = {
@@ -33,6 +35,7 @@ const routes = {
   "#/teachers": TeacherList,
   "#/teacher-register": TeacherRegister,
   "#/teacher-edit": TeacherEdit,
+  "#/subjects": SubjectList,
 };
 
 export function router() {

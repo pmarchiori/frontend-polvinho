@@ -68,6 +68,7 @@ export function StudentEdit(studentId) {
     disciplines: [
       { _id: "666b5a7a93be74d1c1e3271c", name: "disciplina 1" },
       { _id: "566b5a7a93be74d1c1e3271c", name: "disciplina 2" },
+      { _id: "466b5a7a93be74d1c1e3271c", name: "disciplina 3" },
     ],
     name: "subject",
   });

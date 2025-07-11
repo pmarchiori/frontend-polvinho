@@ -5,8 +5,12 @@ import { Title } from "../components/Title.js";
 import { UserListing } from "../components/UserListing.js";
 import { fetchStudents, removeStudent } from "../utils/handlers/userHandler.js";
 import { Toaster } from "../components/Toaster.js";
+import { ChartNames } from "../components/ChartNames.js";
+import { PaginationButton } from "../components/Buttons/PaginationButton.js";
 
 export function StudentList() {
+  let currentPage = 1;
+
   const studentList = document.createElement("div");
   studentList.classList.add("user-list");
 
@@ -34,88 +38,99 @@ export function StudentList() {
     route: "#/student-register",
   });
 
-  const chartNames = document.createElement("div");
-  chartNames.classList.add("chart-names");
-
-  const registration = document.createElement("p");
-  registration.textContent = "Matrícula";
-  registration.classList.add("col-registration", "textSm", "chart-names-text");
-
-  const name = document.createElement("p");
-  name.textContent = "Nome";
-  name.classList.add("col-name", "textSm", "chart-names-text");
-
-  const subjects = document.createElement("p");
-  subjects.textContent = "Disciplinas";
-  subjects.classList.add("col-subjects", "textSm", "chart-names-text");
-
-  const actions = document.createElement("p");
-  actions.textContent = "Ações";
-  actions.classList.add("col-actions", "textSm", "chart-names-text");
-
-  chartNames.append(registration, name, subjects, actions);
+  const chartNames = ChartNames({
+    text1: "Matrícula",
+    text2: "Nome",
+    text3: "Disciplinas",
+    text4: "Ações",
+  });
 
   const usersArea = document.createElement("div");
   usersArea.classList.add("users-area");
 
-  fetchStudents()
-    .then((students) => {
-      title.querySelector(
-        ".textLg"
-      ).textContent = `${students.length} Cadastrados`;
+  const paginationArea = document.createElement("div");
+  paginationArea.classList.add("pagination");
 
-      if (students.length === 0) {
-        const emptyComponent = EmptyData({ text: "Nenhum aluno cadastrado" });
-        studentList.appendChild(emptyComponent);
-      } else {
-        students.forEach((user) => {
-          const userComponent = UserListing({
-            registration: user.registration,
-            name: user.name,
-            subjects: user.subject ? [user.subject] : [],
-            onEdit: () => {
-              window.location.hash = `#/student-edit/${user._id}`;
-            },
-            onRemove: () => {
-              removeStudent(user._id)
-                .then(() => {
-                  Toaster({
-                    title: "Aluno removido!",
-                    description: "O aluno foi eliminado com sucesso.",
-                    type: "success",
+  const paginationText = document.createElement("p");
+  paginationText.classList.add("pagination-text");
+
+  const paginationButtons = document.createElement("div");
+  paginationButtons.classList.add("pagination-btns-container");
+
+  const prevButton = PaginationButton({
+    btnName: "Anterior",
+    initiateDisabled: true,
+  });
+
+  const nextButton = PaginationButton({
+    btnName: "Próxima",
+  });
+
+  paginationButtons.append(prevButton, nextButton);
+  paginationArea.append(paginationText, paginationButtons);
+
+  function loadStudents(page = 1) {
+    usersArea.innerHTML = "";
+    fetchStudents(page)
+      .then(({ users, total, currentPage, totalPages }) => {
+        currentPage = page;
+
+        title.querySelector(".textLg").textContent = `${total} Cadastrados`;
+        paginationText.textContent = `Mostrando ${users.length} de ${total} entradas.`;
+
+        if (users.length === 0) {
+          const emptyComponent = EmptyData({ text: "Nenhum aluno cadastrado" });
+          usersArea.appendChild(emptyComponent);
+        } else {
+          users.forEach((user) => {
+            const userComponent = UserListing({
+              registration: user.registration,
+              name: user.name,
+              subjects: Array.isArray(user.subjects) ? user.subjects : [],
+              onEdit: () => {
+                window.location.hash = `#/student-edit/${user._id}`;
+              },
+              onRemove: () => {
+                removeStudent(user._id)
+                  .then(() => {
+                    Toaster({
+                      title: "Aluno removido!",
+                      description: "O aluno foi eliminado com sucesso.",
+                      type: "success",
+                    });
+                    loadStudents(currentPage);
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                    Toaster({
+                      title: "Erro ao remover",
+                      description: "Não foi possível eliminar o aluno.",
+                      type: "error",
+                    });
                   });
-                  //setTimeout(() => window.location.reload(), 3000);
-                })
-                .catch((error) => {
-                  console.error(error);
-                  Toaster({
-                    title: "Erro ao remover",
-                    description: "Não foi possível eliminar o aluno.",
-                    type: "error",
-                  });
-                });
-            },
+              },
+            });
+            usersArea.appendChild(userComponent);
           });
-          usersArea.appendChild(userComponent);
-        });
+        }
 
-        //TESTANDO PRA FAZER A PAGINAÇÃO
-        // alunos.forEach((user) => {
-        //   const userComponent2 = UserListing({
-        //     registration: user.registration,
-        //     name: user.name,
-        //     subjects: user.subject ? [user.subject] : [],
-        //   });
-        //   usersArea.appendChild(userComponent2);
-        // });
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages;
+      })
+      .catch((err) => {
+        title.querySelector(".textLg").textContent = "Erro ao carregar";
+      });
+  }
 
-        studentList.appendChild(chartNames);
-        studentList.appendChild(usersArea);
-      }
-    })
-    .catch((err) => {
-      title.querySelector(".textLg").textContent = "Erro ao carregar";
-    });
+  prevButton.addEventListener("click", () => {
+    currentPage--;
+    loadStudents(currentPage);
+  });
+
+  nextButton.addEventListener("click", () => {
+    currentPage++;
+    loadStudents(currentPage);
+  });
 
   titleArea.appendChild(returnButton);
   titleArea.appendChild(title);
@@ -125,10 +140,15 @@ export function StudentList() {
   header.appendChild(btnArea);
 
   studentList.appendChild(header);
+  studentList.appendChild(chartNames);
+  studentList.appendChild(usersArea);
+  studentList.appendChild(paginationArea);
 
   returnButton.addEventListener("click", () => {
     window.history.back();
   });
+
+  loadStudents(currentPage);
 
   return studentList;
 }

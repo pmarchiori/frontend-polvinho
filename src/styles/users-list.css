@@ -6,8 +6,9 @@
   border-radius: 24px 0 0 24px;
   width: 100%;
   height: 100vh;
-  padding: 40px;
+  padding: 40px 40px 20px 40px;
   box-sizing: border-box;
+  overflow: auto;
 }
 
 .list-header {
@@ -45,6 +46,7 @@
 
 .users-area {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: 8px;
 }
@@ -94,4 +96,20 @@
 
 .empty-subjects {
   color: var(--stone-400);
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  align-items: center;
+}
+
+.pagination-text {
+  color: var(--stone-500);
+}
+
+.pagination-btns-container {
+  display: flex;
+  gap: 12px;
 }
