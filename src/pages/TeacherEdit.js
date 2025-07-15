@@ -9,6 +9,7 @@ import {
   hasUserChanges,
   submitUserEdit,
 } from "../utils/handlers/userEditHandler.js";
+import { navigateTo } from "../routes/navigate.js";
 
 export function TeacherEdit(teacherId) {
   const teacherEdit = document.createElement("form");
@@ -113,13 +114,13 @@ export function TeacherEdit(teacherId) {
           "Se voltar agora as alterações feitas não serão salvas. Deseja continuar?",
         type: "delete",
         onConfirm: () => {
-          window.location.hash = "#/teachers";
+          navigateTo("#/teachers");
         },
         onCancel: () => {},
       });
       document.body.appendChild(modal);
     } else {
-      window.location.hash = "#/teachers";
+      navigateTo("#/teachers");
     }
   });
 

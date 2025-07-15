@@ -1,4 +1,4 @@
-export function SidebarItem({ text, iconSrc, helperIconSrc = "", onClick }) {
+export function SidebarItem({ text, iconSrc, helperIconSrc, onClick }) {
   const sidebarItem = document.createElement("div");
   sidebarItem.classList.add("sidebar-item");
 

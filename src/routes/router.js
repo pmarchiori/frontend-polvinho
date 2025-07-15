@@ -11,6 +11,8 @@ import { TeacherRegister } from "../pages/TeacherRegister.js";
 import { TeacherList } from "../pages/TeacherList.js";
 import { TeacherEdit } from "../pages/TeacherEdit.js";
 import { SubjectList } from "../pages/SubjectList.js";
+import { SubjectEdit } from "../pages/SubjectEdit.js";
+import { SubjectRegister } from "../pages/SubjectRegister.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -21,6 +23,8 @@ const routesWithSidebar = [
   "#/teacher-register",
   "#/teacher-edit",
   "#/subjects",
+  "#/subject-register",
+  "#/subject-edit",
 ];
 
 const routes = {
@@ -36,6 +40,8 @@ const routes = {
   "#/teacher-register": TeacherRegister,
   "#/teacher-edit": TeacherEdit,
   "#/subjects": SubjectList,
+  "#/subject-register": SubjectRegister,
+  "#/subject-edit": SubjectEdit,
 };
 
 export function router() {

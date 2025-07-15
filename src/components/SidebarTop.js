@@ -1,4 +1,5 @@
 import { navigateTo } from "../routes/navigate.js";
+import { SidebarDropdown } from "./SidebarDropdown.js";
 import { SidebarItem } from "./SidebarItem.js";
 
 export function SidebarTop() {
@@ -13,14 +14,7 @@ export function SidebarTop() {
     },
   });
 
-  const sidebarPanel = SidebarItem({
-    text: "Painel",
-    iconSrc: "/assets/Books.svg",
-    helperIconSrc: "/assets/caret-down.svg",
-    onClick: () => {
-      navigateTo("#/students"); //TEMPORARIO, ATE FAZER LOGICA DE PERFIS
-    },
-  });
+  const sidebarPanel = SidebarDropdown();
 
   const polvoLogo = document.createElement("img");
 

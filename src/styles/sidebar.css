@@ -45,3 +45,19 @@
 .sidebar-item:hover {
   cursor: pointer;
 }
+
+.sidebar-dropdown {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1vh;
+}
+
+.sidebar-submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  border-radius: 8px;
+  padding: 8px 0;
+}

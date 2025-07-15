@@ -1,7 +1,15 @@
 import { CreationButton } from "../components/Buttons/CreationButton.js";
+import { PaginationButton } from "../components/Buttons/PaginationButton.js";
 import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { ChartNames } from "../components/ChartNames.js";
+import { SubjectListing } from "../components/SubjectListing.js";
 import { Title } from "../components/Title.js";
+import { Toaster } from "../components/Toaster.js";
+import {
+  fetchSubjects,
+  removeSubject,
+} from "../utils/handlers/subjectHandler.js";
+import { EmptyData } from "../components/EmptyData.js";
 
 export function SubjectList() {
   let currentPage = 1;
@@ -31,7 +39,7 @@ export function SubjectList() {
   const createButton = CreationButton({
     btnName: "Cadastrar",
     btnClass: "creation-btn",
-    route: "",
+    route: "#/subject-register",
   });
 
   const chartNames = ChartNames({
@@ -41,19 +49,108 @@ export function SubjectList() {
     text4: "Ações",
   });
 
-  const usersArea = document.createElement("div");
-  usersArea.classList.add("users-area");
+  const subjectsArea = document.createElement("div");
+  subjectsArea.classList.add("users-area");
+
+  const paginationArea = document.createElement("div");
+  paginationArea.classList.add("pagination");
+
+  const paginationText = document.createElement("p");
+  paginationText.classList.add("pagination-text");
+
+  const paginationButtons = document.createElement("div");
+  paginationButtons.classList.add("pagination-btns-container");
+
+  const prevButton = PaginationButton({
+    btnName: "Anterior",
+    initiateDisabled: true,
+  });
+
+  const nextButton = PaginationButton({
+    btnName: "Próxima",
+  });
+
+  paginationButtons.append(prevButton, nextButton);
+  paginationArea.append(paginationText, paginationButtons);
+
+  function loadSubjects(page = 1) {
+    subjectsArea.innerHTML = "";
+    fetchSubjects(page)
+      .then(({ subjects, total, currentPage, totalPages }) => {
+        currentPage = page;
+
+        title.querySelector(
+          ".textLg"
+        ).textContent = `${total} Disciplinas Cadastradas`;
+        paginationText.textContent = `Mostrando ${subjects.length} de ${total} entradas.`;
+
+        if (subjects.length === 0) {
+          const emptyComponent = EmptyData({
+            text: "Nenhuma disciplina cadastrada",
+          });
+          subjectsArea.appendChild(emptyComponent);
+        } else {
+          subjects.forEach((subject) => {
+            const subjectComponent = SubjectListing({
+              name: subject.name,
+              teacher: subject.teacher ? subject.teacher : "Nenhum professor",
+              quizzes: Array.isArray(subject.quizzes) ? subject.quizzes : [],
+              onEdit: () => {
+                window.location.hash = `#/subject-edit/${subject._id}`;
+              },
+              onRemove: () => {
+                removeSubject(subject._id)
+                  .then(() => {
+                    Toaster({
+                      title: "Disciplina removida!",
+                      description: "A disciplina foi eliminada com sucesso.",
+                      type: "success",
+                    });
+                    loadSubjects(currentPage);
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                    Toaster({
+                      title: "Erro ao remover",
+                      description: "Não foi possível eliminar a disciplina.",
+                      type: "error",
+                    });
+                  });
+              },
+            });
+            subjectsArea.appendChild(subjectComponent);
+          });
+        }
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages;
+      })
+      .catch((err) => {
+        title.querySelector(".textLg").textContent = "Erro ao carregar";
+      });
+  }
+
+  prevButton.addEventListener("click", () => {
+    currentPage--;
+    loadSubjects(currentPage);
+  });
+
+  nextButton.addEventListener("click", () => {
+    currentPage++;
+    loadSubjects(currentPage);
+  });
 
   titleArea.append(returnButton, title);
   btnArea.append(createButton);
 
   header.append(titleArea, btnArea);
 
-  subjectList.append(header, chartNames, usersArea);
+  subjectList.append(header, chartNames, subjectsArea, paginationArea);
 
   returnButton.addEventListener("click", () => {
     window.history.back();
   });
+
+  loadSubjects(currentPage);
 
   return subjectList;
 }
