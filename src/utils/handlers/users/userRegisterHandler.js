@@ -1,5 +1,6 @@
-import { isValidEmail } from "../validators.js";
-import { Toaster } from "../../components/Toaster.js";
+import { isValidEmail } from "../../validators.js";
+import { Toaster } from "../../../components/Toaster.js";
+import { API_URL } from "../../../config/config.js";
 
 export async function handleRegisterSubmit(event, role) {
   event.preventDefault();
@@ -32,7 +33,7 @@ export async function handleRegisterSubmit(event, role) {
   };
 
   try {
-    const response = await fetch("http://localhost:8000/users", {
+    const response = await fetch(`${API_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

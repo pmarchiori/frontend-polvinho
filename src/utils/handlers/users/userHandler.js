@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:8000";
+import { API_URL } from "../../../config/config.js";
 
 export async function fetchUsersByRole(role, page = 1) {
   try {

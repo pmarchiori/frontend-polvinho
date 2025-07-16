@@ -4,6 +4,7 @@ import { SelectInputField } from "../components/SelectInputField.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
 import { UserRegisterForm } from "../components/UserRegisterForm.js";
+import { handleSubjectRegisterSubmit } from "../utils/handlers/subjects/subjectRegisterHandler.js";
 
 export function SubjectRegister() {
   const subjectRegister = document.createElement("form");
@@ -43,7 +44,7 @@ export function SubjectRegister() {
       { _id: "56655a7a93be74d1c1e3271c", name: "professor 2" },
       { _id: "466b5a1a93be74d1c1e3271c", name: "professor 3" },
     ],
-    name: "subject",
+    name: "teacher",
   });
 
   const buttonContainer = document.createElement("div");
@@ -65,6 +66,8 @@ export function SubjectRegister() {
   returnButton.addEventListener("click", () => {
     window.history.back();
   });
+
+  subjectRegister.addEventListener("submit", handleSubjectRegisterSubmit);
 
   return subjectRegister;
 }

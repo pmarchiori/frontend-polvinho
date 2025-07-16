@@ -44,13 +44,36 @@ const routes = {
   "#/subject-edit": SubjectEdit,
 };
 
-export function router() {
-  let container = document.querySelector("#container");
-  if (!container) {
-    container = document.createElement("div");
-    container.id = "container";
-    document.body.appendChild(container);
+const protectedRoutes = {
+  "#/dashboard": ["admin", "teacher", "student"],
+  "#/students": ["admin", "teacher"],
+  "#/student-register": ["admin"],
+  "#/student-edit": ["admin", "teacher"],
+  "#/teachers": ["admin"],
+  "#/teacher-register": ["admin"],
+  "#/teacher-edit": ["admin"],
+  "#/subjects": ["admin", "teacher"],
+  "#/subject-register": ["admin"],
+  "#/subject-edit": ["admin"],
+};
+
+function getUserFromToken() {
+  const token = localStorage.getItem("authToken");
+  if (!token) return null;
+  try {
+    const payloadBase64 = token.split(".")[1];
+    return JSON.parse(atob(payloadBase64));
+  } catch {
+    return null;
   }
+}
+
+export function router() {
+  const container =
+    document.querySelector("#container") ||
+    document.body.appendChild(document.createElement("div"));
+  container.id = "container";
+  container.innerHTML = "";
 
   const fullPath = window.location.hash || "#/login";
   const [basePath, param] =
@@ -58,21 +81,24 @@ export function router() {
       ? [fullPath.split("/").slice(0, 2).join("/"), fullPath.split("/")[2]]
       : [fullPath, null];
 
+  const user = getUserFromToken();
+  const allowedRoles = protectedRoutes[basePath];
+
+  if (allowedRoles && (!user || !allowedRoles.includes(user.role))) {
+    console.log("usuário não autorizado");
+    window.location.hash = "#/login";
+    return;
+  }
+
   const PageComponent = routes[basePath];
-
-  container.innerHTML = "";
-
   if (!PageComponent) {
     container.appendChild(routes[404]());
     return;
   }
 
   if (routesWithSidebar.includes(basePath)) {
-    const sidebar = Sidebar();
-    const page = param ? PageComponent(param) : PageComponent();
-    container.appendChild(sidebar);
-    container.appendChild(page);
-  } else {
-    container.appendChild(param ? PageComponent(param) : PageComponent());
+    container.appendChild(Sidebar());
   }
+
+  container.appendChild(param ? PageComponent(param) : PageComponent());
 }

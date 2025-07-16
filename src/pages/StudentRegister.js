@@ -1,6 +1,6 @@
 import { FormButton } from "../components/Buttons/FormButton.js";
 import { Title } from "../components/Title.js";
-import { handleRegisterSubmit } from "../utils/handlers/registerHandler.js";
+import { handleRegisterSubmit } from "../utils/handlers/users/userRegisterHandler.js";
 import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { UserRegisterForm } from "../components/UserRegisterForm.js";
 

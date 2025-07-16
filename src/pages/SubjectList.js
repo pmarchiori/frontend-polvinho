@@ -8,7 +8,7 @@ import { Toaster } from "../components/Toaster.js";
 import {
   fetchSubjects,
   removeSubject,
-} from "../utils/handlers/subjectHandler.js";
+} from "../utils/handlers/subjects/subjectHandler.js";
 import { EmptyData } from "../components/EmptyData.js";
 
 export function SubjectList() {

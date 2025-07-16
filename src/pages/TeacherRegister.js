@@ -2,7 +2,7 @@ import { FormButton } from "../components/Buttons/FormButton.js";
 import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { Title } from "../components/Title.js";
 import { UserRegisterForm } from "../components/UserRegisterForm.js";
-import { handleRegisterSubmit } from "../utils/handlers/registerHandler.js";
+import { handleRegisterSubmit } from "../utils/handlers/users/userRegisterHandler.js";
 
 export function TeacherRegister() {
   const teacherRegister = document.createElement("form");

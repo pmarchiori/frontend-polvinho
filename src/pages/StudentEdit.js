@@ -8,7 +8,7 @@ import {
   loadUserData,
   hasUserChanges,
   submitUserEdit,
-} from "../utils/handlers/userEditHandler.js";
+} from "../utils/handlers/users/userEditHandler.js";
 import { navigateTo } from "../routes/navigate.js";
 
 export function StudentEdit(studentId) {

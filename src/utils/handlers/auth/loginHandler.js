@@ -1,4 +1,5 @@
-import { validateLoginCredentials } from "../validators.js";
+import { validateLoginCredentials } from "../../validators.js";
+import { API_URL } from "../../../config/config.js";
 
 export async function handleLoginSubmit(
   event,
@@ -28,11 +29,11 @@ export async function handleLoginSubmit(
     inputError.style.display = "block";
     emailInput.classList.add("error");
     passwordInput.classList.add("error");
-    return;
+    return false;
   }
 
   try {
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,8 +46,7 @@ export async function handleLoginSubmit(
     if (response.ok) {
       console.log("login successful!", data);
       localStorage.setItem("authToken", data.token);
-      inputError.textContent = "";
-      inputError.style.display = "none";
+      return true;
     } else {
       console.error("login error:", data.error || "unknown error");
       inputError.textContent =
@@ -54,6 +54,7 @@ export async function handleLoginSubmit(
       inputError.style.display = "block";
       emailInput.classList.add("error");
       passwordInput.classList.add("error");
+      return false;
     }
   } catch (error) {
     console.error("backend error:", error);
@@ -62,5 +63,6 @@ export async function handleLoginSubmit(
     inputError.style.display = "block";
     emailInput.classList.add("error");
     passwordInput.classList.add("error");
+    return false;
   }
 }

@@ -1,4 +1,5 @@
 import { navigateTo } from "../routes/navigate.js";
+import { logout } from "../utils/handlers/auth/logoutHandler.js";
 import { AlertModal } from "./AlertModal.js";
 import { SidebarItem } from "./SidebarItem.js";
 
@@ -24,7 +25,7 @@ export function SidebarBottom() {
           "Você irá encerrar sua sessão e precisará realizar login para entrar novamente.",
         type: "delete",
         onConfirm: () => {
-          navigateTo("#/login");
+          logout();
         },
         onCancel: () => {},
       });

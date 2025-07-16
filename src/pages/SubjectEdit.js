@@ -35,12 +35,17 @@ export function SubjectEdit(subjectId) {
     name: "name",
   });
 
-  const nameInput2 = TextInputField({
-    label: "Nome",
+  const teachersInput = SelectInputField({
+    label: "Disciplinas",
     fieldClass: "input-field",
-    inputClass: "register-input",
-    placeholder: "Nome da disciplina",
-    name: "name",
+    inputClass: "select-input",
+    placeholder: "Disciplinas do usuário",
+    disciplines: [
+      { _id: "666b5a6a93be74d1c1e3271c", name: "professor 1" },
+      { _id: "56655a7a93be74d1c1e3271c", name: "professor 2" },
+      { _id: "466b5a1a93be74d1c1e3271c", name: "professor 3" },
+    ],
+    name: "teacher",
   });
 
   const buttonContainer = document.createElement("div");
@@ -53,7 +58,7 @@ export function SubjectEdit(subjectId) {
 
   buttonContainer.appendChild(registerButton);
 
-  inputRow.append(nameInput, nameInput2);
+  inputRow.append(nameInput, teachersInput);
 
   editForm.appendChild(inputRow);
 
