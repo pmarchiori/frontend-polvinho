@@ -11,7 +11,13 @@ export async function handleRegisterSubmit(event, role) {
   const data = {};
   inputs.forEach((input) => {
     if (input.name) {
-      data[input.name] = input.value.trim();
+      if (input.multiple) {
+        data[input.name] = Array.from(input.selectedOptions).map(
+          (option) => option.value
+        );
+      } else {
+        data[input.name] = input.value.trim();
+      }
     }
   });
 
@@ -28,7 +34,7 @@ export async function handleRegisterSubmit(event, role) {
     name: data.name,
     email: data.email,
     registration: data.registration,
-    subject: data.subjects || null,
+    subjects: data.subjects || [],
     role: role,
   };
 

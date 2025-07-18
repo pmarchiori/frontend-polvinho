@@ -19,6 +19,17 @@ export async function fetchSubjects(page = 1) {
   }
 }
 
+export async function fetchSubjectById(id) {
+  try {
+    const res = await fetch(`${API_URL}/subjects/${id}`);
+    if (!res.ok) throw new Error("Disciplina não encontrada");
+    return await res.json();
+  } catch (err) {
+    console.error("Erro ao buscar usuário:", err);
+    throw err;
+  }
+}
+
 export async function removeSubject(id) {
   try {
     const res = await fetch(`${API_URL}/subjects/${id}/remove`, {

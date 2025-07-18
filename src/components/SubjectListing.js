@@ -11,12 +11,15 @@ export function SubjectListing({ name, teacher, quizzes, onEdit, onRemove }) {
   const subjectTeacher = document.createElement("p");
   subjectTeacher.textContent = teacher;
   subjectTeacher.classList.add("textMd", "col-registration", "list-text");
+  if (subjectTeacher.textContent === "Nenhum professor") {
+    subjectTeacher.classList.add("empty-color");
+  }
 
   const subjectQuizzes = document.createElement("p");
   subjectQuizzes.textContent = quizzes.length;
   subjectQuizzes.classList.add("textMd", "col-subjects", "list-text");
   if (quizzes.length === 0) {
-    subjectQuizzes.classList.add("empty-subjects");
+    subjectQuizzes.classList.add("empty-color");
   }
 
   const actionsArea = document.createElement("div");

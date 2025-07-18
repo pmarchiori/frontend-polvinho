@@ -5,6 +5,7 @@ export function SelectInputField({
   placeholder,
   disciplines,
   name,
+  multiple = false,
 }) {
   const selectInputField = document.createElement("div");
   selectInputField.classList.add(fieldClass);
@@ -20,17 +21,22 @@ export function SelectInputField({
   const select = document.createElement("select");
   select.classList.add(inputClass);
   select.name = name;
+  if (multiple) {
+    select.multiple = true;
+  }
 
   const dropdownIcon = document.createElement("img");
   dropdownIcon.src = "/assets/caret-down-dark.svg";
   dropdownIcon.alt = "Abrir lista";
   dropdownIcon.classList.add("dropdown-icon");
 
-  const placeholderOption = document.createElement("option");
-  placeholderOption.textContent = placeholder;
-  placeholderOption.disabled = true;
-  placeholderOption.selected = true;
-  select.appendChild(placeholderOption);
+  if (!multiple) {
+    const placeholderOption = document.createElement("option");
+    placeholderOption.textContent = "Selecione uma disciplina";
+    placeholderOption.disabled = true;
+    placeholderOption.selected = true;
+    select.appendChild(placeholderOption);
+  }
 
   disciplines.forEach((discipline) => {
     const option = document.createElement("option");

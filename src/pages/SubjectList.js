@@ -93,7 +93,7 @@ export function SubjectList() {
           subjects.forEach((subject) => {
             const subjectComponent = SubjectListing({
               name: subject.name,
-              teacher: subject.teacher ? subject.teacher : "Nenhum professor",
+              teacher: subject.teacher?.name || "Nenhum professor",
               quizzes: Array.isArray(subject.quizzes) ? subject.quizzes : [],
               onEdit: () => {
                 window.location.hash = `#/subject-edit/${subject._id}`;

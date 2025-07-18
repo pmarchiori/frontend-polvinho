@@ -1,10 +1,18 @@
+import { AlertModal } from "../components/AlertModal.js";
 import { FormButton } from "../components/Buttons/FormButton.js";
 import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { SelectInputField } from "../components/SelectInputField.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
+import { navigateTo } from "../routes/navigate.js";
+import {
+  hasSubjectChanges,
+  loadSubjectData,
+  submitSubjectEdit,
+} from "../utils/handlers/subjects/subjectEditHandler.js";
+import { fetchTeachers } from "../utils/handlers/users/userHandler.js";
 
-export function SubjectEdit(subjectId) {
+export async function SubjectEdit(subjectId) {
   const subjectEdit = document.createElement("form");
   subjectEdit.classList.add("user-register");
 
@@ -35,18 +43,31 @@ export function SubjectEdit(subjectId) {
     name: "name",
   });
 
-  const teachersInput = SelectInputField({
-    label: "Disciplinas",
-    fieldClass: "input-field",
-    inputClass: "select-input",
-    placeholder: "Disciplinas do usuário",
-    disciplines: [
-      { _id: "666b5a6a93be74d1c1e3271c", name: "professor 1" },
-      { _id: "56655a7a93be74d1c1e3271c", name: "professor 2" },
-      { _id: "466b5a1a93be74d1c1e3271c", name: "professor 3" },
-    ],
-    name: "teacher",
-  });
+  let teachers = [];
+  try {
+    const { users } = await fetchTeachers();
+    teachers = users;
+  } catch (error) {
+    console.error("Erro ao carregar professores:", error);
+  }
+
+  let teachersInput;
+  if (teachers.length > 0) {
+    teachersInput = SelectInputField({
+      label: "Professor",
+      fieldClass: "input-field",
+      inputClass: "select-input",
+      name: "teacher",
+      disciplines: teachers.map((teacher) => ({
+        _id: teacher._id,
+        name: teacher.name,
+      })),
+    });
+  } else {
+    const noTeachersMsg = document.createElement("p");
+    noTeachersMsg.textContent = "Nenhum professor cadastrado no sistema.";
+    teachersInput = noTeachersMsg;
+  }
 
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
@@ -66,25 +87,39 @@ export function SubjectEdit(subjectId) {
   subjectEdit.appendChild(editForm);
   subjectEdit.appendChild(buttonContainer);
 
+  const inputs = {
+    name: nameInput.querySelector("input"),
+    teacher: teachersInput.querySelector("select") || null,
+  };
+
+  let originalValues = {};
+
+  loadSubjectData(subjectId, inputs, (values) => {
+    originalValues = values;
+  });
+
   returnButton.addEventListener("click", (e) => {
     e.preventDefault();
+    if (hasSubjectChanges(inputs, originalValues)) {
+      const modal = AlertModal({
+        title: "Alterações serão perdidas",
+        message:
+          "Se voltar agora as alterações feitas não serão salvas. Deseja continuar?",
+        type: "delete",
+        onConfirm: () => {
+          navigateTo("#/subjects");
+        },
+        onCancel: () => {},
+      });
+      document.body.appendChild(modal);
+    } else {
+      navigateTo("#/subjects");
+    }
+  });
 
-    window.location.hash = "#/subjects";
-    // if (hasUserChanges(inputs, originalValues)) {
-    //   const modal = AlertModal({
-    //     title: "Alterações serão perdidas",
-    //     message:
-    //       "Se voltar agora as alterações feitas não serão salvas. Deseja continuar?",
-    //     type: "delete",
-    //     onConfirm: () => {
-    //       window.location.hash = "#/subjects";
-    //     },
-    //     onCancel: () => {},
-    //   });
-    //   document.body.appendChild(modal);
-    // } else {
-    //   window.location.hash = "#/subjects";
-    // }
+  registerButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    submitSubjectEdit(subjectId, inputs, originalValues);
   });
 
   return subjectEdit;

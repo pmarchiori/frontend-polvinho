@@ -96,7 +96,7 @@ export function TeacherEdit(teacherId) {
     name: nameInput.querySelector("input"),
     registration: registrationInput.querySelector("input"),
     email: emailInput.querySelector("input"),
-    subject: subjectsInput.querySelector("select"),
+    subjects: subjectsInput.querySelector("select"),
   };
 
   let originalValues = {};

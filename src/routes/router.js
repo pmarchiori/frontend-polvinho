@@ -68,7 +68,7 @@ function getUserFromToken() {
   }
 }
 
-export function router() {
+export async function router() {
   const container =
     document.querySelector("#container") ||
     document.body.appendChild(document.createElement("div"));
@@ -100,5 +100,13 @@ export function router() {
     container.appendChild(Sidebar());
   }
 
-  container.appendChild(param ? PageComponent(param) : PageComponent());
+  const pageElement = param
+    ? await PageComponent(param)
+    : await PageComponent();
+
+  if (pageElement instanceof Node) {
+    container.appendChild(pageElement);
+  } else {
+    console.error("A página não retornou um elemento válido:", pageElement);
+  }
 }

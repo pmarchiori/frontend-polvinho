@@ -3,10 +3,10 @@ import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { SelectInputField } from "../components/SelectInputField.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
-import { UserRegisterForm } from "../components/UserRegisterForm.js";
 import { handleSubjectRegisterSubmit } from "../utils/handlers/subjects/subjectRegisterHandler.js";
+import { fetchTeachers } from "../utils/handlers/users/userHandler.js";
 
-export function SubjectRegister() {
+export async function SubjectRegister() {
   const subjectRegister = document.createElement("form");
   subjectRegister.classList.add("user-register");
 
@@ -26,6 +26,9 @@ export function SubjectRegister() {
   const registerForm = document.createElement("form");
   registerForm.classList.add("register-container");
 
+  const inputRow = document.createElement("div");
+  inputRow.classList.add("input-row");
+
   const nameInput = TextInputField({
     label: "Nome",
     fieldClass: "input-field",
@@ -34,18 +37,31 @@ export function SubjectRegister() {
     name: "subject",
   });
 
-  const teachersInput = SelectInputField({
-    label: "Disciplinas",
-    fieldClass: "input-field",
-    inputClass: "select-input",
-    placeholder: "Disciplinas do usuário",
-    disciplines: [
-      { _id: "666b5a6a93be74d1c1e3271c", name: "professor 1" },
-      { _id: "56655a7a93be74d1c1e3271c", name: "professor 2" },
-      { _id: "466b5a1a93be74d1c1e3271c", name: "professor 3" },
-    ],
-    name: "teacher",
-  });
+  let teachers = [];
+  try {
+    const { users } = await fetchTeachers();
+    teachers = users;
+  } catch (error) {
+    console.error("Erro ao carregar professores:", error);
+  }
+
+  let teachersInput;
+  if (teachers.length > 0) {
+    teachersInput = SelectInputField({
+      label: "Professor",
+      fieldClass: "input-field",
+      inputClass: "select-input",
+      name: "teacher",
+      disciplines: teachers.map((teacher) => ({
+        _id: teacher._id,
+        name: teacher.name,
+      })),
+    });
+  } else {
+    const noTeachersMsg = document.createElement("p");
+    noTeachersMsg.textContent = "Nenhum professor cadastrado no sistema.";
+    teachersInput = noTeachersMsg;
+  }
 
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
@@ -57,7 +73,8 @@ export function SubjectRegister() {
 
   buttonContainer.appendChild(registerButton);
 
-  registerForm.append(nameInput, teachersInput);
+  inputRow.append(nameInput, teachersInput);
+  registerForm.append(inputRow);
 
   subjectRegister.appendChild(header);
   subjectRegister.appendChild(registerForm);

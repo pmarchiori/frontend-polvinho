@@ -22,7 +22,7 @@ export function UserListing({
   userSubjects.textContent = subjects.length;
   userSubjects.classList.add("textMd", "col-subjects", "list-text");
   if (subjects.length === 0) {
-    userSubjects.classList.add("empty-subjects");
+    userSubjects.classList.add("empty-color");
   }
 
   const actionsArea = document.createElement("div");

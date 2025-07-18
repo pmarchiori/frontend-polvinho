@@ -3,8 +3,9 @@ import { Title } from "../components/Title.js";
 import { handleRegisterSubmit } from "../utils/handlers/users/userRegisterHandler.js";
 import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { UserRegisterForm } from "../components/UserRegisterForm.js";
+import { fetchSubjects } from "../utils/handlers/subjects/subjectHandler.js";
 
-export function StudentRegister() {
+export async function StudentRegister() {
   const studentRegister = document.createElement("form");
   studentRegister.classList.add("user-register");
 
@@ -22,7 +23,15 @@ export function StudentRegister() {
   header.appendChild(returnButton);
   header.appendChild(title);
 
-  const registerForm = UserRegisterForm();
+  let subjects = [];
+  try {
+    const { subjects: fetchedSubjects } = await fetchSubjects();
+    subjects = fetchedSubjects;
+  } catch (error) {
+    console.error("Erro ao carregar disciplinas:", error);
+  }
+
+  const registerForm = UserRegisterForm(subjects);
 
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
@@ -35,7 +44,7 @@ export function StudentRegister() {
   buttonContainer.appendChild(registerButton);
 
   studentRegister.appendChild(header);
-  studentRegister.appendChild(registerForm);
+  studentRegister.append(registerForm);
   studentRegister.appendChild(buttonContainer);
 
   returnButton.addEventListener("click", () => {
