@@ -1,57 +1,118 @@
 export function SelectInputField({
   label,
-  fieldClass,
-  inputClass,
-  placeholder,
+  fieldClass = "input-field",
+  inputClass = "register-input",
+  placeholder = "Selecione...",
   disciplines,
   name,
-  multiple = false,
 }) {
-  const selectInputField = document.createElement("div");
-  selectInputField.classList.add(fieldClass);
+  const fieldWrapper = document.createElement("div");
+  fieldWrapper.classList.add(fieldClass);
+
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("select-wrapper", inputClass);
 
   const inputLabel = document.createElement("label");
   inputLabel.textContent = label;
   inputLabel.classList.add("textMd");
   inputLabel.style.color = "var(--stone-900)";
 
-  const inputWrapper = document.createElement("div");
-  inputWrapper.classList.add("input-wrapper");
+  const container = document.createElement("div");
+  container.classList.add("select-container");
 
-  const select = document.createElement("select");
-  select.classList.add(inputClass);
-  select.name = name;
-  if (multiple) {
-    select.multiple = true;
-  }
+  const selectedTags = document.createElement("div");
+  selectedTags.classList.add("selected-tags");
 
-  const dropdownIcon = document.createElement("img");
-  dropdownIcon.src = "/assets/caret-down-dark.svg";
-  dropdownIcon.alt = "Abrir lista";
-  dropdownIcon.classList.add("dropdown-icon");
+  const placeholderSpan = document.createElement("span");
+  placeholderSpan.classList.add("placeholder");
+  placeholderSpan.textContent = placeholder;
+  selectedTags.appendChild(placeholderSpan);
 
-  if (!multiple) {
-    const placeholderOption = document.createElement("option");
-    placeholderOption.textContent = "Selecione uma disciplina";
-    placeholderOption.disabled = true;
-    placeholderOption.selected = true;
-    select.appendChild(placeholderOption);
-  }
+  const toggleIcon = document.createElement("img");
+  toggleIcon.src = "/assets/caret-down-dark.svg";
+  toggleIcon.alt = "Abrir lista";
+  toggleIcon.classList.add("dropdown-icon");
+
+  const dropdown = document.createElement("div");
+  dropdown.classList.add("dropdown", "hidden");
 
   disciplines.forEach((discipline) => {
-    const option = document.createElement("option");
-    option.value = discipline._id;
+    const option = document.createElement("div");
+    option.classList.add("option");
+    option.dataset.value = discipline._id;
     option.textContent = discipline.name;
-    select.appendChild(option);
+    dropdown.appendChild(option);
   });
 
-  inputWrapper.appendChild(select);
-  inputWrapper.appendChild(dropdownIcon);
+  let selectedValues = [];
 
-  selectInputField.appendChild(inputLabel);
-  selectInputField.appendChild(inputWrapper);
+  wrapper.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle("hidden");
+    toggleIcon.classList.toggle("rotated");
+  });
 
-  selectInputField.select = select;
+  document.addEventListener("click", (e) => {
+    if (!fieldWrapper.contains(e.target)) {
+      dropdown.classList.add("hidden");
+      toggleIcon.classList.remove("rotated");
+    }
+  });
 
-  return selectInputField;
+  dropdown.addEventListener("click", (e) => {
+    if (e.target.classList.contains("option")) {
+      const value = e.target.dataset.value;
+
+      if (selectedValues.includes(value)) {
+        selectedValues = selectedValues.filter((v) => v !== value);
+        e.target.classList.remove("selected");
+      } else {
+        selectedValues.push(value);
+        e.target.classList.add("selected");
+      }
+
+      updateSelectedTags();
+      updateHiddenInput();
+    }
+  });
+
+  function updateSelectedTags() {
+    selectedTags.innerHTML = "";
+
+    if (selectedValues.length === 0) {
+      selectedTags.appendChild(placeholderSpan);
+      return;
+    }
+
+    selectedValues.forEach((value) => {
+      const discipline = disciplines.find((d) => d._id === value);
+      const tag = document.createElement("span");
+      tag.classList.add("tag");
+      tag.textContent = discipline.name;
+
+      tag.addEventListener("click", () => {
+        selectedValues = selectedValues.filter((v) => v !== value);
+        const option = dropdown.querySelector(`[data-value="${value}"]`);
+        if (option) option.classList.remove("selected");
+        updateSelectedTags();
+        updateHiddenInput();
+      });
+
+      selectedTags.appendChild(tag);
+    });
+  }
+
+  const hiddenInput = document.createElement("input");
+  hiddenInput.type = "hidden";
+  hiddenInput.name = name;
+
+  function updateHiddenInput() {
+    hiddenInput.value = JSON.stringify(selectedValues);
+  }
+
+  wrapper.append(selectedTags, toggleIcon);
+  container.append(wrapper, dropdown);
+  fieldWrapper.append(inputLabel, container, hiddenInput);
+
+  return fieldWrapper;
 }

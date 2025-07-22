@@ -1,16 +1,14 @@
 import { FormButton } from "../components/Buttons/FormButton.js";
-import { SelectInputField } from "../components/SelectInputField.js";
-import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
 import { ReturnButton } from "../components/Buttons/ReturnButton.js";
 import { AlertModal } from "../components/AlertModal.js";
+import { UserRegisterForm } from "../components/UserRegisterForm.js";
 import {
   loadUserData,
   hasUserChanges,
   submitUserEdit,
 } from "../utils/handlers/users/userEditHandler.js";
 import { navigateTo } from "../routes/navigate.js";
-import { UserRegisterForm } from "../components/UserRegisterForm.js";
 import { fetchSubjects } from "../utils/handlers/subjects/subjectHandler.js";
 
 export async function StudentEdit(studentId) {
@@ -28,8 +26,7 @@ export async function StudentEdit(studentId) {
     titleColor: "var(--stone-900)",
   });
 
-  header.appendChild(returnButton);
-  header.appendChild(title);
+  header.append(returnButton, title);
 
   let subjects = [];
   try {
@@ -59,7 +56,7 @@ export async function StudentEdit(studentId) {
     name: editForm.querySelector('input[name="name"]'),
     registration: editForm.querySelector('input[name="registration"]'),
     email: editForm.querySelector('input[name="email"]'),
-    subjects: editForm.querySelector('select[name="subjects"]'),
+    subjects: editForm.querySelector('input[name="subjects"]'),
   };
 
   let originalValues = {};
@@ -89,7 +86,7 @@ export async function StudentEdit(studentId) {
 
   registerButton.addEventListener("click", (e) => {
     e.preventDefault();
-    submitUserEdit(studentId, inputs, originalValues);
+    submitUserEdit(studentId, inputs, originalValues, "students");
   });
 
   return studentEdit;

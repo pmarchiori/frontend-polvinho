@@ -57,15 +57,17 @@ export function hasUserChanges(inputs, originalValues) {
   );
 }
 
-export async function submitUserEdit(userId, inputs, originalValues) {
+export async function submitUserEdit(
+  userId,
+  inputs,
+  originalValues,
+  navigateToPage
+) {
   const updatedUser = {
     name: inputs.name.value,
     registration: inputs.registration.value,
     email: inputs.email.value,
-    subjects:
-      inputs.subjects && inputs.subjects.multiple
-        ? Array.from(inputs.subjects.selectedOptions).map((opt) => opt.value)
-        : [inputs.subjects.value],
+    subjects: inputs.subjects.value ? JSON.parse(inputs.subjects.value) : [],
   };
 
   if (updatedUser.registration === originalValues.registration) {
@@ -89,7 +91,7 @@ export async function submitUserEdit(userId, inputs, originalValues) {
       type: "success",
     });
 
-    window.location.hash = "#/students";
+    window.location.hash = `#/${navigateToPage}`;
   } catch (err) {
     console.error("Erro ao atualizar usuário:", err);
     Toaster({

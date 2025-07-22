@@ -10,7 +10,13 @@ export async function handleSubjectRegisterSubmit(event) {
   const data = {};
   inputs.forEach((input) => {
     if (input.name) {
-      data[input.name] = input.value.trim();
+      if (input.name === "teacher") {
+        data[input.name] = input.value
+          ? JSON.parse(input.value)[0] || null
+          : null;
+      } else {
+        data[input.name] = input.value.trim();
+      }
     }
   });
 

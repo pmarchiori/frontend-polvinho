@@ -1,17 +1,17 @@
 import { FormButton } from "../components/Buttons/FormButton.js";
 import { ReturnButton } from "../components/Buttons/ReturnButton.js";
-import { SelectInputField } from "../components/SelectInputField.js";
-import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
 import { AlertModal } from "../components/AlertModal.js";
+import { UserRegisterForm } from "../components/UserRegisterForm.js";
 import {
   loadUserData,
   hasUserChanges,
   submitUserEdit,
 } from "../utils/handlers/users/userEditHandler.js";
 import { navigateTo } from "../routes/navigate.js";
+import { fetchSubjects } from "../utils/handlers/subjects/subjectHandler.js";
 
-export function TeacherEdit(teacherId) {
+export async function TeacherEdit(teacherId) {
   const teacherEdit = document.createElement("form");
   teacherEdit.classList.add("user-register");
 
@@ -28,50 +28,15 @@ export function TeacherEdit(teacherId) {
 
   header.append(returnButton, title);
 
-  const editForm = document.createElement("form");
-  editForm.classList.add("register-container");
+  let subjects = [];
+  try {
+    const { subjects: fetchedSubjects } = await fetchSubjects();
+    subjects = fetchedSubjects;
+  } catch (error) {
+    console.error("Erro ao carregar disciplinas:", error);
+  }
 
-  const upperInputRow = document.createElement("div");
-  upperInputRow.classList.add("input-row");
-
-  const lowerInputRow = document.createElement("div");
-  lowerInputRow.classList.add("input-row");
-
-  const nameInput = TextInputField({
-    label: "Nome Completo",
-    fieldClass: "input-field",
-    inputClass: "register-input",
-    placeholder: "Nome Sobrenome",
-    name: "name",
-  });
-
-  const registrationInput = TextInputField({
-    label: "Matrícula",
-    fieldClass: "input-field",
-    inputClass: "register-input",
-    placeholder: "000000",
-    name: "registration",
-  });
-
-  const emailInput = TextInputField({
-    label: "Email",
-    fieldClass: "input-field",
-    inputClass: "register-input",
-    placeholder: "email@email.com",
-    name: "email",
-  });
-
-  const subjectsInput = SelectInputField({
-    label: "Disciplinas",
-    fieldClass: "input-field",
-    inputClass: "select-input",
-    placeholder: "Disciplinas do usuário",
-    disciplines: [
-      { _id: "666b5a7a93be74d1c1e3271c", name: "disciplina 1" },
-      { _id: "566b5a7a93be74d1c1e3271c", name: "disciplina 2" },
-    ],
-    name: "subject",
-  });
+  const editForm = UserRegisterForm(subjects);
 
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
@@ -83,20 +48,15 @@ export function TeacherEdit(teacherId) {
 
   buttonContainer.appendChild(registerButton);
 
-  upperInputRow.append(nameInput, registrationInput);
-  lowerInputRow.append(emailInput, subjectsInput);
-
-  editForm.append(upperInputRow, lowerInputRow);
-
   teacherEdit.appendChild(header);
   teacherEdit.appendChild(editForm);
   teacherEdit.appendChild(buttonContainer);
 
   const inputs = {
-    name: nameInput.querySelector("input"),
-    registration: registrationInput.querySelector("input"),
-    email: emailInput.querySelector("input"),
-    subjects: subjectsInput.querySelector("select"),
+    name: editForm.querySelector('input[name="name"]'),
+    registration: editForm.querySelector('input[name="registration"]'),
+    email: editForm.querySelector('input[name="email"]'),
+    subjects: editForm.querySelector('input[name="subjects"]'),
   };
 
   let originalValues = {};
@@ -126,7 +86,7 @@ export function TeacherEdit(teacherId) {
 
   registerButton.addEventListener("click", (e) => {
     e.preventDefault();
-    submitUserEdit(teacherId, inputs, originalValues);
+    submitUserEdit(teacherId, inputs, originalValues, "teachers");
   });
 
   return teacherEdit;

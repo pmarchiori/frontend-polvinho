@@ -89,7 +89,7 @@ export async function SubjectEdit(subjectId) {
 
   const inputs = {
     name: nameInput.querySelector("input"),
-    teacher: teachersInput.querySelector("select") || null,
+    teacher: teachersInput.querySelector('input[name="teacher"]') || null,
   };
 
   let originalValues = {};

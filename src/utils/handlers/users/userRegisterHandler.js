@@ -11,7 +11,9 @@ export async function handleRegisterSubmit(event, role) {
   const data = {};
   inputs.forEach((input) => {
     if (input.name) {
-      if (input.multiple) {
+      if (input.name === "subjects") {
+        data[input.name] = input.value ? JSON.parse(input.value) : [];
+      } else if (input.multiple) {
         data[input.name] = Array.from(input.selectedOptions).map(
           (option) => option.value
         );

@@ -1,18 +1,21 @@
-import { Toaster } from "../../../components/Toaster.js";
 import { fetchSubjectById } from "./subjectHandler.js";
+import { Toaster } from "../../../components/Toaster.js";
 import { API_URL } from "../../../config/config.js";
 
 export async function loadSubjectData(subjectId, inputs, setOriginalValues) {
   try {
     const subject = await fetchSubjectById(subjectId);
     inputs.name.value = subject.name || "";
-    inputs.teacher.value = subject.teacher || "";
+    inputs.teacher.value = subject.teacher
+      ? JSON.stringify([subject.teacher])
+      : "[]";
 
     setOriginalValues({
       name: subject.name || "",
       teacher: subject.teacher || "",
     });
   } catch (err) {
+    console.error("Erro ao carregar dados da disciplina:", err);
     Toaster({
       title: "Erro",
       description: "Erro ao carregar dados da disciplina.",
@@ -28,10 +31,13 @@ export function hasSubjectChanges(inputs, originalValues) {
   );
 }
 
-export async function submitSubjectEdit(subjectId, inputs, originalValues) {
+export async function submitSubjectEdit(subjectId, inputs) {
   const updatedSubject = {
     name: inputs.name.value,
-    teacher: inputs.teacher ? inputs.teacher.value : null,
+    teacher:
+      inputs.teacher && inputs.teacher.value
+        ? JSON.parse(inputs.teacher.value)[0] || null
+        : null,
   };
 
   try {
