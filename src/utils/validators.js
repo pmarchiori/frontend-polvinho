@@ -20,3 +20,15 @@ export function validateLoginCredentials(email, password) {
   }
   return { isValid: true, message: "" };
 }
+
+export function decodeToken(token) {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return {
+      id: payload.id,
+      role: payload.role,
+    };
+  } catch (err) {
+    throw new Error("Token inválido.");
+  }
+}

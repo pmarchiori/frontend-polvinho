@@ -1,33 +1,34 @@
-import { CreationButton } from "../components/Buttons/CreationButton.js";
-import { EmptyData } from "../components/EmptyData.js";
-import { ReturnButton } from "../components/Buttons/ReturnButton.js";
-import { Title } from "../components/Title.js";
-import { UserListing } from "../components/UserListing.js";
+import { CreationButton } from "../../components/Buttons/CreationButton.js";
+import { PaginationButton } from "../../components/Buttons/PaginationButton.js";
+import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
+import { ChartNames } from "../../components/ChartNames.js";
+import { EmptyData } from "../../components/EmptyData.js";
+import { Title } from "../../components/Title.js";
+import { Toaster } from "../../components/Toaster.js";
+import { UserListing } from "../../components/UserListing.js";
 import {
-  fetchStudents,
-  removeStudent,
-} from "../utils/handlers/users/userHandler.js";
-import { Toaster } from "../components/Toaster.js";
-import { ChartNames } from "../components/ChartNames.js";
-import { PaginationButton } from "../components/Buttons/PaginationButton.js";
+  fetchTeachers,
+  removeTeacher,
+} from "../../utils/handlers/users/userHandler.js";
 
-export function StudentList() {
+export function TeacherList() {
   let currentPage = 1;
 
-  const studentList = document.createElement("div");
-  studentList.classList.add("user-list");
+  const teacherList = document.createElement("div");
+  teacherList.classList.add("user-list");
 
   const header = document.createElement("div");
   header.classList.add("list-header");
 
   const titleArea = document.createElement("div");
   titleArea.classList.add("title-area");
+
   const btnArea = document.createElement("div");
 
   const returnButton = ReturnButton();
 
   const title = Title({
-    title: "Alunos",
+    title: "Professores",
     titleClass: "title2",
     titleColor: "var(--stone-900)",
     subtitle: "0 Cadastrados",
@@ -38,7 +39,7 @@ export function StudentList() {
   const createButton = CreationButton({
     btnName: "Cadastrar",
     btnClass: "creation-btn",
-    route: "#/student-register",
+    route: "#/teacher-register",
   });
 
   const chartNames = ChartNames({
@@ -56,6 +57,7 @@ export function StudentList() {
 
   const paginationText = document.createElement("p");
   paginationText.classList.add("pagination-text");
+  paginationText.textContent = "Mostrando X de X entradas.";
 
   const paginationButtons = document.createElement("div");
   paginationButtons.classList.add("pagination-btns-container");
@@ -72,9 +74,9 @@ export function StudentList() {
   paginationButtons.append(prevButton, nextButton);
   paginationArea.append(paginationText, paginationButtons);
 
-  function loadStudents(page = 1) {
+  function loadTeachers(page = 1) {
     usersArea.innerHTML = "";
-    fetchStudents(page)
+    fetchTeachers(page)
       .then(({ users, total, currentPage, totalPages }) => {
         currentPage = page;
 
@@ -82,7 +84,9 @@ export function StudentList() {
         paginationText.textContent = `Mostrando ${users.length} de ${total} entradas.`;
 
         if (users.length === 0) {
-          const emptyComponent = EmptyData({ text: "Nenhum aluno cadastrado" });
+          const emptyComponent = EmptyData({
+            text: "Nenhum professor cadastrado",
+          });
           usersArea.appendChild(emptyComponent);
         } else {
           users.forEach((user) => {
@@ -91,32 +95,31 @@ export function StudentList() {
               name: user.name,
               subjects: Array.isArray(user.subjects) ? user.subjects : [],
               onEdit: () => {
-                window.location.hash = `#/student-edit/${user._id}`;
+                window.location.hash = `#/teacher-edit/${user._id}`;
               },
               onRemove: () => {
-                removeStudent(user._id)
+                removeTeacher(user._id)
                   .then(() => {
                     Toaster({
-                      title: "Aluno removido!",
-                      description: "O aluno foi eliminado com sucesso.",
+                      title: "Professor removido",
+                      description: "O professor foi eliminado com sucesso.",
                       type: "success",
                     });
-                    loadStudents(currentPage);
+                    loadTeachers(currentPage);
                   })
                   .catch((error) => {
                     console.error(error);
                     Toaster({
                       title: "Erro ao remover",
-                      description: "Não foi possível eliminar o aluno.",
+                      description: "Não foi possível eliminar o professor.",
                       type: "error",
                     });
                   });
               },
             });
-            usersArea.appendChild(userComponent);
+            usersArea.append(userComponent);
           });
         }
-
         prevButton.disabled = currentPage === 1;
         nextButton.disabled = currentPage === totalPages;
       })
@@ -127,31 +130,29 @@ export function StudentList() {
 
   prevButton.addEventListener("click", () => {
     currentPage--;
-    loadStudents(currentPage);
+    loadTeachers(currentPage);
   });
 
   nextButton.addEventListener("click", () => {
     currentPage++;
-    loadStudents(currentPage);
+    loadTeachers(currentPage);
   });
 
-  titleArea.appendChild(returnButton);
-  titleArea.appendChild(title);
+  titleArea.append(returnButton, title);
   btnArea.appendChild(createButton);
 
-  header.appendChild(titleArea);
-  header.appendChild(btnArea);
+  header.append(titleArea, btnArea);
 
-  studentList.appendChild(header);
-  studentList.appendChild(chartNames);
-  studentList.appendChild(usersArea);
-  studentList.appendChild(paginationArea);
+  teacherList.appendChild(header);
+  teacherList.appendChild(chartNames);
+  teacherList.appendChild(usersArea);
+  teacherList.appendChild(paginationArea);
 
   returnButton.addEventListener("click", () => {
     window.history.back();
   });
 
-  loadStudents(currentPage);
+  loadTeachers(currentPage);
 
-  return studentList;
+  return teacherList;
 }

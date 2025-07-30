@@ -21,12 +21,6 @@
   margin: 1.5rem;
 }
 
-/* .sidebar-menu-text {
-  color: var(--indigo-50);
-  font-weight: 400;
-  line-height: 24px;
-} */
-
 .sidebar-icon {
   margin-left: 2rem;
   width: 1.6rem;
@@ -44,6 +38,7 @@
 
 .sidebar-item:hover {
   cursor: pointer;
+  border-left: 3px solid var(--yellow-200);
 }
 
 .sidebar-dropdown {
@@ -60,4 +55,15 @@
   margin-top: 8px;
   border-radius: 8px;
   padding: 8px 0;
+}
+
+.sidebar-dropdown-icon {
+  margin-left: 2rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-dropdown-icon.rotated {
+  transform: rotate(-90deg);
 }

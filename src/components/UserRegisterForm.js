@@ -42,6 +42,7 @@ export function UserRegisterForm(subjects = []) {
       fieldClass: "input-field",
       inputClass: "select-input",
       name: "subjects",
+      placeholder: "Disciplinas do usuário",
       disciplines: subjects.map((subject) => ({
         _id: subject._id,
         name: subject.name,

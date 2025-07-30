@@ -1,15 +1,15 @@
-import { FormButton } from "../components/Buttons/FormButton.js";
-import { ReturnButton } from "../components/Buttons/ReturnButton.js";
-import { Title } from "../components/Title.js";
-import { AlertModal } from "../components/AlertModal.js";
-import { UserRegisterForm } from "../components/UserRegisterForm.js";
+import { FormButton } from "../../components/Buttons/FormButton.js";
+import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
+import { Title } from "../../components/Title.js";
+import { AlertModal } from "../../components/AlertModal.js";
+import { UserRegisterForm } from "../../components/UserRegisterForm.js";
 import {
   loadUserData,
   hasUserChanges,
   submitUserEdit,
-} from "../utils/handlers/users/userEditHandler.js";
-import { navigateTo } from "../routes/navigate.js";
-import { fetchSubjects } from "../utils/handlers/subjects/subjectHandler.js";
+} from "../../utils/handlers/users/userEditHandler.js";
+import { navigateTo } from "../../routes/navigate.js";
+import { fetchSubjects } from "../../utils/handlers/subjects/subjectHandler.js";
 
 export async function TeacherEdit(teacherId) {
   const teacherEdit = document.createElement("form");

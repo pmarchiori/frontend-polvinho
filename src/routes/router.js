@@ -2,17 +2,20 @@ import { Login } from "../pages/Login.js";
 import { ChangePassword } from "../pages/ChangePassword.js";
 import { RetrievePassword } from "../pages/RetrievePassword.js";
 import { Sidebar } from "../components/Sidebar.js";
-import { Dashboard } from "../pages/Dashboard.js";
-import { StudentList } from "../pages/StudentList.js";
-import { StudentRegister } from "../pages/StudentRegister.js";
-import { StudentEdit } from "../pages/StudentEdit.js";
 import { PageNotFound } from "../pages/PageNotFound.js";
-import { TeacherRegister } from "../pages/TeacherRegister.js";
-import { TeacherList } from "../pages/TeacherList.js";
-import { TeacherEdit } from "../pages/TeacherEdit.js";
-import { SubjectList } from "../pages/SubjectList.js";
-import { SubjectEdit } from "../pages/SubjectEdit.js";
-import { SubjectRegister } from "../pages/SubjectRegister.js";
+
+import { DashboardRouter } from "../components/Dashboard/DashboardRouter.js";
+
+import { DashboardAdmin } from "../pages/Admin/DashboardAdmin.js";
+import { StudentList } from "../pages/Admin/StudentList.js";
+import { StudentRegister } from "../pages/Admin/StudentRegister.js";
+import { StudentEdit } from "../pages/Admin/StudentEdit.js";
+import { TeacherRegister } from "../pages/Admin/TeacherRegister.js";
+import { TeacherList } from "../pages/Admin/TeacherList.js";
+import { TeacherEdit } from "../pages/Admin/TeacherEdit.js";
+import { SubjectList } from "../pages/Admin/SubjectList.js";
+import { SubjectEdit } from "../pages/Admin/SubjectEdit.js";
+import { SubjectRegister } from "../pages/Admin/SubjectRegister.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -32,7 +35,8 @@ const routes = {
   "#/login": Login,
   "#/change-password": ChangePassword,
   "#/retrieve-password": RetrievePassword,
-  "#/dashboard": Dashboard,
+  "#/dashboard": DashboardRouter,
+
   "#/students": StudentList,
   "#/student-register": StudentRegister,
   "#/student-edit": StudentEdit,

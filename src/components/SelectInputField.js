@@ -2,9 +2,10 @@ export function SelectInputField({
   label,
   fieldClass = "input-field",
   inputClass = "register-input",
-  placeholder = "Selecione...",
+  placeholder,
   disciplines,
   name,
+  multiple = true,
 }) {
   const fieldWrapper = document.createElement("div");
   fieldWrapper.classList.add(fieldClass);
@@ -63,12 +64,23 @@ export function SelectInputField({
     if (e.target.classList.contains("option")) {
       const value = e.target.dataset.value;
 
-      if (selectedValues.includes(value)) {
-        selectedValues = selectedValues.filter((v) => v !== value);
-        e.target.classList.remove("selected");
+      if (multiple) {
+        if (selectedValues.includes(value)) {
+          selectedValues = selectedValues.filter((v) => v !== value);
+          e.target.classList.remove("selected");
+        } else {
+          selectedValues.push(value);
+          e.target.classList.add("selected");
+        }
       } else {
-        selectedValues.push(value);
+        selectedValues = [value];
+
+        dropdown.querySelectorAll(".option").forEach((opt) => {
+          opt.classList.remove("selected");
+        });
         e.target.classList.add("selected");
+        dropdown.classList.add("hidden");
+        toggleIcon.classList.remove("rotated");
       }
 
       updateSelectedTags();
@@ -90,13 +102,15 @@ export function SelectInputField({
       tag.classList.add("tag");
       tag.textContent = discipline.name;
 
-      tag.addEventListener("click", () => {
-        selectedValues = selectedValues.filter((v) => v !== value);
-        const option = dropdown.querySelector(`[data-value="${value}"]`);
-        if (option) option.classList.remove("selected");
-        updateSelectedTags();
-        updateHiddenInput();
-      });
+      if (multiple) {
+        tag.addEventListener("click", () => {
+          selectedValues = selectedValues.filter((v) => v !== value);
+          const option = dropdown.querySelector(`[data-value="${value}"]`);
+          if (option) option.classList.remove("selected");
+          updateSelectedTags();
+          updateHiddenInput();
+        });
+      }
 
       selectedTags.appendChild(tag);
     });
@@ -107,7 +121,9 @@ export function SelectInputField({
   hiddenInput.name = name;
 
   function updateHiddenInput() {
-    hiddenInput.value = JSON.stringify(selectedValues);
+    hiddenInput.value = JSON.stringify(
+      multiple ? selectedValues : [selectedValues[0]]
+    );
   }
 
   wrapper.append(selectedTags, toggleIcon);

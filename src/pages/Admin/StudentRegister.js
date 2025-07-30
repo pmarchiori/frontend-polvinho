@@ -1,13 +1,13 @@
-import { FormButton } from "../components/Buttons/FormButton.js";
-import { ReturnButton } from "../components/Buttons/ReturnButton.js";
-import { Title } from "../components/Title.js";
-import { UserRegisterForm } from "../components/UserRegisterForm.js";
-import { fetchSubjects } from "../utils/handlers/subjects/subjectHandler.js";
-import { handleRegisterSubmit } from "../utils/handlers/users/userRegisterHandler.js";
+import { FormButton } from "../../components/Buttons/FormButton.js";
+import { Title } from "../../components/Title.js";
+import { handleRegisterSubmit } from "../../utils/handlers/users/userRegisterHandler.js";
+import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
+import { UserRegisterForm } from "../../components/UserRegisterForm.js";
+import { fetchSubjects } from "../../utils/handlers/subjects/subjectHandler.js";
 
-export async function TeacherRegister() {
-  const teacherRegister = document.createElement("form");
-  teacherRegister.classList.add("user-register");
+export async function StudentRegister() {
+  const studentRegister = document.createElement("form");
+  studentRegister.classList.add("user-register");
 
   const header = document.createElement("div");
   header.classList.add("register-header");
@@ -15,7 +15,7 @@ export async function TeacherRegister() {
   const returnButton = ReturnButton();
 
   const title = Title({
-    title: "Cadastro do Professor",
+    title: "Cadastro do Aluno",
     titleClass: "title2",
     titleColor: "var(--stone-900)",
   });
@@ -43,17 +43,17 @@ export async function TeacherRegister() {
 
   buttonContainer.appendChild(registerButton);
 
-  teacherRegister.appendChild(header);
-  teacherRegister.appendChild(registerForm);
-  teacherRegister.appendChild(buttonContainer);
+  studentRegister.appendChild(header);
+  studentRegister.append(registerForm);
+  studentRegister.appendChild(buttonContainer);
 
   returnButton.addEventListener("click", () => {
     window.history.back();
   });
 
-  teacherRegister.addEventListener("submit", async (event) => {
-    handleRegisterSubmit(event, "teacher");
+  studentRegister.addEventListener("submit", async (event) => {
+    handleRegisterSubmit(event, "student");
   });
 
-  return teacherRegister;
+  return studentRegister;
 }

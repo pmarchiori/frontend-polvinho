@@ -15,20 +15,26 @@ export function SidebarItem({ text, iconSrc, helperIconSrc, onClick }) {
   sidebarItem.appendChild(sidebarItemIcon);
   sidebarItem.appendChild(sidebarItemText);
 
+  let sidebarHelperIcon = null;
   if (helperIconSrc) {
-    const sidebarHelperIcon = document.createElement("img");
+    sidebarHelperIcon = document.createElement("img");
     sidebarHelperIcon.src = helperIconSrc;
     sidebarHelperIcon.alt = "Ícone de dropdown";
-    sidebarHelperIcon.classList.add("sidebar-icon");
+    sidebarHelperIcon.classList.add("sidebar-dropdown-icon");
     sidebarItem.appendChild(sidebarHelperIcon);
   }
 
-  if (typeof onClick === "function") {
-    sidebarItem.addEventListener("click", (e) => {
-      e.preventDefault();
+  sidebarItem.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (sidebarHelperIcon) {
+      sidebarHelperIcon.classList.toggle("rotated");
+    }
+
+    if (typeof onClick === "function") {
       onClick();
-    });
-  }
+    }
+  });
 
   return sidebarItem;
 }
