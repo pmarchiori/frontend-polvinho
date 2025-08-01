@@ -2,7 +2,7 @@ import { FormButton } from "../../components/Buttons/FormButton.js";
 import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
 import { SubjectRegisterForm } from "../../components/SubjectRegisterForm.js";
 import { Title } from "../../components/Title.js";
-import { handleSubjectRegisterSubmit } from "../../utils/handlers/subjects/subjectRegisterHandler.js";
+import { handleSubjectRegisterSubmit } from "../../handlers/subjects/subjectRegisterHandler.js";
 
 export async function SubjectRegister() {
   const subjectRegister = document.createElement("form");

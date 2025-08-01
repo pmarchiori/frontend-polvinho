@@ -1,6 +1,6 @@
 import { fetchSubjectById } from "./subjectHandler.js";
-import { Toaster } from "../../../components/Toaster.js";
-import { API_URL } from "../../../config/config.js";
+import { Toaster } from "../../components/Toaster.js";
+import { API_URL } from "../../config/config.js";
 
 export async function loadSubjectData(subjectId, inputs, setOriginalValues) {
   try {

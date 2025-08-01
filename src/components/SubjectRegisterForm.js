@@ -1,4 +1,4 @@
-import { fetchTeachers } from "../utils/handlers/users/userHandler.js";
+import { fetchTeachers } from "../handlers/users/userHandler.js";
 import { SelectInputField } from "./SelectInputField.js";
 import { TextInputField } from "./TextInputField.js";
 

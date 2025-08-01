@@ -6,7 +6,7 @@ import { UserListing } from "../../components/UserListing.js";
 import {
   fetchStudents,
   removeStudent,
-} from "../../utils/handlers/users/userHandler.js";
+} from "../../handlers/users/userHandler.js";
 import { Toaster } from "../../components/Toaster.js";
 import { ChartNames } from "../../components/ChartNames.js";
 import { PaginationButton } from "../../components/Buttons/PaginationButton.js";

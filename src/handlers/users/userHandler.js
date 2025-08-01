@@ -1,4 +1,4 @@
-import { API_URL } from "../../../config/config.js";
+import { API_URL } from "../../config/config.js";
 
 export async function fetchUsersByRole(role, page = 1) {
   try {

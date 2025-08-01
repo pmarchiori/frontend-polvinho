@@ -2,7 +2,7 @@ import { FormButton } from "../components/Buttons/FormButton.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
 import { navigateTo } from "../routes/navigate.js";
-import { handleLoginSubmit } from "../utils/handlers/auth/loginHandler.js";
+import { handleLoginSubmit } from "../handlers/auth/loginHandler.js";
 
 export function Login() {
   const loginBackground = document.createElement("div");

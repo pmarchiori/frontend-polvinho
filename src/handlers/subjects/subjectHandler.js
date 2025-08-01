@@ -1,4 +1,4 @@
-import { API_URL } from "../../../config/config.js";
+import { API_URL } from "../../config/config.js";
 
 export async function fetchSubjects(page = 1) {
   try {

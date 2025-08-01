@@ -1,7 +1,8 @@
-import { Toaster } from "../../../components/Toaster.js";
-import { API_URL } from "../../../config/config.js";
+import { isValidEmail } from "../../utils/validators.js";
+import { Toaster } from "../../components/Toaster.js";
+import { API_URL } from "../../config/config.js";
 
-export async function handleSubjectRegisterSubmit(event) {
+export async function handleRegisterSubmit(event, role) {
   event.preventDefault();
 
   const form = event.target;
@@ -10,52 +11,50 @@ export async function handleSubjectRegisterSubmit(event) {
   const data = {};
   inputs.forEach((input) => {
     if (input.name) {
-      if (input.name === "teacher") {
-        data[input.name] = input.value
-          ? JSON.parse(input.value)[0] || null
-          : null;
+      if (input.name === "subjects") {
+        data[input.name] = input.value ? JSON.parse(input.value) : [];
+      } else if (input.multiple) {
+        data[input.name] = Array.from(input.selectedOptions).map(
+          (option) => option.value
+        );
       } else {
         data[input.name] = input.value.trim();
       }
     }
   });
 
-  if (!data.subject || data.subject.length === 0) {
+  if (!isValidEmail(data.email)) {
     Toaster({
-      title: "Erro",
-      description: "O nome da disciplina é obrigatório.",
-      type: "error",
-    });
-    return;
-  }
-  if (!data.teacher) {
-    Toaster({
-      title: "Erro",
-      description: "O professor é obrigatório.",
+      title: "Email inválido",
+      description: "Por favor, insira um e-mail válido.",
       type: "error",
     });
     return;
   }
 
   const payload = {
-    name: data.subject,
-    teacher: data.teacher,
+    name: data.name,
+    email: data.email,
+    registration: data.registration,
+    subjects: data.subjects || [],
+    role: role,
   };
 
   try {
-    const response = await fetch(`${API_URL}/subjects`, {
+    const response = await fetch(`${API_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     });
+
     const result = await response.json();
 
     if (response.ok) {
       Toaster({
         title: "Sucesso!",
-        description: "Disciplina cadastrada com sucesso.",
+        description: "Usuário cadastrado com sucesso.",
         type: "success",
       });
       form.reset();

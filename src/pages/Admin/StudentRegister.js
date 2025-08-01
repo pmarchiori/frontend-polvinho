@@ -1,9 +1,9 @@
 import { FormButton } from "../../components/Buttons/FormButton.js";
 import { Title } from "../../components/Title.js";
-import { handleRegisterSubmit } from "../../utils/handlers/users/userRegisterHandler.js";
+import { handleRegisterSubmit } from "../../handlers/users/userRegisterHandler.js";
 import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
 import { UserRegisterForm } from "../../components/UserRegisterForm.js";
-import { fetchSubjects } from "../../utils/handlers/subjects/subjectHandler.js";
+import { fetchSubjects } from "../../handlers/subjects/subjectHandler.js";
 
 export async function StudentRegister() {
   const studentRegister = document.createElement("form");

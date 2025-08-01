@@ -1,7 +1,7 @@
 import { Title } from "../../components/Title.js";
 import { navigateTo } from "../../routes/navigate.js";
 import { DashboardItem } from "../../components/Dashboard/DashboardItem.js";
-import { fetchUserById } from "../../utils/handlers/users/userHandler.js";
+import { fetchUserById } from "../../handlers/users/userHandler.js";
 import { EmptyData } from "../../components/EmptyData.js";
 
 export async function DashboardTeacher({ userId }) {

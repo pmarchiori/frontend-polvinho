@@ -1,5 +1,5 @@
-import { validateLoginCredentials } from "../../validators.js";
-import { API_URL } from "../../../config/config.js";
+import { validateLoginCredentials } from "../../utils/validators.js";
+import { API_URL } from "../../config/config.js";
 
 export async function handleLoginSubmit(
   event,

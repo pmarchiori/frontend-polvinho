@@ -7,9 +7,9 @@ import {
   loadUserData,
   hasUserChanges,
   submitUserEdit,
-} from "../../utils/handlers/users/userEditHandler.js";
+} from "../../handlers/users/userEditHandler.js";
 import { navigateTo } from "../../routes/navigate.js";
-import { fetchSubjects } from "../../utils/handlers/subjects/subjectHandler.js";
+import { fetchSubjects } from "../../handlers/subjects/subjectHandler.js";
 
 export async function TeacherEdit(teacherId) {
   const teacherEdit = document.createElement("form");

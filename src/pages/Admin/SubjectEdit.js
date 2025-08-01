@@ -8,7 +8,7 @@ import {
   hasSubjectChanges,
   loadSubjectData,
   submitSubjectEdit,
-} from "../../utils/handlers/subjects/subjectEditHandler.js";
+} from "../../handlers/subjects/subjectEditHandler.js";
 
 export async function SubjectEdit(subjectId) {
   const subjectEdit = document.createElement("form");

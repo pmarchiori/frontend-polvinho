@@ -9,7 +9,7 @@ import { UserListing } from "../../components/UserListing.js";
 import {
   fetchTeachers,
   removeTeacher,
-} from "../../utils/handlers/users/userHandler.js";
+} from "../../handlers/users/userHandler.js";
 
 export function TeacherList() {
   let currentPage = 1;

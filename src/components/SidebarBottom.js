@@ -1,5 +1,5 @@
 import { navigateTo } from "../routes/navigate.js";
-import { logout } from "../utils/handlers/auth/logoutHandler.js";
+import { logout } from "../handlers/auth/logoutHandler.js";
 import { AlertModal } from "./AlertModal.js";
 import { SidebarItem } from "./SidebarItem.js";
 
