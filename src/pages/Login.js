@@ -2,7 +2,7 @@ import { FormButton } from "../components/Buttons/FormButton.js";
 import { TextInputField } from "../components/TextInputField.js";
 import { Title } from "../components/Title.js";
 import { navigateTo } from "../routes/navigate.js";
-import { handleLoginSubmit } from "../utils/handlers/loginHandler.js";
+import { handleLoginSubmit } from "../handlers/auth/loginHandler.js";
 
 export function Login() {
   const loginBackground = document.createElement("div");
@@ -62,9 +62,13 @@ export function Login() {
   loginBackground.appendChild(polvoLogoLogin);
   loginBackground.appendChild(loginForm);
 
-  loginForm.addEventListener("submit", (event) => {
-    handleLoginSubmit(event, userLoginField, userPasswordField);
-    navigateTo("#/dashboard");
+  loginForm.addEventListener("submit", async (event) => {
+    const success = await handleLoginSubmit(
+      event,
+      userLoginField,
+      userPasswordField
+    );
+    if (success) navigateTo("#/dashboard");
   });
 
   return loginBackground;

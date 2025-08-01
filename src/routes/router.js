@@ -2,15 +2,20 @@ import { Login } from "../pages/Login.js";
 import { ChangePassword } from "../pages/ChangePassword.js";
 import { RetrievePassword } from "../pages/RetrievePassword.js";
 import { Sidebar } from "../components/Sidebar.js";
-import { Dashboard } from "../pages/Dashboard.js";
-import { StudentList } from "../pages/StudentList.js";
-import { StudentRegister } from "../pages/StudentRegister.js";
-import { StudentEdit } from "../pages/StudentEdit.js";
 import { PageNotFound } from "../pages/PageNotFound.js";
-import { TeacherRegister } from "../pages/TeacherRegister.js";
-import { TeacherList } from "../pages/TeacherList.js";
-import { TeacherEdit } from "../pages/TeacherEdit.js";
-import { SubjectList } from "../pages/SubjectList.js";
+
+import { DashboardRouter } from "../components/Dashboard/DashboardRouter.js";
+
+import { DashboardAdmin } from "../pages/Admin/DashboardAdmin.js";
+import { StudentList } from "../pages/Admin/StudentList.js";
+import { StudentRegister } from "../pages/Admin/StudentRegister.js";
+import { StudentEdit } from "../pages/Admin/StudentEdit.js";
+import { TeacherRegister } from "../pages/Admin/TeacherRegister.js";
+import { TeacherList } from "../pages/Admin/TeacherList.js";
+import { TeacherEdit } from "../pages/Admin/TeacherEdit.js";
+import { SubjectList } from "../pages/Admin/SubjectList.js";
+import { SubjectEdit } from "../pages/Admin/SubjectEdit.js";
+import { SubjectRegister } from "../pages/Admin/SubjectRegister.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -21,6 +26,8 @@ const routesWithSidebar = [
   "#/teacher-register",
   "#/teacher-edit",
   "#/subjects",
+  "#/subject-register",
+  "#/subject-edit",
 ];
 
 const routes = {
@@ -28,7 +35,8 @@ const routes = {
   "#/login": Login,
   "#/change-password": ChangePassword,
   "#/retrieve-password": RetrievePassword,
-  "#/dashboard": Dashboard,
+  "#/dashboard": DashboardRouter,
+
   "#/students": StudentList,
   "#/student-register": StudentRegister,
   "#/student-edit": StudentEdit,
@@ -36,15 +44,40 @@ const routes = {
   "#/teacher-register": TeacherRegister,
   "#/teacher-edit": TeacherEdit,
   "#/subjects": SubjectList,
+  "#/subject-register": SubjectRegister,
+  "#/subject-edit": SubjectEdit,
 };
 
-export function router() {
-  let container = document.querySelector("#container");
-  if (!container) {
-    container = document.createElement("div");
-    container.id = "container";
-    document.body.appendChild(container);
+const protectedRoutes = {
+  "#/dashboard": ["admin", "teacher", "student"],
+  "#/students": ["admin", "teacher"],
+  "#/student-register": ["admin"],
+  "#/student-edit": ["admin", "teacher"],
+  "#/teachers": ["admin"],
+  "#/teacher-register": ["admin"],
+  "#/teacher-edit": ["admin"],
+  "#/subjects": ["admin", "teacher"],
+  "#/subject-register": ["admin"],
+  "#/subject-edit": ["admin"],
+};
+
+function getUserFromToken() {
+  const token = localStorage.getItem("authToken");
+  if (!token) return null;
+  try {
+    const payloadBase64 = token.split(".")[1];
+    return JSON.parse(atob(payloadBase64));
+  } catch {
+    return null;
   }
+}
+
+export async function router() {
+  const container =
+    document.querySelector("#container") ||
+    document.body.appendChild(document.createElement("div"));
+  container.id = "container";
+  container.innerHTML = "";
 
   const fullPath = window.location.hash || "#/login";
   const [basePath, param] =
@@ -52,21 +85,32 @@ export function router() {
       ? [fullPath.split("/").slice(0, 2).join("/"), fullPath.split("/")[2]]
       : [fullPath, null];
 
+  const user = getUserFromToken();
+  const allowedRoles = protectedRoutes[basePath];
+
+  if (allowedRoles && (!user || !allowedRoles.includes(user.role))) {
+    console.log("usuário não autorizado");
+    window.location.hash = "#/login";
+    return;
+  }
+
   const PageComponent = routes[basePath];
-
-  container.innerHTML = "";
-
   if (!PageComponent) {
     container.appendChild(routes[404]());
     return;
   }
 
   if (routesWithSidebar.includes(basePath)) {
-    const sidebar = Sidebar();
-    const page = param ? PageComponent(param) : PageComponent();
-    container.appendChild(sidebar);
-    container.appendChild(page);
+    container.appendChild(Sidebar());
+  }
+
+  const pageElement = param
+    ? await PageComponent(param)
+    : await PageComponent();
+
+  if (pageElement instanceof Node) {
+    container.appendChild(pageElement);
   } else {
-    container.appendChild(param ? PageComponent(param) : PageComponent());
+    console.error("A página não retornou um elemento válido:", pageElement);
   }
 }

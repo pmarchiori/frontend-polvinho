@@ -1,4 +1,6 @@
 import { navigateTo } from "../routes/navigate.js";
+import { logout } from "../handlers/auth/logoutHandler.js";
+import { AlertModal } from "./AlertModal.js";
 import { SidebarItem } from "./SidebarItem.js";
 
 export function SidebarBottom() {
@@ -17,7 +19,17 @@ export function SidebarBottom() {
     text: "Encerrar sessão",
     iconSrc: "/assets/SignOut.svg",
     onClick: () => {
-      navigateTo("#/login");
+      const modal = AlertModal({
+        title: "Tem certeza?",
+        message:
+          "Você irá encerrar sua sessão e precisará realizar login para entrar novamente.",
+        type: "delete",
+        onConfirm: () => {
+          logout();
+        },
+        onCancel: () => {},
+      });
+      document.body.appendChild(modal);
     },
   });
 

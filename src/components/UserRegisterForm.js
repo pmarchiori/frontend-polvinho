@@ -1,7 +1,7 @@
 import { SelectInputField } from "./SelectInputField.js";
 import { TextInputField } from "./TextInputField.js";
 
-export function UserRegisterForm() {
+export function UserRegisterForm(subjects = []) {
   const userRegisterForm = document.createElement("form");
   userRegisterForm.classList.add("register-container");
 
@@ -35,18 +35,25 @@ export function UserRegisterForm() {
     name: "email",
   });
 
-  const subjectsInput = SelectInputField({
-    label: "Disciplinas",
-    fieldClass: "input-field",
-    inputClass: "select-input",
-    placeholder: "Disciplinas do usuário",
-    disciplines: [
-      { _id: "666b5a7a93be74d1c1e3271c", name: "disciplina 1" },
-      { _id: "566b5a7a93be74d1c1e3271c", name: "disciplina 2" },
-      { _id: "466b5a7a93be74d1c1e3271c", name: "disciplina 3" },
-    ],
-    name: "subject",
-  });
+  let subjectsInput;
+  if (subjects.length > 0) {
+    subjectsInput = SelectInputField({
+      label: "Disciplinas",
+      fieldClass: "input-field",
+      inputClass: "select-input",
+      name: "subjects",
+      placeholder: "Disciplinas do usuário",
+      disciplines: subjects.map((subject) => ({
+        _id: subject._id,
+        name: subject.name,
+      })),
+      multiple: true,
+    });
+  } else {
+    const noSubjectMsg = document.createElement("p");
+    noSubjectMsg.textContent = "Nenhuma disciplina cadastrada no sistema.";
+    subjectsInput = noSubjectMsg;
+  }
 
   upperInputRow.append(nameInput, registrationInput);
   lowerInputRow.append(emailInput, subjectsInput);

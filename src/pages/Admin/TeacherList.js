@@ -1,12 +1,15 @@
-import { CreationButton } from "../components/Buttons/CreationButton.js";
-import { PaginationButton } from "../components/Buttons/PaginationButton.js";
-import { ReturnButton } from "../components/Buttons/ReturnButton.js";
-import { ChartNames } from "../components/ChartNames.js";
-import { EmptyData } from "../components/EmptyData.js";
-import { Title } from "../components/Title.js";
-import { Toaster } from "../components/Toaster.js";
-import { UserListing } from "../components/UserListing.js";
-import { fetchTeachers, removeTeacher } from "../utils/handlers/userHandler.js";
+import { CreationButton } from "../../components/Buttons/CreationButton.js";
+import { PaginationButton } from "../../components/Buttons/PaginationButton.js";
+import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
+import { ChartNames } from "../../components/ChartNames.js";
+import { EmptyData } from "../../components/EmptyData.js";
+import { Title } from "../../components/Title.js";
+import { Toaster } from "../../components/Toaster.js";
+import { UserListing } from "../../components/UserListing.js";
+import {
+  fetchTeachers,
+  removeTeacher,
+} from "../../handlers/users/userHandler.js";
 
 export function TeacherList() {
   let currentPage = 1;

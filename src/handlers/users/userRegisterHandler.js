@@ -1,5 +1,6 @@
-import { isValidEmail } from "../validators.js";
+import { isValidEmail } from "../../utils/validators.js";
 import { Toaster } from "../../components/Toaster.js";
+import { API_URL } from "../../config/config.js";
 
 export async function handleRegisterSubmit(event, role) {
   event.preventDefault();
@@ -10,7 +11,15 @@ export async function handleRegisterSubmit(event, role) {
   const data = {};
   inputs.forEach((input) => {
     if (input.name) {
-      data[input.name] = input.value.trim();
+      if (input.name === "subjects") {
+        data[input.name] = input.value ? JSON.parse(input.value) : [];
+      } else if (input.multiple) {
+        data[input.name] = Array.from(input.selectedOptions).map(
+          (option) => option.value
+        );
+      } else {
+        data[input.name] = input.value.trim();
+      }
     }
   });
 
@@ -27,12 +36,12 @@ export async function handleRegisterSubmit(event, role) {
     name: data.name,
     email: data.email,
     registration: data.registration,
-    subject: data.subjects || null,
+    subjects: data.subjects || [],
     role: role,
   };
 
   try {
-    const response = await fetch("http://localhost:8000/users", {
+    const response = await fetch(`${API_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

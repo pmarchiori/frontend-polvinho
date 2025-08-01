@@ -1,10 +1,11 @@
-import { FormButton } from "../components/Buttons/FormButton.js";
-import { ReturnButton } from "../components/Buttons/ReturnButton.js";
-import { Title } from "../components/Title.js";
-import { UserRegisterForm } from "../components/UserRegisterForm.js";
-import { handleRegisterSubmit } from "../utils/handlers/registerHandler.js";
+import { FormButton } from "../../components/Buttons/FormButton.js";
+import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
+import { Title } from "../../components/Title.js";
+import { UserRegisterForm } from "../../components/UserRegisterForm.js";
+import { fetchSubjects } from "../../handlers/subjects/subjectHandler.js";
+import { handleRegisterSubmit } from "../../handlers/users/userRegisterHandler.js";
 
-export function TeacherRegister() {
+export async function TeacherRegister() {
   const teacherRegister = document.createElement("form");
   teacherRegister.classList.add("user-register");
 
@@ -22,7 +23,15 @@ export function TeacherRegister() {
   header.appendChild(returnButton);
   header.appendChild(title);
 
-  const registerForm = UserRegisterForm();
+  let subjects = [];
+  try {
+    const { subjects: fetchedSubjects } = await fetchSubjects();
+    subjects = fetchedSubjects;
+  } catch (error) {
+    console.error("Erro ao carregar disciplinas:", error);
+  }
+
+  const registerForm = UserRegisterForm(subjects);
 
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");

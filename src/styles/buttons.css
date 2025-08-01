@@ -106,3 +106,18 @@
   border: 1px solid var(--neutral-300);
   cursor: default;
 }
+
+.sidebar-dropdown-btn {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 8px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  color: var(--indigo-50);
+}
+
+.sidebar-dropdown-btn:hover {
+  color: var(--yellow-200);
+}

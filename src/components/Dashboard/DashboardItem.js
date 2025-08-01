@@ -14,14 +14,14 @@ export function DashboardItem({ title, description = "", onClick }) {
     dashboardItemDescription.classList.add("textMd");
     dashboardItemDescription.style.color = "var(--indigo-700)";
 
-    if (typeof onClick === "function") {
-      dashboardItemDescription.addEventListener("click", (e) => {
-        e.preventDefault();
-        onClick();
-      });
-    }
-
     dashboardItem.appendChild(dashboardItemDescription);
+  }
+
+  if (typeof onClick === "function") {
+    dashboardItem.addEventListener("click", (e) => {
+      e.preventDefault();
+      onClick();
+    });
   }
 
   return dashboardItem;
