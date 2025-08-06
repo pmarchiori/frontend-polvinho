@@ -1,6 +1,7 @@
 import { fetchSubjectById } from "./subjectHandler.js";
 import { Toaster } from "../../components/Toaster.js";
 import { API_URL } from "../../config/config.js";
+import { fetchWithAuth } from "../../utils/fetchWithAuth.js";
 
 export async function loadSubjectData(subjectId, inputs, setOriginalValues) {
   try {
@@ -41,15 +42,13 @@ export async function submitSubjectEdit(subjectId, inputs) {
   };
 
   try {
-    const res = await fetch(`${API_URL}/subjects/${subjectId}`, {
+    await fetchWithAuth(`${API_URL}/subjects/${subjectId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedSubject),
     });
-
-    if (!res.ok) throw new Error("Erro ao atualizar disciplina");
 
     Toaster({
       title: "Sucesso!",

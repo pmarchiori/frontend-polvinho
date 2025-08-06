@@ -1,6 +1,12 @@
 import { AlertModal } from "./AlertModal.js";
 
-export function SubjectListing({ name, teacher, quizzes, onEdit, onRemove }) {
+export function SubjectListing({
+  name,
+  teacher,
+  quizzes = [],
+  onEdit,
+  onRemove,
+}) {
   const subjectListing = document.createElement("div");
   subjectListing.classList.add("user-listing");
 
@@ -11,7 +17,7 @@ export function SubjectListing({ name, teacher, quizzes, onEdit, onRemove }) {
   const subjectTeacher = document.createElement("p");
   subjectTeacher.textContent = teacher;
   subjectTeacher.classList.add("textMd", "col-registration", "list-text");
-  if (subjectTeacher.textContent === "Nenhum professor") {
+  if (subjectTeacher.textContent === "Nenhum Professor") {
     subjectTeacher.classList.add("empty-color");
   }
 

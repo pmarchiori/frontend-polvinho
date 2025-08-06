@@ -1,6 +1,7 @@
 import { isValidEmail } from "../../utils/validators.js";
 import { Toaster } from "../../components/Toaster.js";
 import { API_URL } from "../../config/config.js";
+import { fetchWithAuth } from "../../utils/fetchWithAuth.js";
 
 export async function handleRegisterSubmit(event, role) {
   event.preventDefault();
@@ -41,35 +42,22 @@ export async function handleRegisterSubmit(event, role) {
   };
 
   try {
-    const response = await fetch(`${API_URL}/users`, {
+    await fetchWithAuth(`${API_URL}/users`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(payload),
     });
 
-    const result = await response.json();
-
-    if (response.ok) {
-      Toaster({
-        title: "Sucesso!",
-        description: "Usuário cadastrado com sucesso.",
-        type: "success",
-      });
-      form.reset();
-    } else {
-      Toaster({
-        title: "Erro",
-        description: result.error || "Algo deu errado.",
-        type: "error",
-      });
-    }
+    Toaster({
+      title: "Sucesso!",
+      description: "Usuário cadastrado com sucesso.",
+      type: "success",
+    });
+    form.reset();
   } catch (error) {
     console.error("Erro:", error);
     Toaster({
       title: "Erro",
-      description: "Não foi possível conectar com o servidor.",
+      description: error.message || "Não foi possível conectar com o servidor.",
       type: "error",
     });
   }

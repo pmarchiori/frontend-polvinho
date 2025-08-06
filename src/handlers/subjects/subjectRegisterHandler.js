@@ -1,5 +1,6 @@
 import { Toaster } from "../../components/Toaster.js";
 import { API_URL } from "../../config/config.js";
+import { fetchWithAuth } from "../../utils/fetchWithAuth.js";
 
 export async function handleSubjectRegisterSubmit(event) {
   event.preventDefault();
@@ -43,34 +44,22 @@ export async function handleSubjectRegisterSubmit(event) {
   };
 
   try {
-    const response = await fetch(`${API_URL}/subjects`, {
+    const result = await fetchWithAuth(`${API_URL}/subjects`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(payload),
     });
-    const result = await response.json();
 
-    if (response.ok) {
-      Toaster({
-        title: "Sucesso!",
-        description: "Disciplina cadastrada com sucesso.",
-        type: "success",
-      });
-      form.reset();
-    } else {
-      Toaster({
-        title: "Erro",
-        description: result.error || "Algo deu errado.",
-        type: "error",
-      });
-    }
+    Toaster({
+      title: "Sucesso!",
+      description: "Disciplina cadastrada com sucesso.",
+      type: "success",
+    });
+    form.reset();
   } catch (error) {
     console.error("Erro:", error);
     Toaster({
       title: "Erro",
-      description: "Não foi possível conectar com o servidor.",
+      description: error.message || "Não foi possível conectar com o servidor.",
       type: "error",
     });
   }
