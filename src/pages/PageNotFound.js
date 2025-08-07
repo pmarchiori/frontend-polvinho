@@ -27,9 +27,7 @@ export function PageNotFound() {
     navigateTo("#/login");
   });
 
-  notFoundContainer.appendChild(notFoundImage);
-  notFoundContainer.appendChild(notFoundTitle);
-  notFoundContainer.appendChild(notFoundButton);
+  notFoundContainer.append(notFoundImage, notFoundTitle, notFoundButton);
 
   return notFoundContainer;
 }

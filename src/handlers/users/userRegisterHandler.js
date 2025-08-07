@@ -1,6 +1,8 @@
 import { isValidEmail } from "../../utils/validators.js";
-import { Toaster } from "../../components/Toaster.js";
 import { API_URL } from "../../config/config.js";
+import { fetchWithAuth } from "../../utils/fetchWithAuth.js";
+import { Toaster } from "../../components/Toaster.js";
+import { showInlineError } from "../../utils/showInlineError.js";
 
 export async function handleRegisterSubmit(event, role) {
   event.preventDefault();
@@ -8,29 +10,42 @@ export async function handleRegisterSubmit(event, role) {
   const form = event.target;
   const inputs = form.querySelectorAll("input, select");
 
+  form.querySelectorAll(".input-error").forEach((el) => el.remove());
+  form.querySelectorAll(".error").forEach((el) => el.classList.remove("error"));
+
   const data = {};
+  let hasError = false;
+
   inputs.forEach((input) => {
-    if (input.name) {
-      if (input.name === "subjects") {
-        data[input.name] = input.value ? JSON.parse(input.value) : [];
-      } else if (input.multiple) {
-        data[input.name] = Array.from(input.selectedOptions).map(
-          (option) => option.value
-        );
-      } else {
-        data[input.name] = input.value.trim();
-      }
+    const name = input.name;
+    const value = input.value.trim();
+
+    if (!name) return;
+
+    const parent = input.closest(".input-field");
+    if (parent) {
+      const oldError = parent.querySelector(".input-error");
+      if (oldError) oldError.remove();
+    }
+
+    if (name === "email" && !isValidEmail(value)) {
+      showInlineError(input, "Por favor, insira um e-mail válido.");
+      hasError = true;
+    } else if (value === "" && name !== "subjects") {
+      showInlineError(input, "Este campo é obrigatório.");
+      hasError = true;
+    }
+
+    if (name === "subjects") {
+      data[name] = input.value ? JSON.parse(input.value) : [];
+    } else if (input.multiple) {
+      data[name] = Array.from(input.selectedOptions).map((o) => o.value);
+    } else {
+      data[name] = value;
     }
   });
 
-  if (!isValidEmail(data.email)) {
-    Toaster({
-      title: "Email inválido",
-      description: "Por favor, insira um e-mail válido.",
-      type: "error",
-    });
-    return;
-  }
+  if (hasError) return;
 
   const payload = {
     name: data.name,
@@ -41,35 +56,23 @@ export async function handleRegisterSubmit(event, role) {
   };
 
   try {
-    const response = await fetch(`${API_URL}/users`, {
+    await fetchWithAuth(`${API_URL}/users`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(payload),
     });
 
-    const result = await response.json();
+    form.reset();
 
-    if (response.ok) {
-      Toaster({
-        title: "Sucesso!",
-        description: "Usuário cadastrado com sucesso.",
-        type: "success",
-      });
-      form.reset();
-    } else {
-      Toaster({
-        title: "Erro",
-        description: result.error || "Algo deu errado.",
-        type: "error",
-      });
-    }
+    Toaster({
+      title: "Sucesso!",
+      description: "Usuário cadastrado com sucesso.",
+      type: "success",
+    });
   } catch (error) {
     console.error("Erro:", error);
     Toaster({
       title: "Erro",
-      description: "Não foi possível conectar com o servidor.",
+      description: error.message || "Não foi possível conectar com o servidor.",
       type: "error",
     });
   }

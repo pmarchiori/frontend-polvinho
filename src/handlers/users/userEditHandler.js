@@ -1,6 +1,7 @@
 import { fetchUserById } from "./userHandler.js";
 import { Toaster } from "../../components/Toaster.js";
 import { API_URL } from "../../config/config.js";
+import { fetchWithAuth } from "../../utils/fetchWithAuth.js";
 
 export async function loadUserData(userId, inputs, setOriginalValues) {
   try {
@@ -75,15 +76,10 @@ export async function submitUserEdit(
   }
 
   try {
-    const res = await fetch(`${API_URL}/users/${userId}`, {
+    await fetchWithAuth(`${API_URL}/users/${userId}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(updatedUser),
     });
-
-    if (!res.ok) throw new Error("Erro ao atualizar usuário");
 
     Toaster({
       title: "Sucesso!",
