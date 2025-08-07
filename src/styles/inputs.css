@@ -47,8 +47,16 @@
   max-width: 26rem;
 }
 
+.register-input.error,
+.select-container.error {
+  border-color: var(--red-500);
+}
+
 .input-error {
   color: var(--red-500);
+  font-size: 0.875rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .select-container {

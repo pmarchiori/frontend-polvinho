@@ -5,6 +5,7 @@ import { ChartNames } from "./ChartNames.js";
 import { Title } from "./Title.js";
 import { EmptyData } from "../components/EmptyData.js";
 import { Toaster } from "../components/Toaster.js";
+import { fetchPageData } from "../utils/pagination.js";
 
 export function ItemsList({
   titleProps,
@@ -31,11 +32,16 @@ export function ItemsList({
   const btnArea = document.createElement("div");
 
   const returnButton = ReturnButton();
+  returnButton.addEventListener("click", () => window.history.back());
 
   const title = Title(titleProps);
 
-  const createButton = CreationButton(buttonProps);
+  const updateTitleInfo = (text) => {
+    const titleText = title.querySelector(".textLg");
+    if (titleText) titleText.textContent = text;
+  };
 
+  const createButton = CreationButton(buttonProps);
   const chartNames = ChartNames(chartNamesProps);
 
   const contentArea = document.createElement("div");
@@ -60,63 +66,63 @@ export function ItemsList({
   paginationButtons.append(prevButton, nextButton);
   paginationArea.append(paginationText, paginationButtons);
 
-  function loadItems(page = 1) {
+  async function loadItems(page = 1) {
     contentArea.innerHTML = "";
-    fetchData(page)
-      .then((response) => {
-        const items = response[data] || [];
-        const { total, currentPage: cp, totalPages } = response;
-        currentPage = cp;
 
-        title.querySelector(".textLg").textContent = `${total} Cadastrados`;
-        paginationText.textContent = `Mostrando ${items.length} de ${total} entradas.`;
+    try {
+      const {
+        items,
+        total,
+        currentPage: cp,
+        totalPages,
+      } = await fetchPageData(fetchData, page, data);
+      currentPage = cp;
 
-        if (items.length === 0) {
-          const emptyComponent = EmptyData({ text: emptyMessage });
-          contentArea.appendChild(emptyComponent);
-        } else {
-          items.forEach((item) => {
-            const itemComponent = createItemComponent({
-              ...item,
-              onEdit: () => {
-                window.location.hash = `${editRoutePrefix}${item._id}`;
-              },
-              onRemove: () => {
-                removeItem(item._id)
-                  .then(() => {
-                    Toaster({
-                      title: "Sucesso!",
-                      description: "Removido com sucesso!",
-                      type: "success",
-                    });
-                    loadItems(currentPage);
-                  })
-                  .catch(() => {
-                    Toaster({
-                      title: "Erro ao remover",
-                      description: "Não foi possível remover.",
-                      type: "error",
-                    });
+      updateTitleInfo(`${total} Cadastrados`);
+      paginationText.textContent = `Mostrando ${items.length} de ${total} entradas.`;
+
+      if (items.length === 0) {
+        const emptyComponent = EmptyData({ text: emptyMessage });
+        contentArea.appendChild(emptyComponent);
+      } else {
+        items.forEach((item) => {
+          const itemComponent = createItemComponent({
+            ...item,
+            onEdit: () => {
+              window.location.hash = `${editRoutePrefix}${item._id}`;
+            },
+            onRemove: () => {
+              removeItem(item._id)
+                .then(() => {
+                  Toaster({
+                    title: "Sucesso!",
+                    description: "Removido com sucesso!",
+                    type: "success",
                   });
-              },
-            });
-            contentArea.appendChild(itemComponent);
+                  loadItems(currentPage);
+                })
+                .catch(() => {
+                  Toaster({
+                    title: "Erro ao remover",
+                    description: "Não foi possível remover.",
+                    type: "error",
+                  });
+                });
+            },
           });
-        }
+          contentArea.appendChild(itemComponent);
+        });
+      }
 
-        prevButton.disabled = currentPage === 1;
-        nextButton.disabled = currentPage === totalPages;
-      })
-      .catch((err) => {
-        console.error("Erro durante carregamento:", err);
-        title.querySelector(".textLg").textContent = "Erro ao carregar";
-      });
+      prevButton.disabled = currentPage === 1;
+      nextButton.disabled = currentPage === totalPages;
+    } catch (err) {
+      updateTitleInfo("Erro ao carregar");
+    }
   }
 
-  prevButton.addEventListener("click", () => loadItems(--currentPage));
-  nextButton.addEventListener("click", () => loadItems(++currentPage));
-
-  returnButton.addEventListener("click", () => window.history.back());
+  prevButton.addEventListener("click", () => loadItems(currentPage - 1));
+  nextButton.addEventListener("click", () => loadItems(currentPage + 1));
 
   titleArea.append(returnButton, title);
   btnArea.append(createButton);

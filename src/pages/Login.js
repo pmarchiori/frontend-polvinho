@@ -52,15 +52,16 @@ export function Login() {
 
   const loginButton = FormButton({ btnName: "Entrar", btnClass: "form-btn" });
 
-  loginForm.appendChild(loginFormTitle);
-  loginForm.appendChild(splitLine);
-  loginForm.appendChild(userLoginField);
-  loginForm.appendChild(userPasswordField);
-  loginForm.appendChild(forgotPassword);
-  loginForm.appendChild(loginButton);
+  loginForm.append(
+    loginFormTitle,
+    splitLine,
+    userLoginField,
+    userPasswordField,
+    forgotPassword,
+    loginButton
+  );
 
-  loginBackground.appendChild(polvoLogoLogin);
-  loginBackground.appendChild(loginForm);
+  loginBackground.append(polvoLogoLogin, loginForm);
 
   loginForm.addEventListener("submit", async (event) => {
     const success = await handleLoginSubmit(

@@ -42,13 +42,14 @@ export function RetrievePassword() {
     btnClass: "form-btn",
   });
 
-  retrievePasswordForm.appendChild(retrievePasswordTitle);
-  retrievePasswordForm.appendChild(splitLine);
-  retrievePasswordForm.appendChild(userEmailField);
-  retrievePasswordForm.appendChild(retrievePasswordButton);
+  retrievePasswordForm.append(
+    retrievePasswordTitle,
+    splitLine,
+    userEmailField,
+    retrievePasswordButton
+  );
 
-  retrievePasswordBackground.appendChild(polvoLogo);
-  retrievePasswordBackground.appendChild(retrievePasswordForm);
+  retrievePasswordBackground.append(polvoLogo, retrievePasswordForm);
 
   return retrievePasswordBackground;
 }
