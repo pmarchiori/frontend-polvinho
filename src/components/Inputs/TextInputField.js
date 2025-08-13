@@ -1,5 +1,5 @@
 export function TextInputField({
-  label,
+  label = "",
   inputType = "text",
   fieldClass,
   inputClass,

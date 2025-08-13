@@ -16,6 +16,9 @@ import { TeacherEdit } from "../pages/Admin/TeacherEdit.js";
 import { SubjectList } from "../pages/Admin/SubjectList.js";
 import { SubjectEdit } from "../pages/Admin/SubjectEdit.js";
 import { SubjectRegister } from "../pages/Admin/SubjectRegister.js";
+import { SubjectQuizzes } from "../pages/Teacher/SubjectQuizzes.js";
+import { QuizRegister } from "../pages/Teacher/QuizRegister.js";
+import { QuizDetails } from "../pages/Teacher/QuizDetails.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -28,6 +31,9 @@ const routesWithSidebar = [
   "#/subjects",
   "#/subject-register",
   "#/subject-edit",
+  "#/subject-quizzes",
+  "#/quiz-register",
+  "#/quiz-details",
 ];
 
 const routes = {
@@ -46,19 +52,28 @@ const routes = {
   "#/subjects": SubjectList,
   "#/subject-register": SubjectRegister,
   "#/subject-edit": SubjectEdit,
+
+  "#/subject-quizzes": SubjectQuizzes,
+  "#/quiz-register": QuizRegister,
+  "#/quiz-details": QuizDetails,
 };
 
 const protectedRoutes = {
   "#/dashboard": ["admin", "teacher", "student"],
+
   "#/students": ["admin", "teacher"],
   "#/student-register": ["admin"],
   "#/student-edit": ["admin", "teacher"],
   "#/teachers": ["admin"],
   "#/teacher-register": ["admin"],
   "#/teacher-edit": ["admin"],
+
   "#/subjects": ["admin", "teacher"],
   "#/subject-register": ["admin"],
   "#/subject-edit": ["admin"],
+
+  "#/subject-quizzes": ["teacher"],
+  "#/quiz-register": ["teacher"],
 };
 
 function getUserFromToken() {

@@ -1,5 +1,5 @@
 export function SelectInputField({
-  label,
+  label = "",
   fieldClass = "input-field",
   inputClass = "register-input",
   placeholder,
