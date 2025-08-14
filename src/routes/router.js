@@ -1,12 +1,11 @@
 import { Login } from "../pages/Login.js";
 import { ChangePassword } from "../pages/ChangePassword.js";
 import { RetrievePassword } from "../pages/RetrievePassword.js";
-import { Sidebar } from "../components/Sidebar.js";
+import { Sidebar } from "../components/Sidebar/Sidebar.js";
 import { PageNotFound } from "../pages/PageNotFound.js";
 
 import { DashboardRouter } from "../components/Dashboard/DashboardRouter.js";
 
-import { DashboardAdmin } from "../pages/Admin/DashboardAdmin.js";
 import { StudentList } from "../pages/Admin/StudentList.js";
 import { StudentRegister } from "../pages/Admin/StudentRegister.js";
 import { StudentEdit } from "../pages/Admin/StudentEdit.js";

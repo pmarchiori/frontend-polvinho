@@ -22,6 +22,7 @@ export function TextInputField({
   input.type = inputType;
   input.placeholder = placeholder;
   input.classList.add(inputClass);
+  input.classList.add("placeholder");
   input.name = name;
 
   inputWrapper.appendChild(input);

@@ -2,8 +2,11 @@ import { AlertModal } from "../../components/AlertModal.js";
 import { FormButton } from "../../components/Buttons/FormButton.js";
 import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
 import { Title } from "../../components/Title.js";
+import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
 
-export function QuizDetails() {
+export async function QuizDetails(quizId) {
+  const quiz = await fetchQuizById(quizId);
+
   const quizDetails = document.createElement("div");
   quizDetails.classList.add("user-list");
 
@@ -14,8 +17,8 @@ export function QuizDetails() {
   returnButton.addEventListener("click", () => window.history.back());
 
   const title = Title({
-    title: "NOME DO QUIZ",
-    subtitle: "NOME DA DISCIPLINA",
+    title: quiz.name,
+    subtitle: quiz.subject?.name || "Sem disciplina",
     titleClass: "title2",
     titleColor: "var(--stone-900)",
     subtitleClass: "textLg",
@@ -33,19 +36,23 @@ export function QuizDetails() {
   const guidelines = document.createElement("p");
   guidelines.classList.add("textMd");
   guidelines.style.color = "var(--stone-700)";
-  guidelines.textContent = "abcda";
+  guidelines.textContent = quiz.description || "Sem orientações";
 
   const quizInfo = document.createElement("ul");
   quizInfo.classList.add("quiz-info-list");
 
   const triesAmountInfo = document.createElement("li");
-  triesAmountInfo.textContent = `Tentativas: ${"num de tentativas"}`;
+  triesAmountInfo.textContent = `Tentativas: ${
+    quiz.maxAttempts || "Ilimitadas"
+  }`;
 
   const maxTimeInfo = document.createElement("li");
-  maxTimeInfo.textContent = `Tempo máximo: ${"1hr"}`;
+  maxTimeInfo.textContent = `Tempo máximo: ${quiz.duration} minutos`;
 
   const submitDateInfo = document.createElement("li");
-  submitDateInfo.textContent = `Data de Entrega: ${"32 de dezembro"}`;
+  submitDateInfo.textContent = `Data de Entrega: ${new Date(
+    quiz.finishedDate
+  ).toLocaleDateString("pt-BR")}`;
 
   const studentsContainer = document.createElement("div");
   studentsContainer.classList.add("students-container");
@@ -60,16 +67,15 @@ export function QuizDetails() {
     btnClass: "delete-quiz-btn",
   });
 
-  deleteQuizBtn.addEventListener("click", (e) => {
+  deleteQuizBtn.addEventListener("click", () => {
     const confirmDeleteModal = AlertModal({
       title: "Tem certeza?",
-      message: `Você irá eliminar o quiz ${"NOME DO QUIZ"}. Esta ação não pode ser desfeita.`,
+      message: `Você irá eliminar o quiz ${quiz.name}. Esta ação não pode ser desfeita.`,
       type: "delete",
       confirmText: "Eliminar",
       onConfirm: () => {
-        //onRemove?.();
+        // ADICIONAR FUNÇÃO DE REMOVER QUIZ
       },
-      onCancel: () => {},
     });
     document.body.appendChild(confirmDeleteModal);
   });

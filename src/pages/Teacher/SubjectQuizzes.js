@@ -64,7 +64,7 @@ export async function SubjectQuizzes(subjectId) {
     const item = DashboardItem({
       title: quiz.name,
       onClick: () => {
-        window.location.hash = `#/COLOCAR A ROTA PRA ABRIR O QUIZ`;
+        window.location.hash = `#/quiz-details/${quiz._id}`;
       },
     });
 
@@ -74,7 +74,6 @@ export async function SubjectQuizzes(subjectId) {
       draftsQuizzes.appendChild(item);
     }
   });
-
   contentArea.append(postedQuizzes, draftsQuizzes);
 
   titleArea.append(returnButton, title);
