@@ -2,7 +2,12 @@ import { AlertModal } from "../../components/AlertModal.js";
 import { FormButton } from "../../components/Buttons/FormButton.js";
 import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
 import { Title } from "../../components/Title.js";
-import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
+import { Toaster } from "../../components/Toaster.js";
+import {
+  fetchQuizById,
+  removeQuiz,
+} from "../../handlers/quizzes/quizHandler.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export async function QuizDetails(quizId) {
   const quiz = await fetchQuizById(quizId);
@@ -74,7 +79,23 @@ export async function QuizDetails(quizId) {
       type: "delete",
       confirmText: "Eliminar",
       onConfirm: () => {
-        // ADICIONAR FUNÇÃO DE REMOVER QUIZ
+        removeQuiz(quizId)
+          .then(() => {
+            Toaster({
+              title: "Sucesso!",
+              description: `O quiz ${quiz.name} foi removido.`,
+              type: "success",
+            });
+          })
+          .catch(() => {
+            Toaster({
+              title: "Erro ao remover",
+              description: "Não foi possível remover o quiz",
+              type: "error",
+            });
+          });
+        const subjectId = quiz.subject?._id || quiz.subject;
+        navigateTo(`#/subject-quizzes/${subjectId}`);
       },
     });
     document.body.appendChild(confirmDeleteModal);

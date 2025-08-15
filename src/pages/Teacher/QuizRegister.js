@@ -6,7 +6,10 @@ import { NumberInputField } from "../../components/Inputs/NumberInputField.js";
 import { DateInputField } from "../../components/Inputs/DateInputField.js";
 import { TextareaInputField } from "../../components/Inputs/TextareaInputField.js";
 import { Title } from "../../components/Title.js";
-import { handleQuizRegisterSubmit } from "../../handlers/quizzes/quizRegisterHandler.js";
+import {
+  handleQuizRegisterSubmit,
+  saveQuiz,
+} from "../../handlers/quizzes/quizRegisterHandler.js";
 
 export async function QuizRegister() {
   const form = document.createElement("form");
@@ -100,12 +103,12 @@ export async function QuizRegister() {
   buttonsWrapper.classList.add("buttons-wrapper");
 
   const saveDraftBtn = document.createElement("button");
-  saveDraftBtn.type = "button";
+  saveDraftBtn.type = "submit";
   saveDraftBtn.textContent = "Guardar Rascunho";
   saveDraftBtn.classList.add("save-draft-btn");
 
   const createQuestionsBtn = document.createElement("button");
-  createQuestionsBtn.type = "submit";
+  createQuestionsBtn.type = "button";
   createQuestionsBtn.textContent = "Criar Perguntas";
   createQuestionsBtn.classList.add("create-questions-btn");
 
@@ -126,6 +129,13 @@ export async function QuizRegister() {
   form.append(header, registerForm);
 
   form.addEventListener("submit", handleQuizRegisterSubmit);
+
+  createQuestionsBtn.addEventListener("click", async () => {
+    const savedQuiz = await saveQuiz(form);
+    if (savedQuiz && savedQuiz._id) {
+      window.location.hash = `#/question-register/${savedQuiz._id}`;
+    }
+  });
 
   return form;
 }

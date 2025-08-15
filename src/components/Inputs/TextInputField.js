@@ -3,6 +3,7 @@ export function TextInputField({
   inputType = "text",
   fieldClass,
   inputClass,
+  inputWrapperClass = "input-wrapper",
   showPasswordToggle = false,
   placeholder = "",
   name,
@@ -16,7 +17,7 @@ export function TextInputField({
   inputLabel.style.color = "var(--stone-900)";
 
   const inputWrapper = document.createElement("div");
-  inputWrapper.classList.add("input-wrapper");
+  inputWrapper.classList.add(inputWrapperClass);
 
   const input = document.createElement("input");
   input.type = inputType;

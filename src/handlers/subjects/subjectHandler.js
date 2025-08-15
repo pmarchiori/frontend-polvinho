@@ -12,7 +12,7 @@ export async function fetchSubjects(page = 1) {
       totalPages: data.totalPages,
     };
   } catch (err) {
-    console.error(`Erro ao fazer o fetch de usuário com role ${role}:`, err);
+    console.error(`Erro ao fazer o fetch de disciplinas`, err);
     throw err;
   }
 }
@@ -21,7 +21,7 @@ export async function fetchSubjectById(id) {
   try {
     return await fetchWithAuth(`${API_URL}/subjects/${id}`);
   } catch (err) {
-    console.error("Erro ao buscar usuário:", err);
+    console.error("Erro ao buscar disciplina:", err);
     throw err;
   }
 }

@@ -18,6 +18,7 @@ import { SubjectRegister } from "../pages/Admin/SubjectRegister.js";
 import { SubjectQuizzes } from "../pages/Teacher/SubjectQuizzes.js";
 import { QuizRegister } from "../pages/Teacher/QuizRegister.js";
 import { QuizDetails } from "../pages/Teacher/QuizDetails.js";
+import { QuestionRegister } from "../pages/Teacher/QuestionRegister.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -33,6 +34,7 @@ const routesWithSidebar = [
   "#/subject-quizzes",
   "#/quiz-register",
   "#/quiz-details",
+  "#/question-register",
 ];
 
 const routes = {
@@ -55,6 +57,7 @@ const routes = {
   "#/subject-quizzes": SubjectQuizzes,
   "#/quiz-register": QuizRegister,
   "#/quiz-details": QuizDetails,
+  "#/question-register": QuestionRegister,
 };
 
 const protectedRoutes = {
@@ -73,6 +76,7 @@ const protectedRoutes = {
 
   "#/subject-quizzes": ["teacher"],
   "#/quiz-register": ["teacher"],
+  "#/question-register": ["teacher"],
 };
 
 function getUserFromToken() {

@@ -3,10 +3,7 @@ import { API_URL } from "../../config/config.js";
 import { fetchWithAuth } from "../../utils/fetchWithAuth.js";
 import { showInlineError } from "../../utils/showInlineError.js";
 
-export async function handleQuizRegisterSubmit(event) {
-  event.preventDefault();
-
-  const form = event.target;
+export async function saveQuiz(form) {
   const inputs = form.querySelectorAll("input, select, textarea");
 
   const data = {};
@@ -55,7 +52,7 @@ export async function handleQuizRegisterSubmit(event) {
     hasError = true;
   }
 
-  if (hasError) return;
+  if (hasError) return null;
 
   const payload = {
     name: data.quizName,
@@ -75,11 +72,11 @@ export async function handleQuizRegisterSubmit(event) {
 
     Toaster({
       title: "Sucesso!",
-      description: "Quiz criado com sucesso.",
+      description: "O quiz foi salvo com sucesso",
       type: "success",
     });
 
-    form.reset();
+    return result;
   } catch (error) {
     console.error("Erro:", error);
     Toaster({
@@ -87,5 +84,13 @@ export async function handleQuizRegisterSubmit(event) {
       description: error.message || "Não foi possível conectar com o servidor.",
       type: "error",
     });
+    return null;
   }
+}
+
+export async function handleQuizRegisterSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  await saveQuiz(form);
+  form.reset();
 }
