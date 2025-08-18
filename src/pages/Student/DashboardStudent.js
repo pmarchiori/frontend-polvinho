@@ -12,7 +12,7 @@ export function DashboardStudent({ userId }) {
       return (student?.subjects || []).map((subject) =>
         DashboardItem({
           title: subject.name,
-          onClick: () => navigateTo(`#/`),
+          onClick: () => navigateTo(`#/quizzes/${subject._id}`),
         })
       );
     },

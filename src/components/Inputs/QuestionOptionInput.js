@@ -17,6 +17,8 @@ export function QuestionOptionInput({
   input.classList.add(correct ? "correct-option" : "incorrect-option");
   input.name = name;
 
+  input.dataset.correct = correct ? "true" : "false";
+
   answerInputField.append(icon, input);
 
   answerInputField.input = input;

@@ -80,7 +80,12 @@ export async function QuizRegister() {
     disciplines: [
       { _id: "30", name: "30 minutos" },
       { _id: "60", name: "1 hora" },
+      { _id: "90", name: "1 hora e meia" },
       { _id: "120", name: "2 horas" },
+      { _id: "150", name: "2 horas e meia" },
+      { _id: "180", name: "3 horas" },
+      { _id: "210", name: "3 horas e meia" },
+      { _id: "240", name: "4 horas" },
     ],
   });
 
