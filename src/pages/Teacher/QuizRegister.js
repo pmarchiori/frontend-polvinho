@@ -41,9 +41,10 @@ export async function QuizRegister() {
   }
 
   const nameInput = TextInputField({
-    fieldClass: "input-field",
+    fieldClass: "question-input-field",
     inputClass: "register-input",
     placeholder: "Nome do quiz",
+    inputWrapperClass: "input-wrapper-quiz",
     name: "quizName",
   });
 
@@ -61,6 +62,7 @@ export async function QuizRegister() {
     inputClass: "select-input",
     placeholder: "Selecione o tipo de quiz",
     multiple: false,
+    name: "quizType",
     disciplines: [
       { _id: "prova", name: "Prova" },
       { _id: "simulado", name: "Simulado" },
@@ -77,14 +79,15 @@ export async function QuizRegister() {
     inputClass: "select-input",
     placeholder: "Tempo máximo do quiz",
     multiple: false,
+    name: "timeLimit",
     disciplines: [
       { _id: "30", name: "30 minutos" },
       { _id: "60", name: "1 hora" },
-      { _id: "90", name: "1 hora e meia" },
+      { _id: "90", name: "1 hora e 30 minutos" },
       { _id: "120", name: "2 horas" },
-      { _id: "150", name: "2 horas e meia" },
+      { _id: "150", name: "2 horas e 30 minutos" },
       { _id: "180", name: "3 horas" },
-      { _id: "210", name: "3 horas e meia" },
+      { _id: "210", name: "3 horas e 30 minutos" },
       { _id: "240", name: "4 horas" },
     ],
   });
@@ -117,16 +120,29 @@ export async function QuizRegister() {
   createQuestionsBtn.textContent = "Criar Perguntas";
   createQuestionsBtn.classList.add("create-questions-btn");
 
+  const middleInputDiv = document.createElement("div");
+  middleInputDiv.classList.add("quiz-register-middle-div");
+
+  const middleInputRow1 = document.createElement("div");
+  middleInputRow1.classList.add("middle-input-row");
+
+  const middleInputRow2 = document.createElement("div");
+  middleInputRow2.classList.add("middle-input-row");
+
+  const middleInputRow3 = document.createElement("div");
+  middleInputRow3.classList.add("middle-input-row");
+
   buttonsWrapper.append(saveDraftBtn, createQuestionsBtn);
+
+  middleInputRow1.append(subjectInput, quizTypeInput);
+  middleInputRow2.append(attemptsInput, timeLimitInput);
+  middleInputRow3.append(startDateInput, endDateInput);
+
+  middleInputDiv.append(middleInputRow1, middleInputRow2, middleInputRow3);
 
   registerForm.append(
     nameInput,
-    subjectInput,
-    quizTypeInput,
-    attemptsInput,
-    timeLimitInput,
-    startDateInput,
-    endDateInput,
+    middleInputDiv,
     instructionsInput,
     buttonsWrapper
   );

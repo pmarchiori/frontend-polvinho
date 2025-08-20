@@ -64,7 +64,7 @@ export async function SubjectQuizzes(subjectId) {
     const item = DashboardItem({
       title: quiz.name,
       onClick: () => {
-        window.location.hash = `#/quiz-details/${quiz._id}`;
+        window.location.hash = `#/quiz-details-teacher/${quiz._id}`;
       },
     });
 

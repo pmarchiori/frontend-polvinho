@@ -28,19 +28,22 @@ export async function QuizzesList(subjectId) {
   });
 
   const contentArea = document.createElement("div");
+  contentArea.classList.add("quiz-list");
 
-  subject.quizzes.forEach((quiz) => {
-    const item = QuizListItem({
-      title: quiz.name,
-      finalDate: quiz.finishedDate,
-      quizType: quiz.type,
-      onClick: () => {
-        window.location.hash = `#/quiz-details/${quiz._id}`;
-      },
+  subject.quizzes
+    .filter((quiz) => quiz.isPublished)
+    .forEach((quiz) => {
+      const item = QuizListItem({
+        title: quiz.name,
+        finalDate: quiz.finishedDate,
+        quizType: quiz.quizType,
+        onClick: () => {
+          window.location.hash = `#/quiz-details-student/${quiz._id}`;
+        },
+      });
+
+      contentArea.appendChild(item);
     });
-
-    contentArea.appendChild(item);
-  });
 
   titleArea.append(returnButton, title);
   header.append(titleArea);

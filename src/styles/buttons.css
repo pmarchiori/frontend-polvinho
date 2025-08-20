@@ -164,3 +164,7 @@
   padding: 8px 16px;
   cursor: pointer;
 }
+
+.save-quiz-btn:hover {
+  background-color: var(--indigo-700);
+}

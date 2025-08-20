@@ -10,6 +10,15 @@ export async function fetchQuizById(id) {
   }
 }
 
+export async function updateQuiz(quizId, updates) {
+  const response = await fetchWithAuth(`${API_URL}/quizzes/${quizId}`, {
+    method: "PUT",
+    body: JSON.stringify(updates),
+  });
+
+  return response;
+}
+
 export async function removeQuiz(id) {
   try {
     return await fetchWithAuth(`${API_URL}/quizzes/${id}/remove`, {

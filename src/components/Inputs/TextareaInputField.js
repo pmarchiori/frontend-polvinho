@@ -1,6 +1,6 @@
 export function TextareaInputField({ placeholder, name }) {
   const wrapper = document.createElement("div");
-  wrapper.classList.add("input-field");
+  wrapper.classList.add("question-input-field");
 
   const textarea = document.createElement("textarea");
   textarea.classList.add("register-textarea");

@@ -17,7 +17,11 @@ export async function saveQuiz(form) {
     }
 
     if (input.name === "subject") {
-      data[input.name] = input.value ? JSON.parse(input.value)[0] : null;
+      try {
+        data[input.name] = input.value ? JSON.parse(input.value)[0] : null;
+      } catch {
+        data[input.name] = input.value || null;
+      }
     } else {
       data[input.name] = input.value.trim();
     }
@@ -60,6 +64,7 @@ export async function saveQuiz(form) {
     description: data.instructions || "",
     duration: parseInt(data.timeLimit) || 30,
     maxAttempts: parseInt(data.attempts) || null,
+    quizType: data.quizType || null,
     startedDate: data.startDate,
     finishedDate: data.endDate,
   };

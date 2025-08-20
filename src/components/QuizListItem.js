@@ -13,6 +13,7 @@ export function QuizListItem({ title, finalDate, quizType, onClick }) {
   const type = document.createElement("p");
   type.textContent = quizType;
   type.classList.add("textMd");
+  type.classList.add("quiz-type");
 
   quizListItem.append(quizListItemTitle, finalDateText, type);
 

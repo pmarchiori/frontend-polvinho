@@ -121,9 +121,11 @@ export function SelectInputField({
   hiddenInput.name = name;
 
   function updateHiddenInput() {
-    hiddenInput.value = JSON.stringify(
-      multiple ? selectedValues : [selectedValues[0]]
-    );
+    if (multiple) {
+      hiddenInput.value = JSON.stringify(selectedValues);
+    } else {
+      hiddenInput.value = selectedValues[0] || "";
+    }
   }
 
   wrapper.append(selectedTags, toggleIcon);

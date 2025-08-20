@@ -3,7 +3,10 @@ import { QuestionOptionInput } from "../../components/Inputs/QuestionOptionInput
 import { TextInputField } from "../../components/Inputs/TextInputField.js";
 import { Title } from "../../components/Title.js";
 import { Toaster } from "../../components/Toaster.js";
-import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
+import {
+  fetchQuizById,
+  updateQuiz,
+} from "../../handlers/quizzes/quizHandler.js";
 import {
   fetchQuestionsByQuiz,
   createQuestion,
@@ -85,16 +88,21 @@ export async function QuestionRegister(quizId) {
   buttonsWrapper.classList.add("buttons-wrapper");
 
   const saveDraftBtn = document.createElement("button");
-  saveDraftBtn.type = "submit";
+  saveDraftBtn.type = "button";
   saveDraftBtn.textContent = "Guardar Rascunho";
   saveDraftBtn.classList.add("save-draft-btn");
 
-  const saveQuestionBtn = document.createElement("button");
-  saveQuestionBtn.type = "button";
-  saveQuestionBtn.textContent = "Postar";
-  saveQuestionBtn.classList.add("save-quiz-btn");
+  const postQuizBtn = document.createElement("button");
+  postQuizBtn.type = "button";
+  postQuizBtn.textContent = "Postar";
+  postQuizBtn.classList.add("save-quiz-btn");
 
-  buttonsWrapper.append(saveDraftBtn, saveQuestionBtn);
+  const nextQuestionBtn = document.createElement("button");
+  nextQuestionBtn.type = "button";
+  nextQuestionBtn.textContent = "Próxima questão";
+  nextQuestionBtn.classList.add("save-quiz-btn");
+
+  buttonsWrapper.append(saveDraftBtn, postQuizBtn, nextQuestionBtn);
 
   optionsDiv.append(
     correctOption,
@@ -112,7 +120,65 @@ export async function QuestionRegister(quizId) {
     optionsDiv.querySelectorAll("input").forEach((input) => (input.value = ""));
   }
 
-  saveQuestionBtn.addEventListener("click", async () => {
+  saveDraftBtn.addEventListener("click", async () => {
+    try {
+      await updateQuiz(quizId, { isPublished: false });
+      Toaster({
+        type: "success",
+        title: "Rascunho salvo",
+        description: "O quiz foi salvo como rascunho.",
+      });
+    } catch (error) {
+      console.error("Erro ao salvar rascunho:", error);
+      Toaster({
+        type: "error",
+        title: "Erro",
+        description: "Não foi possível salvar o rascunho.",
+      });
+    }
+  });
+
+  postQuizBtn.addEventListener("click", async () => {
+    try {
+      const questions = await fetchQuestionsByQuiz(quizId);
+      if (!questions || questions.length < 5) {
+        Toaster({
+          type: "error",
+          title: "Erro",
+          description:
+            "É necessário ter pelo menos 5 questões para publicar o quiz.",
+        });
+        return;
+      }
+
+      await updateQuiz(quizId, { isPublished: true });
+      Toaster({
+        type: "success",
+        title: "Publicado",
+        description: "O quiz foi publicado com sucesso!",
+      });
+    } catch (error) {
+      console.error("Erro ao publicar quiz:", error);
+      Toaster({
+        type: "error",
+        title: "Erro",
+        description: "Não foi possível publicar o quiz.",
+      });
+    }
+  });
+
+  nextQuestionBtn.addEventListener("click", async () => {
+    const updatedQuestions = await fetchQuestionsByQuiz(quizId);
+
+    if (updatedQuestions.length + 1 > 20) {
+      Toaster({
+        type: "error",
+        title: "Limite atingido",
+        description: "O quiz não pode ter mais que 20 questões.",
+      });
+      return;
+    }
+
     const questionText = questionInput.querySelector("input").value.trim();
 
     if (!questionText) {
@@ -147,12 +213,11 @@ export async function QuestionRegister(quizId) {
 
     try {
       await createQuestion(newQuestion);
-      console.log("Questão criada com sucesso!");
 
       resetForm();
 
-      const updatedQuestions = await fetchQuestionsByQuiz(quizId);
-      questionNumber = (updatedQuestions?.length || 0) + 1;
+      const updatedQuestionsAfter = await fetchQuestionsByQuiz(quizId);
+      questionNumber = (updatedQuestionsAfter?.length || 0) + 1;
       questionInput.querySelector(
         "label"
       ).textContent = `Pergunta ${questionNumber}`;

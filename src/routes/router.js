@@ -17,9 +17,10 @@ import { SubjectEdit } from "../pages/Admin/SubjectEdit.js";
 import { SubjectRegister } from "../pages/Admin/SubjectRegister.js";
 import { SubjectQuizzes } from "../pages/Teacher/SubjectQuizzes.js";
 import { QuizRegister } from "../pages/Teacher/QuizRegister.js";
-import { QuizDetails } from "../pages/Teacher/QuizDetails.js";
+import { QuizDetailsTeacher } from "../pages/Teacher/QuizDetailsTeacher.js";
 import { QuestionRegister } from "../pages/Teacher/QuestionRegister.js";
 import { QuizzesList } from "../pages/Student/QuizzesList.js";
+import { QuizDetailsStudent } from "../pages/Student/QuizDetailsStudent.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -34,9 +35,10 @@ const routesWithSidebar = [
   "#/subject-edit",
   "#/subject-quizzes",
   "#/quiz-register",
-  "#/quiz-details",
+  "#/quiz-details-teacher",
   "#/question-register",
   "#/quizzes",
+  "#/quiz-details-student",
 ];
 
 const routes = {
@@ -58,10 +60,11 @@ const routes = {
 
   "#/subject-quizzes": SubjectQuizzes,
   "#/quiz-register": QuizRegister,
-  "#/quiz-details": QuizDetails,
+  "#/quiz-details-teacher": QuizDetailsTeacher,
   "#/question-register": QuestionRegister,
 
   "#/quizzes": QuizzesList,
+  "#/quiz-details-student": QuizDetailsStudent,
 };
 
 const protectedRoutes = {
