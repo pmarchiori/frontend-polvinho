@@ -2,6 +2,7 @@ import { decodeToken } from "../../utils/validators.js";
 import { DashboardAdmin } from "../../pages/Admin/DashboardAdmin.js";
 import { DashboardTeacher } from "../../pages/Teacher/DashboardTeacher.js";
 import { PageNotFound } from "../../pages/PageNotFound.js";
+import { DashboardStudent } from "../../pages/Student/DashboardStudent.js";
 
 export async function DashboardRouter() {
   const token = localStorage.getItem("authToken");
@@ -32,6 +33,10 @@ export async function DashboardRouter() {
 
   if (role === "teacher") {
     return await DashboardTeacher({ userId });
+  }
+
+  if (role === "student") {
+    return await DashboardStudent({ userId });
   }
 
   return PageNotFound();

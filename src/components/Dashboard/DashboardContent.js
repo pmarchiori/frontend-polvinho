@@ -1,45 +1,38 @@
-import { navigateTo } from "../../routes/navigate.js";
-import { DashboardItem } from "./DashboardItem.js";
+import { Title } from "../../components/Title.js";
+import { EmptyData } from "../../components/EmptyData.js";
 
-export function DashboardContent({ role }) {
+export async function DashboardContent({ title, subtitle, itemsLoader }) {
   const dashboard = document.createElement("div");
   dashboard.classList.add("dashboard");
+
+  const titleContent = Title({
+    title,
+    subtitle,
+    titleClass: "title2",
+    subtitleClass: "textXl",
+    titleColor: "var(--stone-900)",
+    subtitleColor: "var(--stone-700)",
+  });
+  titleContent.classList.add("dashboard-title");
+  dashboard.appendChild(titleContent);
 
   const itemsArea = document.createElement("div");
   itemsArea.classList.add("items-area");
 
-  if (role == "admin") {
-    const studentsItem = DashboardItem({
-      title: "Alunos",
-      description: "Cadastrar novo",
-      onClick: () => {
-        navigateTo("#/students");
-      },
-    });
-
-    const teachersItem = DashboardItem({
-      title: "Professores",
-      description: "Cadastrar novo",
-      onClick: () => {
-        navigateTo("#/teachers");
-      },
-    });
-
-    const disciplinesItem = DashboardItem({
-      title: "Disciplinas",
-      description: "Cadastrar novo",
-      onClick: () => {
-        navigateTo("#/subjects");
-      },
-    });
-
-    itemsArea.appendChild(studentsItem);
-    itemsArea.appendChild(teachersItem);
-    itemsArea.appendChild(disciplinesItem);
+  try {
+    const items = await itemsLoader();
+    if (items && items.length > 0) {
+      items.forEach((item) => itemsArea.appendChild(item));
+    } else {
+      itemsArea.appendChild(
+        EmptyData({ text: "Nenhuma disciplina cadastrada" })
+      );
+    }
+  } catch (err) {
+    console.error("Erro ao carregar dados do dashboard:", err);
+    itemsArea.appendChild(EmptyData({ text: "Erro ao carregar dados" }));
   }
 
-  dashboard.appendChild(titleContent);
   dashboard.appendChild(itemsArea);
-
   return dashboard;
 }

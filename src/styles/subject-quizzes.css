@@ -1,0 +1,13 @@
+.quizzes-area {
+  display: flex;
+  gap: 40px;
+  width: 90%;
+  align-self: center;
+}
+
+.quizzes-list {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  gap: 8px;
+}

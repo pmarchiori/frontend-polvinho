@@ -1,0 +1,53 @@
+import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
+import { Title } from "../../components/Title.js";
+import { fetchSubjectById } from "../../handlers/subjects/subjectHandler.js";
+import { QuizListItem } from "../../components/QuizListItem.js";
+
+export async function QuizzesList(subjectId) {
+  const subject = await fetchSubjectById(subjectId);
+
+  const listContainer = document.createElement("div");
+  listContainer.classList.add("user-list");
+
+  const header = document.createElement("div");
+  header.classList.add("list-header");
+
+  const titleArea = document.createElement("div");
+  titleArea.classList.add("title-area");
+
+  const returnButton = ReturnButton();
+  returnButton.addEventListener("click", () => window.history.back());
+
+  const title = Title({
+    title: subject.name,
+    subtitle: "Quizzes",
+    titleClass: "title2",
+    titleColor: "var(--stone-900)",
+    subtitleClass: "textLg",
+    subtitleColor: "var(--stone-700)",
+  });
+
+  const contentArea = document.createElement("div");
+  contentArea.classList.add("quiz-list");
+
+  subject.quizzes
+    .filter((quiz) => quiz.isPublished)
+    .forEach((quiz) => {
+      const item = QuizListItem({
+        title: quiz.name,
+        finalDate: quiz.finishedDate,
+        quizType: quiz.quizType,
+        onClick: () => {
+          window.location.hash = `#/quiz-details-student/${quiz._id}`;
+        },
+      });
+
+      contentArea.appendChild(item);
+    });
+
+  titleArea.append(returnButton, title);
+  header.append(titleArea);
+  listContainer.append(header, contentArea);
+
+  return listContainer;
+}

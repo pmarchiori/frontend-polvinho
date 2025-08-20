@@ -3,16 +3,16 @@ import { DashboardItem } from "../../components/Dashboard/DashboardItem.js";
 import { fetchUserById } from "../../handlers/users/userHandler.js";
 import { DashboardContent } from "../../components/Dashboard/DashboardContent.js";
 
-export function DashboardTeacher({ userId }) {
+export function DashboardStudent({ userId }) {
   return DashboardContent({
     title: "Dashboard",
-    subtitle: "Bem-vindo, Professor!",
+    subtitle: "Bem-vindo, Aluno!",
     itemsLoader: async () => {
-      const teacher = await fetchUserById(userId);
-      return (teacher?.subjects || []).map((subject) =>
+      const student = await fetchUserById(userId);
+      return (student?.subjects || []).map((subject) =>
         DashboardItem({
           title: subject.name,
-          onClick: () => navigateTo(`#/subject-quizzes/${subject._id}`),
+          onClick: () => navigateTo(`#/quizzes/${subject._id}`),
         })
       );
     },

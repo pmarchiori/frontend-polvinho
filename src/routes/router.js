@@ -1,12 +1,11 @@
 import { Login } from "../pages/Login.js";
 import { ChangePassword } from "../pages/ChangePassword.js";
 import { RetrievePassword } from "../pages/RetrievePassword.js";
-import { Sidebar } from "../components/Sidebar.js";
+import { Sidebar } from "../components/Sidebar/Sidebar.js";
 import { PageNotFound } from "../pages/PageNotFound.js";
 
 import { DashboardRouter } from "../components/Dashboard/DashboardRouter.js";
 
-import { DashboardAdmin } from "../pages/Admin/DashboardAdmin.js";
 import { StudentList } from "../pages/Admin/StudentList.js";
 import { StudentRegister } from "../pages/Admin/StudentRegister.js";
 import { StudentEdit } from "../pages/Admin/StudentEdit.js";
@@ -16,6 +15,12 @@ import { TeacherEdit } from "../pages/Admin/TeacherEdit.js";
 import { SubjectList } from "../pages/Admin/SubjectList.js";
 import { SubjectEdit } from "../pages/Admin/SubjectEdit.js";
 import { SubjectRegister } from "../pages/Admin/SubjectRegister.js";
+import { SubjectQuizzes } from "../pages/Teacher/SubjectQuizzes.js";
+import { QuizRegister } from "../pages/Teacher/QuizRegister.js";
+import { QuizDetailsTeacher } from "../pages/Teacher/QuizDetailsTeacher.js";
+import { QuestionRegister } from "../pages/Teacher/QuestionRegister.js";
+import { QuizzesList } from "../pages/Student/QuizzesList.js";
+import { QuizDetailsStudent } from "../pages/Student/QuizDetailsStudent.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -28,6 +33,12 @@ const routesWithSidebar = [
   "#/subjects",
   "#/subject-register",
   "#/subject-edit",
+  "#/subject-quizzes",
+  "#/quiz-register",
+  "#/quiz-details-teacher",
+  "#/question-register",
+  "#/quizzes",
+  "#/quiz-details-student",
 ];
 
 const routes = {
@@ -46,19 +57,33 @@ const routes = {
   "#/subjects": SubjectList,
   "#/subject-register": SubjectRegister,
   "#/subject-edit": SubjectEdit,
+
+  "#/subject-quizzes": SubjectQuizzes,
+  "#/quiz-register": QuizRegister,
+  "#/quiz-details-teacher": QuizDetailsTeacher,
+  "#/question-register": QuestionRegister,
+
+  "#/quizzes": QuizzesList,
+  "#/quiz-details-student": QuizDetailsStudent,
 };
 
 const protectedRoutes = {
   "#/dashboard": ["admin", "teacher", "student"],
+
   "#/students": ["admin", "teacher"],
   "#/student-register": ["admin"],
   "#/student-edit": ["admin", "teacher"],
   "#/teachers": ["admin"],
   "#/teacher-register": ["admin"],
   "#/teacher-edit": ["admin"],
-  "#/subjects": ["admin", "teacher"],
+
+  "#/subjects": ["admin", "teacher", "student"],
   "#/subject-register": ["admin"],
   "#/subject-edit": ["admin"],
+
+  "#/subject-quizzes": ["teacher"],
+  "#/quiz-register": ["teacher"],
+  "#/question-register": ["teacher"],
 };
 
 function getUserFromToken() {

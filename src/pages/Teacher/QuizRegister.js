@@ -1,0 +1,162 @@
+import { fetchSubjects } from "../../handlers/subjects/subjectHandler.js";
+import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
+import { TextInputField } from "../../components/Inputs/TextInputField.js";
+import { SelectInputField } from "../../components/Inputs/SelectInputField.js";
+import { NumberInputField } from "../../components/Inputs/NumberInputField.js";
+import { DateInputField } from "../../components/Inputs/DateInputField.js";
+import { TextareaInputField } from "../../components/Inputs/TextareaInputField.js";
+import { Title } from "../../components/Title.js";
+import {
+  handleQuizRegisterSubmit,
+  saveQuiz,
+} from "../../handlers/quizzes/quizRegisterHandler.js";
+
+export async function QuizRegister() {
+  const form = document.createElement("form");
+  form.classList.add("user-list");
+
+  const header = document.createElement("div");
+  header.classList.add("register-header");
+
+  const returnButton = ReturnButton();
+  returnButton.addEventListener("click", () => window.history.back());
+
+  const title = Title({
+    title: "Informações do Quiz",
+    titleClass: "title2",
+    titleColor: "var(--stone-900)",
+  });
+
+  header.append(returnButton, title);
+
+  const registerForm = document.createElement("div");
+  registerForm.classList.add("register-container");
+
+  let subjectsList = [];
+  try {
+    const { subjects } = await fetchSubjects();
+    subjectsList = subjects.map((s) => ({ _id: s._id, name: s.name }));
+  } catch (err) {
+    console.error("Erro ao buscar disciplinas:", err);
+  }
+
+  const nameInput = TextInputField({
+    fieldClass: "question-input-field",
+    inputClass: "register-input",
+    placeholder: "Nome do quiz",
+    inputWrapperClass: "input-wrapper-quiz",
+    name: "quizName",
+  });
+
+  const subjectInput = SelectInputField({
+    fieldClass: "input-field",
+    inputClass: "select-input",
+    name: "subject",
+    placeholder: "Selecione a disciplina",
+    multiple: false,
+    disciplines: subjectsList,
+  });
+
+  const quizTypeInput = SelectInputField({
+    fieldClass: "input-field",
+    inputClass: "select-input",
+    placeholder: "Selecione o tipo de quiz",
+    multiple: false,
+    name: "quizType",
+    disciplines: [
+      { _id: "prova", name: "Prova" },
+      { _id: "simulado", name: "Simulado" },
+    ],
+  });
+
+  const attemptsInput = NumberInputField({
+    placeholder: "Tentativas para realizar o quiz",
+    name: "attempts",
+  });
+
+  const timeLimitInput = SelectInputField({
+    fieldClass: "input-field",
+    inputClass: "select-input",
+    placeholder: "Tempo máximo do quiz",
+    multiple: false,
+    name: "timeLimit",
+    disciplines: [
+      { _id: "30", name: "30 minutos" },
+      { _id: "60", name: "1 hora" },
+      { _id: "90", name: "1 hora e 30 minutos" },
+      { _id: "120", name: "2 horas" },
+      { _id: "150", name: "2 horas e 30 minutos" },
+      { _id: "180", name: "3 horas" },
+      { _id: "210", name: "3 horas e 30 minutos" },
+      { _id: "240", name: "4 horas" },
+    ],
+  });
+
+  const startDateInput = DateInputField({
+    placeholder: "Data de início",
+    name: "startDate",
+  });
+
+  const endDateInput = DateInputField({
+    placeholder: "Data de entrega",
+    name: "endDate",
+  });
+
+  const instructionsInput = TextareaInputField({
+    placeholder: "Escreva aqui as orientações para o aluno...",
+    name: "instructions",
+  });
+
+  const buttonsWrapper = document.createElement("div");
+  buttonsWrapper.classList.add("buttons-wrapper");
+
+  const saveDraftBtn = document.createElement("button");
+  saveDraftBtn.type = "submit";
+  saveDraftBtn.textContent = "Guardar Rascunho";
+  saveDraftBtn.classList.add("save-draft-btn");
+
+  const createQuestionsBtn = document.createElement("button");
+  createQuestionsBtn.type = "button";
+  createQuestionsBtn.textContent = "Criar Perguntas";
+  createQuestionsBtn.classList.add("create-questions-btn");
+
+  const middleInputDiv = document.createElement("div");
+  middleInputDiv.classList.add("quiz-register-middle-div");
+
+  const middleInputRow1 = document.createElement("div");
+  middleInputRow1.classList.add("middle-input-row");
+
+  const middleInputRow2 = document.createElement("div");
+  middleInputRow2.classList.add("middle-input-row");
+
+  const middleInputRow3 = document.createElement("div");
+  middleInputRow3.classList.add("middle-input-row");
+
+  buttonsWrapper.append(saveDraftBtn, createQuestionsBtn);
+
+  middleInputRow1.append(subjectInput, quizTypeInput);
+  middleInputRow2.append(attemptsInput, timeLimitInput);
+  middleInputRow3.append(startDateInput, endDateInput);
+
+  middleInputDiv.append(middleInputRow1, middleInputRow2, middleInputRow3);
+
+  registerForm.append(
+    nameInput,
+    middleInputDiv,
+    instructionsInput,
+    buttonsWrapper
+  );
+
+  form.append(header, registerForm);
+
+  form.addEventListener("submit", handleQuizRegisterSubmit);
+
+  createQuestionsBtn.addEventListener("click", async () => {
+    const savedQuiz = await saveQuiz(form);
+    if (savedQuiz && savedQuiz._id) {
+      window.location.hash = `#/question-register/${savedQuiz._id}`;
+    }
+  });
+
+  return form;
+}

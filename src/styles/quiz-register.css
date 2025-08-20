@@ -1,0 +1,16 @@
+.buttons-wrapper {
+  display: flex;
+  gap: 16px;
+  align-self: flex-end;
+}
+
+.quiz-register-middle-div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.middle-input-row {
+  display: flex;
+}

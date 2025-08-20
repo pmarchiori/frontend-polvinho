@@ -1,4 +1,4 @@
-import { navigateTo } from "../routes/navigate.js";
+import { navigateTo } from "../../routes/navigate.js";
 import { SidebarDropdown } from "./SidebarDropdown.js";
 import { SidebarItem } from "./SidebarItem.js";
 

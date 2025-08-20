@@ -1,5 +1,5 @@
 export function SelectInputField({
-  label,
+  label = "",
   fieldClass = "input-field",
   inputClass = "register-input",
   placeholder,
@@ -16,7 +16,7 @@ export function SelectInputField({
   const inputLabel = document.createElement("label");
   inputLabel.textContent = label;
   inputLabel.classList.add("textMd");
-  inputLabel.style.color = "var(--stone-900)";
+  inputLabel.style.color = "var(--stone-700)";
 
   const container = document.createElement("div");
   container.classList.add("select-container");
@@ -25,7 +25,7 @@ export function SelectInputField({
   selectedTags.classList.add("selected-tags");
 
   const placeholderSpan = document.createElement("span");
-  placeholderSpan.classList.add("placeholder");
+  placeholderSpan.classList.add("select-placeholder");
   placeholderSpan.textContent = placeholder;
   selectedTags.appendChild(placeholderSpan);
 
@@ -121,9 +121,11 @@ export function SelectInputField({
   hiddenInput.name = name;
 
   function updateHiddenInput() {
-    hiddenInput.value = JSON.stringify(
-      multiple ? selectedValues : [selectedValues[0]]
-    );
+    if (multiple) {
+      hiddenInput.value = JSON.stringify(selectedValues);
+    } else {
+      hiddenInput.value = selectedValues[0] || "";
+    }
   }
 
   wrapper.append(selectedTags, toggleIcon);

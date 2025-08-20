@@ -121,3 +121,50 @@
 .sidebar-dropdown-btn:hover {
   color: var(--yellow-200);
 }
+
+.delete-quiz-btn {
+  width: 156px;
+  height: 48px;
+  cursor: pointer;
+  background: none;
+  color: var(--red-500);
+  border: 1px solid var(--red-500);
+  border-radius: 6px;
+}
+
+.save-draft-btn {
+  width: 196px;
+  height: 48px;
+  background: none;
+  color: var(--stone-500);
+  border: 1px solid var(--stone-400);
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.create-questions-btn {
+  width: 196px;
+  height: 48px;
+  background: var(--indigo-500);
+  color: var(--neutral-50);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.save-quiz-btn {
+  width: 105px;
+  height: 48px;
+  background: var(--indigo-500);
+  color: var(--neutral-50);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.save-quiz-btn:hover {
+  background-color: var(--indigo-700);
+}

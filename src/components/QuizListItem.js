@@ -1,0 +1,28 @@
+export function QuizListItem({ title, finalDate, quizType, onClick }) {
+  const quizListItem = document.createElement("div");
+  quizListItem.classList.add("dashboard-item");
+
+  const quizListItemTitle = document.createElement("p");
+  quizListItemTitle.textContent = title;
+  quizListItemTitle.classList.add("textMd");
+
+  const finalDateText = document.createElement("p");
+  finalDateText.textContent = finalDate;
+  finalDateText.classList.add("textMd");
+
+  const type = document.createElement("p");
+  type.textContent = quizType;
+  type.classList.add("textMd");
+  type.classList.add("quiz-type");
+
+  quizListItem.append(quizListItemTitle, finalDateText, type);
+
+  if (typeof onClick === "function") {
+    quizListItem.addEventListener("click", (e) => {
+      e.preventDefault();
+      onClick();
+    });
+  }
+
+  return quizListItem;
+}

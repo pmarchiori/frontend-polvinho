@@ -1,4 +1,4 @@
-import { SidebarDropdownButton } from "./Buttons/SidebarDropdownButton.js";
+import { SidebarDropdownButton } from "../Buttons/SidebarDropdownButton.js";
 import { SidebarItem } from "./SidebarItem.js";
 
 export function SidebarDropdown() {
