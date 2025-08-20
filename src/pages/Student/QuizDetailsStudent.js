@@ -12,10 +12,29 @@ export async function QuizDetailsStudent(quizId) {
   const btnContainer = document.createElement("div");
   btnContainer.classList.add("students-container");
 
+  // const infoCard = InfoCard({
+  //   titleText: "Suas tentativas",
+  //   titleClass: "textMd",
+  // });
+
   const infoCard = InfoCard({
-    titleText: "Suas tentativas",
+    titleText: "Suas Tentativas",
     titleClass: "textMd",
+    contentType: "attempts",
+    attempts: [
+      //{ score: 8, total: 10 },
+      //{ score: 9, total: 10 },
+    ],
   });
+
+  // const infoCard = InfoCard({
+  //   titleText: "Respostas",
+  //   titleClass: "card-title",
+  //   contentType: "answers",
+  //   answers: ["A", "C", "D", "B", "A", "C", "B", "A", "D", "B"],
+  //   showButton: true,
+  //   buttonConfig: { btnName: "Finalizar", btnClass: "save-quiz-btn" },
+  // });
 
   const startQuizBtn = FormButton({
     btnName: "Começar",

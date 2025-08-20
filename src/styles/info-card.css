@@ -7,7 +7,7 @@
   right: 30px;
   height: 604px;
   width: 320px;
-  padding: 40px 0;
+  padding: 40px 0px;
   background-color: var(--neutral-100);
   border-radius: 24px;
   border: 1px solid var(--neutral-200);
@@ -15,4 +15,31 @@
   z-index: 1000;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.info-card-content {
+  margin-top: 20px;
+  flex: 1;
+  width: 100%;
+  padding: 0 20px;
+  overflow-y: auto;
+}
+
+.empty-message {
+  text-align: center;
+  color: var(--stone-400);
+  margin-top: 65%;
+}
+
+.attempt-item,
+.answer-item {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 12px 30px;
+}
+
+.attempt-item a {
+  color: var(--indigo-700);
+  text-decoration: underline;
+  cursor: pointer;
 }
