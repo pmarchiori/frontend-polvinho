@@ -1,4 +1,5 @@
 import { AlertModal } from "../../components/AlertModal.js";
+import { CreationButton } from "../../components/Buttons/CreationButton.js";
 import { FormButton } from "../../components/Buttons/FormButton.js";
 import { QuizDetails } from "../../components/QuizDetails.js";
 import { Toaster } from "../../components/Toaster.js";
@@ -25,6 +26,12 @@ export async function QuizDetailsTeacher(quizId) {
     btnName: "Eliminar Quiz",
     btnClass: "delete-quiz-btn",
   });
+
+  //VER SE COLOCO ESSE BOTAO AQUI PARA EDITAR O QUIZ
+  // const editBtn = CreationButton({
+  //   btnName: "Editar Quiz",
+  //   btnClass: "creation-btn",
+  // });
 
   deleteQuizBtn.addEventListener("click", () => {
     const confirmDeleteModal = AlertModal({

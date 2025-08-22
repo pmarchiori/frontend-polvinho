@@ -1,4 +1,7 @@
+import { QuizAnswer } from "../pages/Student/QuizAnswer.js";
+import { AlertModal } from "./AlertModal.js";
 import { FormButton } from "./Buttons/FormButton.js";
+import { ConfirmModal } from "./ConfirmModal.js";
 import { Title } from "./Title.js";
 
 export function InfoCard({
@@ -64,7 +67,6 @@ export function InfoCard({
 
         const spanQuestion = document.createElement("span");
         spanQuestion.textContent = `Pergunta ${i + 1}`;
-        //spanQuestion.classList.add("textMdBold");
         spanQuestion.style.color = "var(--stone-700)";
 
         const spanAnswer = document.createElement("span");
@@ -86,6 +88,18 @@ export function InfoCard({
       btnClass: buttonConfig.btnClass || "default-btn",
     });
     infoCard.appendChild(infoCardBtn);
+
+    infoCardBtn.addEventListener("click", () => {
+      const finishQuizModal = ConfirmModal({
+        title: "Entregue!",
+        message: `O quiz "ADICIONAR NOME DO QUIZ" foi entregue com sucesso.`,
+        btnText: "Ver Gabarito",
+        onConfirm: () => {
+          //adicionar funcionalidade de entregar o quiz
+        },
+      });
+      document.body.appendChild(finishQuizModal);
+    });
   }
 
   return infoCard;

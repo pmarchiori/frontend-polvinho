@@ -3,6 +3,7 @@ import { FormButton } from "../../components/Buttons/FormButton.js";
 import { InfoCard } from "../../components/InfoCard.js";
 import { QuizDetails } from "../../components/QuizDetails.js";
 import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export async function QuizDetailsStudent(quizId) {
   const quiz = await fetchQuizById(quizId);
@@ -41,7 +42,6 @@ export async function QuizDetailsStudent(quizId) {
     btnClass: "save-quiz-btn",
   });
 
-  //TIRAR ISSO DAQUI, ISSO SO DEVE ESTAR NA TELA DE RESPONDER O QUIZ
   startQuizBtn.addEventListener("click", () => {
     const startQuizModal = AlertModal({
       title: "Deseja começar agora?",
@@ -49,7 +49,7 @@ export async function QuizDetailsStudent(quizId) {
       message:
         "Ao clicar no botão o quiz começará imediatamente e deve ser entregue para sair.",
       onConfirm: () => {
-        //ADICIONAR A LOGICA DE COMEÇAR O QUIZ
+        navigateTo(`#/quiz-answer/${quiz._id}`);
       },
     });
     document.body.appendChild(startQuizModal);
