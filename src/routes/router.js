@@ -88,6 +88,8 @@ const protectedRoutes = {
   "#/quiz-register": ["teacher"],
   "#/question-register": ["teacher"],
 
+  "#/quizzes": ["student"],
+  "#/quiz-details-student": ["student"],
   "#/quiz-answer": ["student"],
 };
 

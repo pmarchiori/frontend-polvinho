@@ -1,6 +1,6 @@
 import { Title } from "./Title.js";
 
-export function Question({ question, index }) {
+export function Question({ question, index, onAnswer }) {
   const questionContainer = document.createElement("div");
   questionContainer.classList.add("question");
 
@@ -12,6 +12,8 @@ export function Question({ question, index }) {
   });
 
   questionContainer.append(questionTitle);
+
+  let selectedOption = null;
 
   question.options.forEach((opt, optIndex) => {
     const questionOption = document.createElement("div");
@@ -25,6 +27,17 @@ export function Question({ question, index }) {
     optionText.textContent = opt.option;
 
     questionOption.append(questionLetter, optionText);
+
+    questionOption.addEventListener("click", () => {
+      if (selectedOption) selectedOption.classList.remove("selected");
+      questionOption.classList.add("selected");
+      selectedOption = questionOption;
+
+      if (onAnswer) {
+        onAnswer(question._id, opt._id);
+      }
+    });
+
     questionContainer.append(questionOption);
   });
 

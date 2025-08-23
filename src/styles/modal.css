@@ -44,11 +44,3 @@
 .modal-message {
   color: var(--stone-700);
 }
-
-.confirm-modal-btn {
-  background: none;
-  border: none;
-  color: var(--indigo-700);
-  text-decoration: underline;
-  text-decoration-style: solid;
-}

@@ -3,6 +3,7 @@ import { FormButton } from "../../components/Buttons/FormButton.js";
 import { InfoCard } from "../../components/InfoCard.js";
 import { QuizDetails } from "../../components/QuizDetails.js";
 import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
+import { fetchStudentAttempts } from "../../handlers/answers/answerHandler.js";
 import { navigateTo } from "../../routes/navigate.js";
 
 export async function QuizDetailsStudent(quizId) {
@@ -13,29 +14,14 @@ export async function QuizDetailsStudent(quizId) {
   const btnContainer = document.createElement("div");
   btnContainer.classList.add("students-container");
 
-  // const infoCard = InfoCard({
-  //   titleText: "Suas tentativas",
-  //   titleClass: "textMd",
-  // });
+  const attempts = await fetchStudentAttempts(quizId);
 
   const infoCard = InfoCard({
     titleText: "Suas Tentativas",
     titleClass: "textMd",
     contentType: "attempts",
-    attempts: [
-      //{ score: 8, total: 10 },
-      //{ score: 9, total: 10 },
-    ],
+    attempts,
   });
-
-  // const infoCard = InfoCard({
-  //   titleText: "Respostas",
-  //   titleClass: "card-title",
-  //   contentType: "answers",
-  //   answers: ["A", "C", "D", "B", "A", "C", "B", "A", "D", "B"],
-  //   showButton: true,
-  //   buttonConfig: { btnName: "Finalizar", btnClass: "save-quiz-btn" },
-  // });
 
   const startQuizBtn = FormButton({
     btnName: "Começar",

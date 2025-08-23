@@ -3,12 +3,13 @@ import { InfoCard } from "../../components/InfoCard.js";
 import { Title } from "../../components/Title.js";
 import { Question } from "../../components/Question.js";
 import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
+import { submitQuizAnswers } from "../../handlers/answers/answerHandler.js";
 
 export async function QuizAnswer(quizId) {
   const quiz = await fetchQuizById(quizId);
 
-  const answerQuizContainer = document.createElement("div");
-  answerQuizContainer.classList.add("user-list");
+  const container = document.createElement("div");
+  container.classList.add("user-list");
 
   const header = document.createElement("div");
   header.classList.add("list-header");
@@ -28,6 +29,12 @@ export async function QuizAnswer(quizId) {
     subtitleColor: "var(--stone-700)",
   });
 
+  titleArea.append(returnButton, title);
+  header.append(titleArea);
+  container.append(header);
+
+  const studentAnswers = {};
+
   const infoCard = InfoCard({
     titleText: "Respostas",
     titleClass: "card-title",
@@ -37,18 +44,35 @@ export async function QuizAnswer(quizId) {
     buttonConfig: { btnName: "Entregar", btnClass: "save-quiz-btn" },
   });
 
+  container.append(infoCard);
+
   const questionsContainer = document.createElement("div");
   questionsContainer.classList.add("questions-container");
 
   quiz.questions.forEach((question, index) => {
-    const questionComponent = Question({ question, index });
+    const questionComponent = Question({
+      question,
+      index,
+      onAnswer: (questionId, optionId) => {
+        studentAnswers[questionId] = optionId;
+      },
+    });
     questionsContainer.append(questionComponent);
   });
 
-  titleArea.append(returnButton, title);
-  header.append(titleArea);
+  container.append(questionsContainer);
 
-  answerQuizContainer.append(header, infoCard, questionsContainer);
+  const submitBtn = infoCard.querySelector(".save-quiz-btn");
+  submitBtn.addEventListener("click", async () => {
+    try {
+      const result = await submitQuizAnswers(quiz._id, studentAnswers);
+      console.log(
+        `Quiz entregue!\n\nTentativa: ${result.attempt}\nAcertos: ${result.correct}\nErros: ${result.wrong}\nScore: ${result.score}`
+      );
+    } catch (err) {
+      console.log(err.message || "Erro ao enviar quiz");
+    }
+  });
 
-  return answerQuizContainer;
+  return container;
 }
