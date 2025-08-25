@@ -29,6 +29,11 @@ export async function SubjectEdit(subjectId) {
 
   const editForm = await SubjectRegisterForm();
 
+  const quizzesContainer = document.createElement("div");
+  const quizzesTitle = document.createElement("p");
+  quizzesTitle.textContent = "Quizzes";
+  quizzesTitle.style.color = "var(--stone-900)";
+
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
 
@@ -39,9 +44,13 @@ export async function SubjectEdit(subjectId) {
 
   buttonContainer.appendChild(registerButton);
 
-  subjectEdit.appendChild(header);
-  subjectEdit.appendChild(editForm);
-  subjectEdit.appendChild(buttonContainer);
+  quizzesContainer.appendChild(quizzesTitle);
+  editForm.appendChild(quizzesContainer);
+
+  subjectEdit.append(header, editForm, buttonContainer);
+
+  //fazer um componente similar ao itemslist (ou o proprio itemslist)
+  //e iterar aqui para mostrar as disciplinas registradas no subject
 
   const inputs = {
     name: editForm.querySelector('input[name="subject"]'),

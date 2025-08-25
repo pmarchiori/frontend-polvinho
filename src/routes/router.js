@@ -21,6 +21,7 @@ import { QuizDetailsTeacher } from "../pages/Teacher/QuizDetailsTeacher.js";
 import { QuestionRegister } from "../pages/Teacher/QuestionRegister.js";
 import { QuizzesList } from "../pages/Student/QuizzesList.js";
 import { QuizDetailsStudent } from "../pages/Student/QuizDetailsStudent.js";
+import { QuizAnswer } from "../pages/Student/QuizAnswer.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -39,6 +40,7 @@ const routesWithSidebar = [
   "#/question-register",
   "#/quizzes",
   "#/quiz-details-student",
+  "#/quiz-answer",
 ];
 
 const routes = {
@@ -65,6 +67,7 @@ const routes = {
 
   "#/quizzes": QuizzesList,
   "#/quiz-details-student": QuizDetailsStudent,
+  "#/quiz-answer": QuizAnswer,
 };
 
 const protectedRoutes = {
@@ -84,6 +87,10 @@ const protectedRoutes = {
   "#/subject-quizzes": ["teacher"],
   "#/quiz-register": ["teacher"],
   "#/question-register": ["teacher"],
+
+  "#/quizzes": ["student"],
+  "#/quiz-details-student": ["student"],
+  "#/quiz-answer": ["student"],
 };
 
 function getUserFromToken() {

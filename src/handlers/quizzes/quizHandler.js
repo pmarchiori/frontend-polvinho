@@ -10,6 +10,15 @@ export async function fetchQuizById(id) {
   }
 }
 
+export async function fetchQuizResultsById(id) {
+  try {
+    return await fetchWithAuth(`${API_URL}/quizzes/${id}/results`);
+  } catch (err) {
+    console.error("Erro ao buscar resultados do quiz:", err);
+    throw err;
+  }
+}
+
 export async function updateQuiz(quizId, updates) {
   const response = await fetchWithAuth(`${API_URL}/quizzes/${quizId}`, {
     method: "PUT",

@@ -1,29 +1,46 @@
 import { AlertModal } from "../../components/AlertModal.js";
 import { FormButton } from "../../components/Buttons/FormButton.js";
 import { QuizDetails } from "../../components/QuizDetails.js";
+import { StudentAnswerList } from "../../components/StudentAnswerList.js";
+import { Title } from "../../components/Title.js";
 import { Toaster } from "../../components/Toaster.js";
 import {
   fetchQuizById,
   removeQuiz,
+  fetchQuizResultsById,
 } from "../../handlers/quizzes/quizHandler.js";
 import { navigateTo } from "../../routes/navigate.js";
 
 export async function QuizDetailsTeacher(quizId) {
-  const quiz = await fetchQuizById(quizId);
+  const [quiz, results] = await Promise.all([
+    fetchQuizById(quizId),
+    fetchQuizResultsById(quizId),
+  ]);
 
   const quizDetails = QuizDetails(quiz);
 
   const studentsContainer = document.createElement("div");
   studentsContainer.classList.add("students-container");
 
-  const studentsTitle = document.createElement("p");
-  studentsTitle.textContent = "Alunos que responderam";
-  studentsTitle.classList.add("title4");
-  studentsTitle.style.color = "var(--stone-700)";
+  const studentsTitle = Title({
+    title: "Alunos que responderam",
+    titleClass: "title4",
+    titleColor: "var(--stone-700)",
+  });
 
   const deleteQuizBtn = FormButton({
     btnName: "Eliminar Quiz",
     btnClass: "delete-quiz-btn",
+  });
+
+  const students = (results || []).map(({ studentId, name, bestScore }) => ({
+    _id: studentId,
+    name,
+    bestScore,
+  }));
+
+  const studentList = StudentAnswerList(students, (studentId) => {
+    //adicionar o navigateto pra tela de respostas do aluno
   });
 
   deleteQuizBtn.addEventListener("click", () => {
@@ -55,9 +72,8 @@ export async function QuizDetailsTeacher(quizId) {
     document.body.appendChild(confirmDeleteModal);
   });
 
-  studentsContainer.append(studentsTitle, deleteQuizBtn);
+  studentsContainer.append(studentsTitle, studentList, deleteQuizBtn);
 
   quizDetails.append(studentsContainer);
-
   return quizDetails;
 }

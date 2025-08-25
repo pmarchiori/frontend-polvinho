@@ -23,3 +23,25 @@
   padding-left: 44px;
   margin-top: 16px;
 }
+
+.student-answer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+  padding-right: 24px;
+}
+
+.student-answer-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--indigo-700);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
