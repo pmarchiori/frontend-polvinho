@@ -25,6 +25,7 @@ export function InfoCard({
 
   const contentWrapper = document.createElement("div");
   contentWrapper.classList.add("info-card-content");
+  infoCard.appendChild(contentWrapper);
 
   if (contentType === "attempts") {
     if (attempts.length === 0) {
@@ -48,39 +49,45 @@ export function InfoCard({
         link.textContent = "Gabarito";
 
         attemptItem.append(spanTry, score, link);
-
         contentWrapper.appendChild(attemptItem);
       });
     }
   }
 
   if (contentType === "answers") {
-    if (answers.length === 0) {
-      const emptyMsg = document.createElement("p");
-      emptyMsg.textContent = "Nenhuma resposta encontrada.";
-      emptyMsg.classList.add("empty-message");
-      contentWrapper.appendChild(emptyMsg);
-    } else {
-      answers.forEach((answer, i) => {
-        const answerItem = document.createElement("div");
-        answerItem.classList.add("answer-item");
+    const renderAnswers = (answersList) => {
+      contentWrapper
+        .querySelectorAll(".answer-item, .empty-message")
+        .forEach((el) => el.remove());
 
-        const spanQuestion = document.createElement("span");
-        spanQuestion.textContent = `Pergunta ${i + 1}`;
-        spanQuestion.style.color = "var(--stone-700)";
+      if (answersList.length === 0) {
+        const emptyMsg = document.createElement("p");
+        emptyMsg.textContent = "Nenhuma resposta encontrada.";
+        emptyMsg.classList.add("empty-message");
+        contentWrapper.appendChild(emptyMsg);
+      } else {
+        answersList.forEach((answer, i) => {
+          const answerItem = document.createElement("div");
+          answerItem.classList.add("answer-item");
 
-        const spanAnswer = document.createElement("span");
-        spanAnswer.textContent = answer;
-        spanAnswer.style.color = "var(--stone-700)";
+          const spanQuestion = document.createElement("span");
+          spanQuestion.textContent = `Pergunta ${i + 1}`;
+          spanQuestion.style.color = "var(--stone-700)";
 
-        answerItem.append(spanQuestion, spanAnswer);
+          const spanAnswer = document.createElement("span");
+          spanAnswer.textContent = answer;
+          spanAnswer.style.color = "var(--stone-700)";
 
-        contentWrapper.appendChild(answerItem);
-      });
-    }
+          answerItem.append(spanQuestion, spanAnswer);
+          contentWrapper.appendChild(answerItem);
+        });
+      }
+    };
+
+    renderAnswers(answers);
+
+    infoCard.updateAnswers = renderAnswers;
   }
-
-  infoCard.appendChild(contentWrapper);
 
   if (showButton) {
     const infoCardBtn = FormButton({
@@ -92,10 +99,10 @@ export function InfoCard({
     infoCardBtn.addEventListener("click", () => {
       const finishQuizModal = ConfirmModal({
         title: "Entregue!",
-        message: `O quiz "ADICIONAR NOME DO QUIZ" foi entregue com sucesso.`,
+        message: `O quiz "${titleText}" foi entregue com sucesso.`,
         btnText: "Ver Gabarito",
         onConfirm: () => {
-          //adicionar funcionalidade de entregar o quiz
+          // funcionalidade de entregar o quiz
         },
       });
       document.body.appendChild(finishQuizModal);

@@ -53,8 +53,22 @@ export async function QuizAnswer(quizId) {
     const questionComponent = Question({
       question,
       index,
-      onAnswer: (questionId, optionId) => {
+      onAnswer: (questionId, optionId, optionIndex) => {
         studentAnswers[questionId] = optionId;
+
+        if (infoCard.updateAnswers) {
+          const answersLetterArray = quiz.questions.map((q) => {
+            const selectedOptionId = studentAnswers[q._id];
+            if (selectedOptionId) {
+              const idx = q.options.findIndex(
+                (o) => o._id === selectedOptionId
+              );
+              return String.fromCharCode(97 + idx);
+            }
+            return "";
+          });
+          infoCard.updateAnswers(answersLetterArray);
+        }
       },
     });
     questionsContainer.append(questionComponent);

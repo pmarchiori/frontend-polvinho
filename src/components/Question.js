@@ -34,7 +34,7 @@ export function Question({ question, index, onAnswer }) {
       selectedOption = questionOption;
 
       if (onAnswer) {
-        onAnswer(question._id, opt._id);
+        onAnswer(question._id, opt._id, optIndex);
       }
     });
 
