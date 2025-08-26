@@ -22,6 +22,8 @@ import { QuestionRegister } from "../pages/Teacher/QuestionRegister.js";
 import { QuizzesList } from "../pages/Student/QuizzesList.js";
 import { QuizDetailsStudent } from "../pages/Student/QuizDetailsStudent.js";
 import { QuizAnswer } from "../pages/Student/QuizAnswer.js";
+import { QuizAnswerSheet } from "../pages/Student/QuizAnswerSheet.js";
+import { navigateTo } from "./navigate.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -41,6 +43,7 @@ const routesWithSidebar = [
   "#/quizzes",
   "#/quiz-details-student",
   "#/quiz-answer",
+  "#/quiz-answer-sheet",
 ];
 
 const routes = {
@@ -68,6 +71,7 @@ const routes = {
   "#/quizzes": QuizzesList,
   "#/quiz-details-student": QuizDetailsStudent,
   "#/quiz-answer": QuizAnswer,
+  "#/quiz-answer-sheet": QuizAnswerSheet,
 };
 
 const protectedRoutes = {
@@ -91,6 +95,7 @@ const protectedRoutes = {
   "#/quizzes": ["student"],
   "#/quiz-details-student": ["student"],
   "#/quiz-answer": ["student"],
+  "#/quiz-answer-sheet": ["student", "teacher"],
 };
 
 function getUserFromToken() {
@@ -122,7 +127,7 @@ export async function router() {
 
   if (allowedRoles && (!user || !allowedRoles.includes(user.role))) {
     console.log("usuário não autorizado");
-    window.location.hash = "#/login";
+    navigateTo("#/login");
     return;
   }
 

@@ -6,6 +6,7 @@ import { Title } from "./Title.js";
 import { EmptyData } from "../components/EmptyData.js";
 import { Toaster } from "../components/Toaster.js";
 import { fetchPageData } from "../utils/pagination.js";
+import { navigateTo } from "../routes/navigate.js";
 
 export function ItemsList({
   titleProps,
@@ -89,7 +90,7 @@ export function ItemsList({
           const itemComponent = createItemComponent({
             ...item,
             onEdit: () => {
-              window.location.hash = `${editRoutePrefix}${item._id}`;
+              navigateTo(`${editRoutePrefix}${item._id}`);
             },
             onRemove: () => {
               removeItem(item._id)

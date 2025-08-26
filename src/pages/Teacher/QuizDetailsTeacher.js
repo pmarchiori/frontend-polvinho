@@ -40,7 +40,7 @@ export async function QuizDetailsTeacher(quizId) {
   }));
 
   const studentList = StudentAnswerList(students, (studentId) => {
-    //adicionar o navigateto pra tela de respostas do aluno
+    //add navegacao ate a tela de gabarito do aluno -> utilizar answerId
   });
 
   deleteQuizBtn.addEventListener("click", () => {

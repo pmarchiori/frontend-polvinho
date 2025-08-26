@@ -1,8 +1,7 @@
-import { QuizAnswer } from "../pages/Student/QuizAnswer.js";
-import { AlertModal } from "./AlertModal.js";
 import { FormButton } from "./Buttons/FormButton.js";
-import { ConfirmModal } from "./ConfirmModal.js";
+import { AlertModal } from "../components/AlertModal.js";
 import { Title } from "./Title.js";
+import { navigateTo } from "../routes/navigate.js";
 
 export function InfoCard({
   titleText,
@@ -12,6 +11,7 @@ export function InfoCard({
   contentType = "attempts",
   attempts = [],
   answers = [],
+  isResult = false,
 }) {
   const infoCard = document.createElement("div");
   infoCard.classList.add("info-card");
@@ -40,15 +40,21 @@ export function InfoCard({
 
         const spanTry = document.createElement("span");
         spanTry.textContent = `${i + 1}º Tentativa`;
+        spanTry.style.color = "var(--stone-700)";
 
         const score = document.createElement("strong");
         score.textContent = `${attempt.score} / ${attempt.total}`;
+        score.style.color = "var(--stone-900)";
 
-        const link = document.createElement("a");
-        link.href = "#";
-        link.textContent = "Gabarito";
+        const viewBtn = document.createElement("button");
+        viewBtn.textContent = "Gabarito";
+        viewBtn.classList.add("link-btn");
+        viewBtn.addEventListener("click", () => {
+          console.log("Tentativa selecionada:", attempt);
+          navigateTo(`#/quiz-answer-sheet/${attempt._id}`);
+        });
 
-        attemptItem.append(spanTry, score, link);
+        attemptItem.append(spanTry, score, viewBtn);
         contentWrapper.appendChild(attemptItem);
       });
     }
@@ -75,8 +81,13 @@ export function InfoCard({
           spanQuestion.style.color = "var(--stone-700)";
 
           const spanAnswer = document.createElement("span");
-          spanAnswer.textContent = answer;
-          spanAnswer.style.color = "var(--stone-700)";
+          spanAnswer.textContent = answer.letter || "-";
+
+          if (answer.isCorrect) {
+            spanAnswer.classList.add("correct");
+          } else {
+            spanAnswer.classList.add("wrong");
+          }
 
           answerItem.append(spanQuestion, spanAnswer);
           contentWrapper.appendChild(answerItem);
@@ -85,11 +96,10 @@ export function InfoCard({
     };
 
     renderAnswers(answers);
-
     infoCard.updateAnswers = renderAnswers;
   }
 
-  if (showButton) {
+  if (showButton && !isResult) {
     const infoCardBtn = FormButton({
       btnName: buttonConfig.btnName || "Enviar",
       btnClass: buttonConfig.btnClass || "default-btn",
@@ -97,15 +107,13 @@ export function InfoCard({
     infoCard.appendChild(infoCardBtn);
 
     infoCardBtn.addEventListener("click", () => {
-      const finishQuizModal = ConfirmModal({
-        title: "Entregue!",
-        message: `O quiz "${titleText}" foi entregue com sucesso.`,
-        btnText: "Ver Gabarito",
-        onConfirm: () => {
-          // funcionalidade de entregar o quiz
-        },
+      const confirmFinishQuizModal = AlertModal({
+        title: "Entregar quiz?",
+        message: "Você irá entregar o quiz. Esta ação não pode ser desfeita.",
+        confirmText: "Entregar",
+        onConfirm: buttonConfig.onConfirm,
       });
-      document.body.appendChild(finishQuizModal);
+      document.body.appendChild(confirmFinishQuizModal);
     });
   }
 

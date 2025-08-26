@@ -1,12 +1,18 @@
 import { Title } from "./Title.js";
 
-export function Question({ question, index, onAnswer }) {
+export function Question({
+  question,
+  index,
+  onAnswer,
+  selectedOptionId = null,
+  isResult = false,
+}) {
   const questionContainer = document.createElement("div");
   questionContainer.classList.add("question");
 
   const questionTitle = Title({
     title: `Pergunta ${index + 1}`,
-    subtitle: question.question,
+    subtitle: question.text || question.question,
     titleClass: "title4",
     subtitleClass: "textMd",
   });
@@ -24,19 +30,34 @@ export function Question({ question, index, onAnswer }) {
     questionLetter.classList.add("question-letter", "textSm");
 
     const optionText = document.createElement("p");
-    optionText.textContent = opt.option;
+    optionText.textContent = opt.text || opt.option || "-";
 
     questionOption.append(questionLetter, optionText);
 
-    questionOption.addEventListener("click", () => {
-      if (selectedOption) selectedOption.classList.remove("selected");
-      questionOption.classList.add("selected");
-      selectedOption = questionOption;
-
-      if (onAnswer) {
-        onAnswer(question._id, opt._id, optIndex);
+    if (isResult) {
+      if (selectedOptionId === opt._id) {
+        if (opt.isCorrect) {
+          questionOption.classList.add("correct");
+        } else {
+          questionOption.classList.add("wrong");
+        }
       }
-    });
+    } else {
+      if (selectedOptionId && selectedOptionId === opt._id) {
+        questionOption.classList.add("selected");
+        selectedOption = questionOption;
+      }
+
+      questionOption.addEventListener("click", () => {
+        if (selectedOption) selectedOption.classList.remove("selected");
+        questionOption.classList.add("selected");
+        selectedOption = questionOption;
+
+        if (onAnswer) {
+          onAnswer(question._id, opt._id, optIndex);
+        }
+      });
+    }
 
     questionContainer.append(questionOption);
   });

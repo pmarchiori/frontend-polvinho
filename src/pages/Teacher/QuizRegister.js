@@ -10,6 +10,7 @@ import {
   handleQuizRegisterSubmit,
   saveQuiz,
 } from "../../handlers/quizzes/quizRegisterHandler.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export async function QuizRegister() {
   const form = document.createElement("form");
@@ -154,7 +155,7 @@ export async function QuizRegister() {
   createQuestionsBtn.addEventListener("click", async () => {
     const savedQuiz = await saveQuiz(form);
     if (savedQuiz && savedQuiz._id) {
-      window.location.hash = `#/question-register/${savedQuiz._id}`;
+      navigateTo(`#/question-register/${savedQuiz._id}`);
     }
   });
 

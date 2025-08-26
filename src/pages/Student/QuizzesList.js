@@ -2,6 +2,7 @@ import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
 import { Title } from "../../components/Title.js";
 import { fetchSubjectById } from "../../handlers/subjects/subjectHandler.js";
 import { QuizListItem } from "../../components/QuizListItem.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export async function QuizzesList(subjectId) {
   const subject = await fetchSubjectById(subjectId);
@@ -38,7 +39,7 @@ export async function QuizzesList(subjectId) {
         finalDate: quiz.finishedDate,
         quizType: quiz.quizType,
         onClick: () => {
-          window.location.hash = `#/quiz-details-student/${quiz._id}`;
+          navigateTo(`#/quiz-details-student/${quiz._id}`);
         },
       });
 

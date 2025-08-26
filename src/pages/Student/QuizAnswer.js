@@ -4,6 +4,8 @@ import { Title } from "../../components/Title.js";
 import { Question } from "../../components/Question.js";
 import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
 import { submitQuizAnswers } from "../../handlers/answers/answerHandler.js";
+import { ConfirmModal } from "../../components/ConfirmModal.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export async function QuizAnswer(quizId) {
   const quiz = await fetchQuizById(quizId);
@@ -41,7 +43,29 @@ export async function QuizAnswer(quizId) {
     contentType: "answers",
     answers: [],
     showButton: true,
-    buttonConfig: { btnName: "Entregar", btnClass: "save-quiz-btn" },
+    buttonConfig: {
+      btnName: "Entregar",
+      btnClass: "save-quiz-btn",
+      onConfirm: async () => {
+        try {
+          const result = await submitQuizAnswers(quiz._id, studentAnswers);
+
+          const finishQuizModal = ConfirmModal({
+            title: "Entregue!",
+            message: `O quiz "${quiz.name}" foi entregue com sucesso.`,
+            btnText: "Ver Gabarito",
+            onConfirm: () => navigateTo(`#/quiz-details-student/${quiz._id}`),
+          });
+          document.body.appendChild(finishQuizModal);
+
+          console.log(
+            `Quiz entregue!\n\nTentativa: ${result.attempt}\nAcertos: ${result.correct}\nErros: ${result.wrong}\nScore: ${result.score}`
+          );
+        } catch (err) {
+          console.log(err.message || "Erro ao enviar quiz");
+        }
+      },
+    },
   });
 
   container.append(infoCard);
@@ -75,18 +99,6 @@ export async function QuizAnswer(quizId) {
   });
 
   container.append(questionsContainer);
-
-  const submitBtn = infoCard.querySelector(".save-quiz-btn");
-  submitBtn.addEventListener("click", async () => {
-    try {
-      const result = await submitQuizAnswers(quiz._id, studentAnswers);
-      console.log(
-        `Quiz entregue!\n\nTentativa: ${result.attempt}\nAcertos: ${result.correct}\nErros: ${result.wrong}\nScore: ${result.score}`
-      );
-    } catch (err) {
-      console.log(err.message || "Erro ao enviar quiz");
-    }
-  });
 
   return container;
 }

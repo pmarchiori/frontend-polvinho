@@ -3,6 +3,7 @@ import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
 import { Title } from "../../components/Title.js";
 import { DashboardItem } from "../../components/Dashboard/DashboardItem.js";
 import { fetchSubjectById } from "../../handlers/subjects/subjectHandler.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export async function SubjectQuizzes(subjectId) {
   const subject = await fetchSubjectById(subjectId);
@@ -64,7 +65,7 @@ export async function SubjectQuizzes(subjectId) {
     const item = DashboardItem({
       title: quiz.name,
       onClick: () => {
-        window.location.hash = `#/quiz-details-teacher/${quiz._id}`;
+        navigateTo(`#/quiz-details-teacher/${quiz._id}`);
       },
     });
 

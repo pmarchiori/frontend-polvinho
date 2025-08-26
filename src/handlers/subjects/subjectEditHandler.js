@@ -2,6 +2,7 @@ import { fetchSubjectById } from "./subjectHandler.js";
 import { Toaster } from "../../components/Toaster.js";
 import { API_URL } from "../../config/config.js";
 import { fetchWithAuth } from "../../utils/fetchWithAuth.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export async function loadSubjectData(subjectId, inputs, setOriginalValues) {
   try {
@@ -56,7 +57,7 @@ export async function submitSubjectEdit(subjectId, inputs) {
       type: "success",
     });
 
-    window.location.hash = "#/subjects";
+    navigateTo("#/subjects");
   } catch (err) {
     console.error("Erro ao atualizar disciplina:", err);
     Toaster({
