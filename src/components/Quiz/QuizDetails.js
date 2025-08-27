@@ -1,5 +1,6 @@
-import { ReturnButton } from "./Buttons/ReturnButton.js";
-import { Title } from "./Title.js";
+import { formatDate } from "../../utils/formatDate.js";
+import { ReturnButton } from "../Buttons/ReturnButton.js";
+import { Title } from "../Title.js";
 
 export function QuizDetails(quiz) {
   const quizDetails = document.createElement("div");
@@ -45,9 +46,9 @@ export function QuizDetails(quiz) {
   maxTimeInfo.textContent = `Tempo máximo: ${quiz.duration} minutos`;
 
   const submitDateInfo = document.createElement("li");
-  submitDateInfo.textContent = `Data de Entrega: ${new Date(
+  submitDateInfo.textContent = `Data de Entrega: ${formatDate(
     quiz.finishedDate
-  ).toLocaleDateString("pt-BR")}`;
+  )}`;
 
   quizInfo.append(triesAmountInfo, maxTimeInfo, submitDateInfo);
   guidelinesContainer.append(guidelinesTitle, guidelines, quizInfo);

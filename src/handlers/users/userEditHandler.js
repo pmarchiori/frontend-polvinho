@@ -2,6 +2,7 @@ import { fetchUserById } from "./userHandler.js";
 import { Toaster } from "../../components/Toaster.js";
 import { API_URL } from "../../config/config.js";
 import { fetchWithAuth } from "../../utils/fetchWithAuth.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export async function loadUserData(userId, inputs, setOriginalValues) {
   try {
@@ -87,7 +88,7 @@ export async function submitUserEdit(
       type: "success",
     });
 
-    window.location.hash = `#/${navigateToPage}`;
+    navigateTo(`#/${navigateToPage}`);
   } catch (err) {
     console.error("Erro ao atualizar usuário:", err);
     Toaster({

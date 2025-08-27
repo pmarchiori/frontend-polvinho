@@ -1,10 +1,11 @@
-import { AlertModal } from "../../components/AlertModal.js";
+import { AlertModal } from "../../components/Modals/AlertModal.js";
 import { FormButton } from "../../components/Buttons/FormButton.js";
-import { InfoCard } from "../../components/InfoCard.js";
-import { QuizDetails } from "../../components/QuizDetails.js";
+import { InfoCard } from "../../components/Quiz/InfoCard.js";
+import { QuizDetails } from "../../components/Quiz/QuizDetails.js";
 import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
 import { fetchStudentAttempts } from "../../handlers/answers/answerHandler.js";
 import { navigateTo } from "../../routes/navigate.js";
+import { Toaster } from "../../components/Toaster.js";
 
 export async function QuizDetailsStudent(quizId) {
   const quiz = await fetchQuizById(quizId);
@@ -17,6 +18,7 @@ export async function QuizDetailsStudent(quizId) {
   const attempts = await fetchStudentAttempts(quizId);
 
   const infoCard = InfoCard({
+    quizId,
     titleText: "Suas Tentativas",
     titleClass: "textMd",
     contentType: "attempts",
@@ -35,7 +37,15 @@ export async function QuizDetailsStudent(quizId) {
       message:
         "Ao clicar no botão o quiz começará imediatamente e deve ser entregue para sair.",
       onConfirm: () => {
-        navigateTo(`#/quiz-answer/${quiz._id}`);
+        if (attempts.length < quiz.maxAttempts) {
+          navigateTo(`#/quiz-answer/${quiz._id}`);
+        } else {
+          Toaster({
+            type: "error",
+            title: "Máximo de tentativas atingido.",
+            description: "Você não possui mais tentativas nesse quiz.",
+          });
+        }
       },
     });
     document.body.appendChild(startQuizModal);

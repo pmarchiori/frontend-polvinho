@@ -22,6 +22,11 @@ import { QuestionRegister } from "../pages/Teacher/QuestionRegister.js";
 import { QuizzesList } from "../pages/Student/QuizzesList.js";
 import { QuizDetailsStudent } from "../pages/Student/QuizDetailsStudent.js";
 import { QuizAnswer } from "../pages/Student/QuizAnswer.js";
+import { QuizAnswerSheet } from "../pages/Student/QuizAnswerSheet.js";
+import { navigateTo } from "./navigate.js";
+import { API_URL } from "../config/config.js";
+
+import { hideLoading, showLoading } from "../components/loadingOverlay.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -41,6 +46,7 @@ const routesWithSidebar = [
   "#/quizzes",
   "#/quiz-details-student",
   "#/quiz-answer",
+  "#/quiz-answer-sheet",
 ];
 
 const routes = {
@@ -68,6 +74,7 @@ const routes = {
   "#/quizzes": QuizzesList,
   "#/quiz-details-student": QuizDetailsStudent,
   "#/quiz-answer": QuizAnswer,
+  "#/quiz-answer-sheet": QuizAnswerSheet,
 };
 
 const protectedRoutes = {
@@ -91,9 +98,10 @@ const protectedRoutes = {
   "#/quizzes": ["student"],
   "#/quiz-details-student": ["student"],
   "#/quiz-answer": ["student"],
+  "#/quiz-answer-sheet": ["student", "teacher"],
 };
 
-function getUserFromToken() {
+export function getUserFromToken() {
   const token = localStorage.getItem("authToken");
   if (!token) return null;
   try {
@@ -105,6 +113,8 @@ function getUserFromToken() {
 }
 
 export async function router() {
+  showLoading();
+
   const container =
     document.querySelector("#container") ||
     document.body.appendChild(document.createElement("div"));
@@ -122,18 +132,37 @@ export async function router() {
 
   if (allowedRoles && (!user || !allowedRoles.includes(user.role))) {
     console.log("usuário não autorizado");
-    window.location.hash = "#/login";
+    navigateTo("#/login");
+    hideLoading();
     return;
   }
 
   const PageComponent = routes[basePath];
   if (!PageComponent) {
     container.appendChild(routes[404]());
+    hideLoading();
     return;
   }
 
   if (routesWithSidebar.includes(basePath)) {
-    container.appendChild(Sidebar());
+    let subjects = [];
+    if (user?.role === "student" || user?.role === "teacher") {
+      try {
+        const res = await fetch(`${API_URL}/users/${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        });
+        if (res.ok) {
+          const userData = await res.json();
+          subjects = userData.subjects || [];
+        }
+      } catch (err) {
+        console.error("Erro ao carregar subjects:", err);
+      }
+    }
+
+    container.appendChild(Sidebar({ role: user?.role, subjects }));
   }
 
   const pageElement = param
@@ -145,4 +174,8 @@ export async function router() {
   } else {
     console.error("A página não retornou um elemento válido:", pageElement);
   }
+
+  //await new Promise((resolve) => setTimeout(resolve, 1500)); //delay pra testar o loading
+
+  hideLoading();
 }

@@ -1,4 +1,6 @@
+import { navigateTo } from "../../routes/navigate.js";
+
 export function logout() {
   localStorage.removeItem("authToken");
-  window.location.hash = "#/login";
+  navigateTo("#/login");
 }

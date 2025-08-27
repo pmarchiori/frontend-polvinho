@@ -1,7 +1,12 @@
 import { Title } from "../../components/Title.js";
 import { EmptyData } from "../../components/EmptyData.js";
 
-export async function DashboardContent({ title, subtitle, itemsLoader }) {
+export async function DashboardContent({
+  title,
+  subtitle,
+  listTitle,
+  itemsLoader,
+}) {
   const dashboard = document.createElement("div");
   dashboard.classList.add("dashboard");
 
@@ -18,6 +23,12 @@ export async function DashboardContent({ title, subtitle, itemsLoader }) {
 
   const itemsArea = document.createElement("div");
   itemsArea.classList.add("items-area");
+
+  const listTitleText = document.createElement("p");
+  listTitleText.textContent = listTitle;
+  listTitleText.classList.add("title4", "dashboard-list-title");
+
+  itemsArea.append(listTitleText);
 
   try {
     const items = await itemsLoader();

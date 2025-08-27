@@ -1,7 +1,7 @@
-import { handleRegisterSubmit } from "../handlers/users/userRegisterHandler.js";
-import { FormButton } from "./Buttons/FormButton.js";
-import { ReturnButton } from "./Buttons/ReturnButton.js";
-import { Title } from "./Title.js";
+import { handleRegisterSubmit } from "../../handlers/users/userRegisterHandler.js";
+import { FormButton } from "../Buttons/FormButton.js";
+import { ReturnButton } from "../Buttons/ReturnButton.js";
+import { Title } from "../Title.js";
 
 export async function UserRegister({
   titleText,

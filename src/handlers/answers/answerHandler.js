@@ -29,3 +29,12 @@ export async function fetchStudentAttempts(quizId) {
     throw err;
   }
 }
+
+export async function getAttemptDetails(answerId) {
+  try {
+    return await fetchWithAuth(`${API_URL}/answers/${answerId}`);
+  } catch (err) {
+    console.error("Erro no getAttemptDetails:", err);
+    throw err;
+  }
+}

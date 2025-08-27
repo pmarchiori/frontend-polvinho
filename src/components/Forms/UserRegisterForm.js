@@ -1,5 +1,5 @@
-import { SelectInputField } from "../components/Inputs/SelectInputField.js";
-import { TextInputField } from "./Inputs/TextInputField.js";
+import { SelectInputField } from "../Inputs/SelectInputField.js";
+import { TextInputField } from "../Inputs/TextInputField.js";
 
 export function UserRegisterForm(subjects = []) {
   const userRegisterForm = document.createElement("form");

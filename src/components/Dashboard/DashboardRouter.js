@@ -3,11 +3,12 @@ import { DashboardAdmin } from "../../pages/Admin/DashboardAdmin.js";
 import { DashboardTeacher } from "../../pages/Teacher/DashboardTeacher.js";
 import { PageNotFound } from "../../pages/PageNotFound.js";
 import { DashboardStudent } from "../../pages/Student/DashboardStudent.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export async function DashboardRouter() {
   const token = localStorage.getItem("authToken");
   if (!token) {
-    window.location.hash = "#/login";
+    navigateTo("#/login");
     const div = document.createElement("div");
     div.textContent = "Redirecionando...";
     return div;
@@ -21,7 +22,7 @@ export async function DashboardRouter() {
     userId = id;
   } catch (err) {
     console.error("Erro ao decodificar token:", err);
-    window.location.hash = "#/login";
+    navigateTo("#/login");
     const div = document.createElement("div");
     div.textContent = "Token inválido.";
     return div;

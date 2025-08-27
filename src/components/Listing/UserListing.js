@@ -1,4 +1,4 @@
-import { AlertModal } from "./AlertModal.js";
+import { AlertModal } from "../Modals/AlertModal.js";
 
 export function UserListing({
   registration,

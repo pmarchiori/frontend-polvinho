@@ -36,3 +36,19 @@
   align-items: center;
   justify-content: center;
 }
+
+.question-option.correct {
+  background-color: var(--emerald-100);
+}
+
+.question-option.wrong {
+  background-color: var(--red-100);
+}
+
+.answer-item span.correct {
+  color: var(--emerald-600);
+}
+
+.answer-item span.wrong {
+  color: var(--red-500);
+}

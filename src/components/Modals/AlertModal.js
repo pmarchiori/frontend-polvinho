@@ -1,4 +1,4 @@
-import { Title } from "../components/Title.js";
+import { Title } from "../Title.js";
 
 export function AlertModal({
   title,

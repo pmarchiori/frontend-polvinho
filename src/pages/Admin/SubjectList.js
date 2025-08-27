@@ -1,5 +1,5 @@
-import { ItemsList } from "../../components/ItemsList.js";
-import { SubjectListing } from "../../components/SubjectListing.js";
+import { ItemsList } from "../../components/Listing/ItemsList.js";
+import { SubjectListing } from "../../components/Listing/SubjectListing.js";
 import {
   fetchSubjects,
   removeSubject,
@@ -25,6 +25,9 @@ export function SubjectList() {
       text2: "Professor",
       text3: "Quiz",
       text4: "Ações",
+      text1Class: "col-registration",
+      text2Class: "col-name",
+      text3Class: "col-subjects",
     },
     fetchData: fetchSubjects,
     removeItem: removeSubject,
