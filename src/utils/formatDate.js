@@ -1,7 +1,9 @@
 export function formatDate(dateString) {
   const date = new Date(dateString);
-  return date.toLocaleDateString("pt-BR", {
-    day: "numeric",
+  const day = date.getUTCDate();
+  const month = date.toLocaleDateString("pt-BR", {
     month: "long",
+    timeZone: "UTC",
   });
+  return `${day} de ${month}`;
 }

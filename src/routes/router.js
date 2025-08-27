@@ -26,6 +26,8 @@ import { QuizAnswerSheet } from "../pages/Student/QuizAnswerSheet.js";
 import { navigateTo } from "./navigate.js";
 import { API_URL } from "../config/config.js";
 
+import { hideLoading, showLoading } from "../components/loadingOverlay.js";
+
 const routesWithSidebar = [
   "#/dashboard",
   "#/students",
@@ -111,6 +113,8 @@ export function getUserFromToken() {
 }
 
 export async function router() {
+  showLoading();
+
   const container =
     document.querySelector("#container") ||
     document.body.appendChild(document.createElement("div"));
@@ -129,18 +133,19 @@ export async function router() {
   if (allowedRoles && (!user || !allowedRoles.includes(user.role))) {
     console.log("usuário não autorizado");
     navigateTo("#/login");
+    hideLoading();
     return;
   }
 
   const PageComponent = routes[basePath];
   if (!PageComponent) {
     container.appendChild(routes[404]());
+    hideLoading();
     return;
   }
 
   if (routesWithSidebar.includes(basePath)) {
     let subjects = [];
-
     if (user?.role === "student" || user?.role === "teacher") {
       try {
         const res = await fetch(`${API_URL}/users/${user.id}`, {
@@ -169,4 +174,8 @@ export async function router() {
   } else {
     console.error("A página não retornou um elemento válido:", pageElement);
   }
+
+  //await new Promise((resolve) => setTimeout(resolve, 1500)); //delay pra testar o loading
+
+  hideLoading();
 }

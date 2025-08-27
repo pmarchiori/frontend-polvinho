@@ -7,6 +7,7 @@ import { navigateTo } from "../../routes/navigate.js";
 export async function loadSubjectData(subjectId, inputs, setOriginalValues) {
   try {
     const subject = await fetchSubjectById(subjectId);
+
     inputs.name.value = subject.name || "";
     inputs.teacher.value = subject.teacher
       ? JSON.stringify([subject.teacher])
@@ -15,6 +16,7 @@ export async function loadSubjectData(subjectId, inputs, setOriginalValues) {
     setOriginalValues({
       name: subject.name || "",
       teacher: subject.teacher || "",
+      quizzes: subject.quizzes || [],
     });
   } catch (err) {
     console.error("Erro ao carregar dados da disciplina:", err);

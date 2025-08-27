@@ -1,6 +1,10 @@
 import { FormButton } from "../components/Buttons/FormButton.js";
 import { TextInputField } from "../components/Inputs/TextInputField.js";
 import { Title } from "../components/Title.js";
+import { showInlineError } from "../utils/showInlineError.js";
+import { API_URL } from "../config/config.js";
+import { navigateTo } from "../routes/navigate.js";
+import { Toaster } from "../components/Toaster.js";
 
 export function ChangePassword() {
   const changePasswordBackground = document.createElement("div");
@@ -47,14 +51,71 @@ export function ChangePassword() {
     btnClass: "form-btn",
   });
 
-  changePasswordForm.appendChild(changePasswordTitle);
-  changePasswordForm.appendChild(splitLine);
-  changePasswordForm.appendChild(newPasswordField);
-  changePasswordForm.appendChild(confirmNewPasswordField);
-  changePasswordForm.appendChild(changePasswordButton);
+  changePasswordForm.append(
+    changePasswordTitle,
+    splitLine,
+    newPasswordField,
+    confirmNewPasswordField,
+    changePasswordButton
+  );
 
-  changePasswordBackground.appendChild(polvoLogo);
-  changePasswordBackground.appendChild(changePasswordForm);
+  changePasswordBackground.append(polvoLogo, changePasswordForm);
+
+  changePasswordForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = sessionStorage.getItem("resetEmail");
+    if (!email) return navigateTo("#/retrieve-password");
+
+    const newPasswordInput = newPasswordField.querySelector("input");
+    const confirmPasswordInput = confirmNewPasswordField.querySelector("input");
+
+    [newPasswordInput, confirmPasswordInput].forEach((input) => {
+      const oldError = input
+        .closest(".input-field")
+        .querySelector(".input-error");
+      if (oldError) oldError.remove();
+      input.classList.remove("error");
+    });
+
+    const newPassword = newPasswordInput.value.trim();
+    const confirmPassword = confirmPasswordInput.value.trim();
+
+    if (!newPassword)
+      return showInlineError(newPasswordInput, "Preencha a nova senha.");
+    if (!confirmPassword)
+      return showInlineError(confirmPasswordInput, "Confirme a nova senha.");
+    if (newPassword !== confirmPassword)
+      return showInlineError(confirmPasswordInput, "As senhas não coincidem.");
+
+    try {
+      const res = await fetch(`${API_URL}/users/change-password`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, newPassword }),
+      });
+
+      if (!res.ok) {
+        let errorMsg = "Erro ao alterar senha.";
+        try {
+          const data = await res.json();
+          errorMsg = data.error || errorMsg;
+        } catch {}
+        return showInlineError(newPasswordInput, errorMsg);
+      }
+
+      Toaster({
+        title: "Sucesso!",
+        description: "Senha alterada com sucesso.",
+        type: "success",
+      });
+
+      sessionStorage.removeItem("resetEmail");
+      navigateTo("#/login");
+    } catch (err) {
+      showInlineError(newPasswordInput, "Erro de conexão.");
+    }
+  });
 
   return changePasswordBackground;
 }

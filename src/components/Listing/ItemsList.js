@@ -1,7 +1,7 @@
 import { CreationButton } from "../Buttons/CreationButton.js";
 import { PaginationButton } from "../Buttons/PaginationButton.js";
 import { ReturnButton } from "../Buttons/ReturnButton.js";
-import { ChartNames } from "../ChartNames.js";
+import { ChartNames } from "./ChartNames.js";
 import { Title } from "../Title.js";
 import { EmptyData } from "../EmptyData.js";
 import { Toaster } from "../Toaster.js";

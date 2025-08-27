@@ -9,6 +9,7 @@ import {
   loadSubjectData,
   submitSubjectEdit,
 } from "../../handlers/subjects/subjectEditHandler.js";
+import { QuizList } from "../../components/Listing/QuizList.js";
 
 export async function SubjectEdit(subjectId) {
   const subjectEdit = document.createElement("form");
@@ -30,9 +31,16 @@ export async function SubjectEdit(subjectId) {
   const editForm = await SubjectRegisterForm();
 
   const quizzesContainer = document.createElement("div");
-  const quizzesTitle = document.createElement("p");
-  quizzesTitle.textContent = "Quizzes";
-  quizzesTitle.style.color = "var(--stone-900)";
+  quizzesContainer.classList.add("quizzes-container");
+
+  const quizzesTitle = Title({
+    title: "Quizzes",
+    titleClass: "title4",
+    titleColor: "var(--stone-900)",
+  });
+
+  quizzesContainer.appendChild(quizzesTitle);
+  editForm.appendChild(quizzesContainer);
 
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
@@ -44,13 +52,7 @@ export async function SubjectEdit(subjectId) {
 
   buttonContainer.appendChild(registerButton);
 
-  quizzesContainer.appendChild(quizzesTitle);
-  editForm.appendChild(quizzesContainer);
-
   subjectEdit.append(header, editForm, buttonContainer);
-
-  //fazer um componente similar ao itemslist (ou o proprio itemslist)
-  //e iterar aqui para mostrar as disciplinas registradas no subject
 
   const inputs = {
     name: editForm.querySelector('input[name="subject"]'),
@@ -60,7 +62,13 @@ export async function SubjectEdit(subjectId) {
   let originalValues = {};
 
   loadSubjectData(subjectId, inputs, (values) => {
+    console.log("Subject carregado:", values);
     originalValues = values;
+
+    if (values.quizzes) {
+      const quizList = QuizList(values.quizzes, subjectId);
+      quizzesContainer.appendChild(quizList);
+    }
   });
 
   returnButton.addEventListener("click", (e) => {

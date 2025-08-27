@@ -10,3 +10,11 @@
   padding: 0px 16px;
   border-radius: 100px;
 }
+
+.col-quiz-name {
+  flex-basis: 33%;
+}
+
+.col-data {
+  flex-basis: 33%;
+}

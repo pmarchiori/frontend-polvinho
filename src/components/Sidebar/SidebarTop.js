@@ -38,7 +38,7 @@ export function SidebarTop({ role, subjects }) {
       iconSrc: "/assets/Books.svg",
       options: subjects.map((s) => ({
         text: s.name,
-        route: `subjects/${s._id}`,
+        route: `quizzes/${s._id}`,
       })),
     });
     sidebarTop.appendChild(subjectsDropdown);
@@ -48,7 +48,7 @@ export function SidebarTop({ role, subjects }) {
       iconSrc: "/assets/Books.svg",
       options: subjects.map((s) => ({
         text: s.name,
-        route: `subjects/${s._id}`,
+        route: `subject-quizzes/${s._id}`,
       })),
     });
     sidebarTop.appendChild(subjectsDropdown);

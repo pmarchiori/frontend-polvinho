@@ -41,6 +41,12 @@
   min-width: 300px;
 }
 
+.confirm-modal-title-area {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
 .modal-message {
   color: var(--stone-700);
 }

@@ -1,6 +1,8 @@
 import { FormButton } from "../components/Buttons/FormButton.js";
 import { TextInputField } from "../components/Inputs/TextInputField.js";
 import { Title } from "../components/Title.js";
+import { showInlineError } from "../utils/showInlineError.js";
+import { navigateTo } from "../routes/navigate.js";
 
 export function RetrievePassword() {
   const retrievePasswordBackground = document.createElement("div");
@@ -16,8 +18,7 @@ export function RetrievePassword() {
 
   const retrievePasswordTitle = Title({
     title: "Recuperar Senha",
-    subtitle:
-      "Digite seu email cadastrado e enviaremos um link para realizar a troca da sua senha :)",
+    subtitle: "Digite seu email cadastrado e você poderá alterar sua senha",
     titleClass: "title2",
     titleColor: "var(--stone-900)",
     subtitleClass: "textMd",
@@ -50,6 +51,25 @@ export function RetrievePassword() {
   );
 
   retrievePasswordBackground.append(polvoLogo, retrievePasswordForm);
+
+  retrievePasswordForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const emailInput = userEmailField.querySelector("input");
+    const email = emailInput.value.trim();
+
+    const oldError = userEmailField.querySelector(".input-error");
+    if (oldError) oldError.remove();
+    emailInput.classList.remove("error");
+
+    if (!email) {
+      showInlineError(emailInput, "Informe um email válido.");
+      return;
+    }
+
+    sessionStorage.setItem("resetEmail", email);
+    navigateTo("#/change-password");
+  });
 
   return retrievePasswordBackground;
 }

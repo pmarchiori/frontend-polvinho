@@ -39,3 +39,7 @@
   cursor: pointer;
   background-color: var(--neutral-200);
 }
+
+.dashboard-list-title {
+  color: var(--stone-700);
+}

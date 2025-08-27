@@ -4,6 +4,7 @@ import { fetchSubjectById } from "../../handlers/subjects/subjectHandler.js";
 import { QuizListItem } from "../../components/Quiz/QuizListItem.js";
 import { navigateTo } from "../../routes/navigate.js";
 import { formatDate } from "../../utils/formatDate.js";
+import { ChartNames } from "../../components/Listing/ChartNames.js";
 
 export async function QuizzesList(subjectId) {
   const subject = await fetchSubjectById(subjectId);
@@ -16,6 +17,15 @@ export async function QuizzesList(subjectId) {
 
   const titleArea = document.createElement("div");
   titleArea.classList.add("title-area");
+
+  const chartNames = ChartNames({
+    text1: "Nome",
+    text2: "Data de Entrega",
+    text3: "Tipo",
+    text1Class: "col-quiz-name",
+    text2Class: "col-data",
+    text3Class: "col-type",
+  });
 
   const returnButton = ReturnButton();
   returnButton.addEventListener("click", () => window.history.back());
@@ -49,7 +59,7 @@ export async function QuizzesList(subjectId) {
 
   titleArea.append(returnButton, title);
   header.append(titleArea);
-  listContainer.append(header, contentArea);
+  listContainer.append(header, chartNames, contentArea);
 
   return listContainer;
 }

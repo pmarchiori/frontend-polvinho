@@ -174,6 +174,6 @@
   border: none;
   color: var(--indigo-700);
   text-decoration: underline;
-  text-decoration-style: solid;
+  text-decoration-style: 1px solid;
   cursor: pointer;
 }

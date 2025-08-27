@@ -7,6 +7,12 @@ export function ConfirmModal({ title, message, btnText, onConfirm }) {
   const modal = document.createElement("div");
   modal.classList.add("confirm-modal");
 
+  const titleArea = document.createElement("div");
+  titleArea.classList.add("confirm-modal-title-area");
+
+  const icon = document.createElement("img");
+  icon.src = "../../assets/CheckCircle.svg";
+
   const modalTitle = Title({
     title: title,
     titleClass: "title3",
@@ -26,7 +32,8 @@ export function ConfirmModal({ title, message, btnText, onConfirm }) {
     document.body.removeChild(overlay);
   });
 
-  modal.append(modalTitle, modalMessage, btn);
+  titleArea.append(icon, modalTitle);
+  modal.append(titleArea, modalMessage, btn);
   overlay.appendChild(modal);
 
   return overlay;

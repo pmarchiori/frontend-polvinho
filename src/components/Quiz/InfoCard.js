@@ -81,7 +81,7 @@ export function InfoCard({
           spanQuestion.style.color = "var(--stone-700)";
 
           const spanAnswer = document.createElement("span");
-          spanAnswer.textContent = answer.letter || "-";
+          spanAnswer.textContent = answer.letter.toUpperCase() || "-";
 
           if (isResult) {
             if (answer.isCorrect) {
