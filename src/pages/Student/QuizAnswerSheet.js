@@ -1,7 +1,7 @@
 import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
-import { InfoCard } from "../../components/InfoCard.js";
+import { InfoCard } from "../../components/Quiz/InfoCard.js";
 import { Title } from "../../components/Title.js";
-import { Question } from "../../components/Question.js";
+import { Question } from "../../components/Quiz/Question.js";
 import { getAttemptDetails } from "../../handlers/answers/answerHandler.js";
 
 export async function QuizAnswerSheet(attemptId) {

@@ -30,7 +30,7 @@ export function StudentAnswerList(students, onViewAnswers) {
     const viewBtn = document.createElement("button");
     viewBtn.textContent = "Ver Respostas";
     viewBtn.classList.add("link-btn");
-    viewBtn.addEventListener("click", () => onViewAnswers(student._id));
+    viewBtn.addEventListener("click", () => onViewAnswers(student.answerId));
 
     rightArea.append(viewBtn, grade);
     item.append(name, rightArea);

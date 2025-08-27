@@ -1,5 +1,5 @@
-import { ReturnButton } from "./Buttons/ReturnButton.js";
-import { Title } from "./Title.js";
+import { ReturnButton } from "../Buttons/ReturnButton.js";
+import { Title } from "../Title.js";
 
 export function QuizDetails(quiz) {
   const quizDetails = document.createElement("div");

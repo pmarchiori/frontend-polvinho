@@ -1,13 +1,13 @@
 import { SidebarDropdownButton } from "../Buttons/SidebarDropdownButton.js";
 import { SidebarItem } from "./SidebarItem.js";
 
-export function SidebarDropdown() {
+export function SidebarDropdown({ text, iconSrc, options = [] }) {
   const sidebarDropdown = document.createElement("div");
   sidebarDropdown.classList.add("sidebar-dropdown");
 
   const dropdown = SidebarItem({
-    text: "Painel",
-    iconSrc: "/assets/Books.svg",
+    text,
+    iconSrc,
     helperIconSrc: "/assets/caret-down.svg",
   });
 
@@ -15,22 +15,13 @@ export function SidebarDropdown() {
   submenu.classList.add("sidebar-submenu");
   submenu.style.display = "none";
 
-  const btnStudents = SidebarDropdownButton({
-    text: "Alunos",
-    route: "students",
+  options.forEach((opt) => {
+    const btn = SidebarDropdownButton({
+      text: opt.text,
+      route: opt.route,
+    });
+    submenu.appendChild(btn);
   });
-
-  const btnTeachers = SidebarDropdownButton({
-    text: "Professores",
-    route: "teachers",
-  });
-
-  const btnSubjects = SidebarDropdownButton({
-    text: "Disciplinas",
-    route: "subjects",
-  });
-
-  submenu.append(btnStudents, btnTeachers, btnSubjects);
 
   sidebarDropdown.appendChild(dropdown);
   sidebarDropdown.appendChild(submenu);

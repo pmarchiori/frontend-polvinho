@@ -1,5 +1,5 @@
-import { ItemsList } from "../../components/ItemsList.js";
-import { UserListing } from "../../components/UserListing.js";
+import { ItemsList } from "../../components/Listing/ItemsList.js";
+import { UserListing } from "../../components/Listing/UserListing.js";
 import {
   fetchStudents,
   removeStudent,

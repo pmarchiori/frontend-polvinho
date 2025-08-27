@@ -1,7 +1,7 @@
-import { FormButton } from "./Buttons/FormButton.js";
-import { AlertModal } from "../components/AlertModal.js";
-import { Title } from "./Title.js";
-import { navigateTo } from "../routes/navigate.js";
+import { FormButton } from "../Buttons/FormButton.js";
+import { AlertModal } from "../Modals/AlertModal.js";
+import { Title } from "../Title.js";
+import { navigateTo } from "../../routes/navigate.js";
 
 export function InfoCard({
   titleText,
@@ -83,10 +83,14 @@ export function InfoCard({
           const spanAnswer = document.createElement("span");
           spanAnswer.textContent = answer.letter || "-";
 
-          if (answer.isCorrect) {
-            spanAnswer.classList.add("correct");
+          if (isResult) {
+            if (answer.isCorrect) {
+              spanAnswer.classList.add("correct");
+            } else {
+              spanAnswer.classList.add("wrong");
+            }
           } else {
-            spanAnswer.classList.add("wrong");
+            spanAnswer.classList.remove("correct", "wrong");
           }
 
           answerItem.append(spanQuestion, spanAnswer);

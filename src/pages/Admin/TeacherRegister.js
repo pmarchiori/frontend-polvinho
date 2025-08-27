@@ -1,5 +1,5 @@
-import { UserRegister } from "../../components/UserRegister.js";
-import { UserRegisterForm } from "../../components/UserRegisterForm.js";
+import { UserRegister } from "../../components/Forms/UserRegister.js";
+import { UserRegisterForm } from "../../components/Forms/UserRegisterForm.js";
 import { fetchSubjects } from "../../handlers/subjects/subjectHandler.js";
 
 export async function TeacherRegister() {

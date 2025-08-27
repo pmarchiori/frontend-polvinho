@@ -2,12 +2,12 @@ import {
   hasUserChanges,
   loadUserData,
   submitUserEdit,
-} from "../handlers/users/userEditHandler.js";
-import { navigateTo } from "../routes/navigate.js";
-import { AlertModal } from "./AlertModal.js";
-import { FormButton } from "./Buttons/FormButton.js";
-import { ReturnButton } from "./Buttons/ReturnButton.js";
-import { Title } from "./Title.js";
+} from "../../handlers/users/userEditHandler.js";
+import { navigateTo } from "../../routes/navigate.js";
+import { AlertModal } from "../Modals/AlertModal.js";
+import { FormButton } from "../Buttons/FormButton.js";
+import { ReturnButton } from "../Buttons/ReturnButton.js";
+import { Title } from "../Title.js";
 
 export async function UserEdit({
   titleText,

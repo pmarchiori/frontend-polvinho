@@ -1,6 +1,6 @@
-import { fetchTeachers } from "../handlers/users/userHandler.js";
-import { SelectInputField } from "../components/Inputs/SelectInputField.js";
-import { TextInputField } from "./Inputs/TextInputField.js";
+import { fetchTeachers } from "../../handlers/users/userHandler.js";
+import { SelectInputField } from "../Inputs/SelectInputField.js";
+import { TextInputField } from "../Inputs/TextInputField.js";
 
 export async function SubjectRegisterForm() {
   const subjectRegisterForm = document.createElement("form");

@@ -1,5 +1,5 @@
-import { ItemsList } from "../../components/ItemsList.js";
-import { SubjectListing } from "../../components/SubjectListing.js";
+import { ItemsList } from "../../components/Listing/ItemsList.js";
+import { SubjectListing } from "../../components/Listing/SubjectListing.js";
 import {
   fetchSubjects,
   removeSubject,

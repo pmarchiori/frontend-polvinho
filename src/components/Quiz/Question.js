@@ -1,4 +1,4 @@
-import { Title } from "./Title.js";
+import { Title } from "../Title.js";
 
 export function Question({
   question,

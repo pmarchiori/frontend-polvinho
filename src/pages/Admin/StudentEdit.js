@@ -1,5 +1,5 @@
-import { UserEdit } from "../../components/UserEdit.js";
-import { UserRegisterForm } from "../../components/UserRegisterForm.js";
+import { UserEdit } from "../../components/Forms/UserEdit.js";
+import { UserRegisterForm } from "../../components/Forms/UserRegisterForm.js";
 import { fetchSubjects } from "../../handlers/subjects/subjectHandler.js";
 
 export async function StudentEdit(studentId) {

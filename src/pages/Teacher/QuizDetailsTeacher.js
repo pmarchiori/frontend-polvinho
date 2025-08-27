@@ -1,7 +1,7 @@
-import { AlertModal } from "../../components/AlertModal.js";
+import { AlertModal } from "../../components/Modals/AlertModal.js";
 import { FormButton } from "../../components/Buttons/FormButton.js";
-import { QuizDetails } from "../../components/QuizDetails.js";
-import { StudentAnswerList } from "../../components/StudentAnswerList.js";
+import { QuizDetails } from "../../components/Quiz/QuizDetails.js";
+import { StudentAnswerList } from "../../components/Quiz/StudentAnswerList.js";
 import { Title } from "../../components/Title.js";
 import { Toaster } from "../../components/Toaster.js";
 import {
@@ -33,14 +33,15 @@ export async function QuizDetailsTeacher(quizId) {
     btnClass: "delete-quiz-btn",
   });
 
-  const students = (results || []).map(({ studentId, name, bestScore }) => ({
+  const students = results.map(({ studentId, name, bestScore, answerId }) => ({
     _id: studentId,
+    answerId,
     name,
     bestScore,
   }));
 
-  const studentList = StudentAnswerList(students, (studentId) => {
-    //add navegacao ate a tela de gabarito do aluno -> utilizar answerId
+  const studentList = StudentAnswerList(students, (answerId) => {
+    navigateTo(`#/quiz-answer-sheet/${answerId}`);
   });
 
   deleteQuizBtn.addEventListener("click", () => {

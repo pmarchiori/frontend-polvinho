@@ -9,6 +9,7 @@ export function QuizListItem({ title, finalDate, quizType, onClick }) {
   const finalDateText = document.createElement("p");
   finalDateText.textContent = finalDate;
   finalDateText.classList.add("textMd");
+  finalDateText.style.color = "var(--stone-600)";
 
   const type = document.createElement("p");
   type.textContent = quizType;

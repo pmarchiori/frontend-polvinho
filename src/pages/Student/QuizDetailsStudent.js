@@ -1,7 +1,7 @@
-import { AlertModal } from "../../components/AlertModal.js";
+import { AlertModal } from "../../components/Modals/AlertModal.js";
 import { FormButton } from "../../components/Buttons/FormButton.js";
-import { InfoCard } from "../../components/InfoCard.js";
-import { QuizDetails } from "../../components/QuizDetails.js";
+import { InfoCard } from "../../components/Quiz/InfoCard.js";
+import { QuizDetails } from "../../components/Quiz/QuizDetails.js";
 import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
 import { fetchStudentAttempts } from "../../handlers/answers/answerHandler.js";
 import { navigateTo } from "../../routes/navigate.js";

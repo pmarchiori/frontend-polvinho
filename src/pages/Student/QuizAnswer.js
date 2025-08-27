@@ -1,10 +1,10 @@
 import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
-import { InfoCard } from "../../components/InfoCard.js";
+import { InfoCard } from "../../components/Quiz/InfoCard.js";
 import { Title } from "../../components/Title.js";
-import { Question } from "../../components/Question.js";
+import { Question } from "../../components/Quiz/Question.js";
 import { fetchQuizById } from "../../handlers/quizzes/quizHandler.js";
 import { submitQuizAnswers } from "../../handlers/answers/answerHandler.js";
-import { ConfirmModal } from "../../components/ConfirmModal.js";
+import { ConfirmModal } from "../../components/Modals/ConfirmModal.js";
 import { navigateTo } from "../../routes/navigate.js";
 
 export async function QuizAnswer(quizId) {
@@ -83,14 +83,16 @@ export async function QuizAnswer(quizId) {
         if (infoCard.updateAnswers) {
           const answersLetterArray = quiz.questions.map((q) => {
             const selectedOptionId = studentAnswers[q._id];
+            let letter = "";
             if (selectedOptionId) {
               const idx = q.options.findIndex(
                 (o) => o._id === selectedOptionId
               );
-              return String.fromCharCode(97 + idx);
+              if (idx !== -1) letter = String.fromCharCode(97 + idx);
             }
-            return "";
+            return { letter };
           });
+
           infoCard.updateAnswers(answersLetterArray);
         }
       },

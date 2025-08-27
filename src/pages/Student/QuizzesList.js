@@ -1,8 +1,9 @@
 import { ReturnButton } from "../../components/Buttons/ReturnButton.js";
 import { Title } from "../../components/Title.js";
 import { fetchSubjectById } from "../../handlers/subjects/subjectHandler.js";
-import { QuizListItem } from "../../components/QuizListItem.js";
+import { QuizListItem } from "../../components/Quiz/QuizListItem.js";
 import { navigateTo } from "../../routes/navigate.js";
+import { formatDate } from "../../utils/formatDate.js";
 
 export async function QuizzesList(subjectId) {
   const subject = await fetchSubjectById(subjectId);
@@ -36,7 +37,7 @@ export async function QuizzesList(subjectId) {
     .forEach((quiz) => {
       const item = QuizListItem({
         title: quiz.name,
-        finalDate: quiz.finishedDate,
+        finalDate: formatDate(quiz.finishedDate),
         quizType: quiz.quizType,
         onClick: () => {
           navigateTo(`#/quiz-details-student/${quiz._id}`);

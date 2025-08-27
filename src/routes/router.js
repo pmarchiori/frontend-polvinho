@@ -24,6 +24,7 @@ import { QuizDetailsStudent } from "../pages/Student/QuizDetailsStudent.js";
 import { QuizAnswer } from "../pages/Student/QuizAnswer.js";
 import { QuizAnswerSheet } from "../pages/Student/QuizAnswerSheet.js";
 import { navigateTo } from "./navigate.js";
+import { API_URL } from "../config/config.js";
 
 const routesWithSidebar = [
   "#/dashboard",
@@ -98,7 +99,7 @@ const protectedRoutes = {
   "#/quiz-answer-sheet": ["student", "teacher"],
 };
 
-function getUserFromToken() {
+export function getUserFromToken() {
   const token = localStorage.getItem("authToken");
   if (!token) return null;
   try {
@@ -138,7 +139,25 @@ export async function router() {
   }
 
   if (routesWithSidebar.includes(basePath)) {
-    container.appendChild(Sidebar());
+    let subjects = [];
+
+    if (user?.role === "student" || user?.role === "teacher") {
+      try {
+        const res = await fetch(`${API_URL}/users/${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        });
+        if (res.ok) {
+          const userData = await res.json();
+          subjects = userData.subjects || [];
+        }
+      } catch (err) {
+        console.error("Erro ao carregar subjects:", err);
+      }
+    }
+
+    container.appendChild(Sidebar({ role: user?.role, subjects }));
   }
 
   const pageElement = param
