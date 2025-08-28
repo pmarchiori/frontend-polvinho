@@ -30,6 +30,19 @@ export async function QuizDetailsStudent(quizId) {
     btnClass: "save-quiz-btn",
   });
 
+  const now = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+  );
+
+  const startDate = new Date(quiz.startedDate);
+  const endDate = new Date(quiz.finishedDate);
+
+  endDate.setDate(endDate.getDate() + 1);
+
+  if (now < startDate || now >= endDate) {
+    startQuizBtn.disabled = true;
+  }
+
   startQuizBtn.addEventListener("click", () => {
     const startQuizModal = AlertModal({
       title: "Deseja começar agora?",
